@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import css from './Reservation.module.scss';
 
 function Reservation() {
+  const navigate = useNavigate();
+  const homepage = 'http://localhost:3000';
+
+  const logoOnClick = () => {
+    navigate(homepage);
+  };
+
   return (
     <div className={css.reservePage}>
       <div>
         <header className={css.reserveBanner}>
-          <a className={css.logoToHome}>
+          <button
+            className={css.logoToHome}
+            id={css.logoButton}
+            onClick={logoOnClick}
+          >
             <div className={css.logoBox}>
               <div className={css.logoIcon}>icon</div>
               <div className={css.logoText}>logo</div>
             </div>
-          </a>
+          </button>
         </header>
       </div>
       <div>
