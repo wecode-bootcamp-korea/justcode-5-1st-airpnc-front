@@ -29,18 +29,26 @@ function Reservation() {
                   <div className={css.rclYourTrip}> Your trip </div>
                   <div className={css.rclDates}> Dates </div>
                   <div className={css.rclGuests}> Guests </div>
-                  <div className={css.rclChooseHowToPay}> Choose how to pay </div>
+                  <div className={css.rclChooseHowToPay}>
+                    'Choose how to pay'
+                  </div>
                   <div className={css.rclPayHow}>
                     <div> Pay in full </div>
                     <div> Pay part now, part later </div>
                   </div>
                   <div className={css.rclPayMethod}> Pay with </div>
                   <div className={css.rclEnterCoupon}> Enter a coupon </div>
-                  <div className={css.rclRequirements}> Required for your trip </div>
-                  <div className={css.rclCancellationPolicy}> Cancellation Policy </div>
-                  <div className={css.rclCovid19Policy}> covid 19 </div>
-                  <div className={css.rclAgreementUpon}> agreement </div>
-                  <div className={css.rclConfirmAndPay}> Confirm and pay Airbnb </div>
+                  <div className={css.rclRequirements}>
+                    'Required for your trip'
+                  </div>
+                  <div className={css.rclCancellationPolicy}>
+                    Cancellation Policy
+                  </div>
+                  <div className={css.rclCovid19Policy}>'covid 19'</div>
+                  <div className={css.rclAgreementUpon}>agreement</div>
+                  <div className={css.rclConfirmAndPay}>
+                    Confirm and pay Airbnb
+                  </div>
                 </div>
               </section>
               <aside>
@@ -49,7 +57,9 @@ function Reservation() {
                     <div className={css.rcrAccommodationSummary}>
                       Entire home
                     </div>
-                    <div className={css.rcrAircover}> Your booking is potected by aircover </div>
+                    <div className={css.rcrAircover}>
+                      Your booking is potected by aircover
+                    </div>
                     <div className={css.rcrPriceDetails}> Price details </div>
                     <div className={css.rcrTotal}> Total (USD) $ </div>
                   </div>
@@ -61,7 +71,9 @@ function Reservation() {
       </div>
       <div>
         <footer className={css.reserveContentFooter}>
-          <div className={css.rcfLeft}> @ 2022 Airbnb, Inc, Privacy Terms Sitemap </div>
+          <div className={css.rcfLeft}>
+            @ 2022 Airbnb, Inc, Privacy Terms Sitemap
+          </div>
           <div className={css.rcfRight}> English (US) $ USD </div>
         </footer>
       </div>
