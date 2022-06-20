@@ -1,5 +1,35 @@
+:root {
+    border: 1px solid black;
+}
+
 .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 80px;
 }
 
 .logo {
+    padding: 0px;
+    margin: 0px;
+    width: 102px;
+    height: 80px;
+    border: 1px solid black;
+}
+
+.searchBar {
+    padding: 0px;
+    margin: 0px;
+    width: 363px;
+    height: 48px;
+    border: 1px solid black;
+}
+
+.user {
+    padding: 0px;
+    margin: 0px;
+    width: 200px;
+    height: 42px;
+    border: 1px solid black;
 }
