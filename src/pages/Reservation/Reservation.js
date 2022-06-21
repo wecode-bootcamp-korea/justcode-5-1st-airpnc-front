@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
-import { MdNavigateBefore } from 'react-icons/fa';
+import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
+import { SiVisa, SiMastercard } from 'react-icons/si';
+import { GrAmex } from 'react-icons/gr';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 
 function Reservation() {
   const navigate = useNavigate();
@@ -13,10 +16,14 @@ function Reservation() {
     navigate(homepage);
   };
 
+  const payOptionSelector = () => {
+    console.log('pay option selector is clicked');
+  };
+
   return (
     <div className={css.container}>
-      <div>
-        <header className={css.reserveBanner}>
+      <header className={css.reserveBanner}>
+        <div className={css.reserveBannerInner}>
           <div className={css.logoBox}>
             <img
               className={css.logoToHome}
@@ -26,13 +33,18 @@ function Reservation() {
               onClick={logoOnClick}
             />
           </div>
-        </header>
-      </div>
+        </div>
+      </header>
       <div>
         <main className={css.reserveContentMain} id="reserve-content">
           <section>
             <div className={css.reserveContentTitle}>
-              <h1 className={css.rctText}>Confirm and pay Airbnb</h1>
+              <div className={css.reserveContentTitleInner}>
+                <div className={css.navigateBefore}>
+                  <MdNavigateBefore />
+                </div>
+                <h1 className={css.rctText}>Confirm and pay • Airbnb</h1>
+              </div>
             </div>
           </section>
           <section>
@@ -43,14 +55,32 @@ function Reservation() {
                   <div className={css.rclYourTrip}> Your trip </div>
                   <div className={css.rclDates}> Dates </div>
                   <div className={css.rclGuests}> Guests </div>
-                  <div className={css.rclChooseHowToPay}>
-                    'Choose how to pay'
+                  <div className={css.rclPayWith}>
+                    <div className={css.rclPayWithTitle}>
+                      <span>Pay with</span>
+                    </div>
+                    <div className={css.payOptionIcons}>
+                      <SiVisa />
+                      <GrAmex />
+                      <SiMastercard />
+                    </div>
+                    <div className={css.payOptionSelector}>
+                      <button
+                        id="dropdown-selector-pay-option-btn"
+                        className={css.payOptionSelectorBtn}
+                        onClick={payOptionSelector}
+                      >
+                        <div className={css.payOptionSelectorInner}>
+                          <div className={css.payOptionSelectorIcon}>
+                            <MdCreditCard />
+                          </div>
+                          <div className={css.payOptionSelectorDescription}>
+                            <span>Credit or debit card</span>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
                   </div>
-                  <div className={css.rclPayHow}>
-                    <div> Pay in full </div>
-                    <div> Pay part now, part later </div>
-                  </div>
-                  <div className={css.rclPayMethod}> Pay with </div>
                   <div className={css.rclEnterCoupon}> Enter a coupon </div>
                   <div className={css.rclRequirements}>
                     'Required for your trip'
@@ -84,12 +114,7 @@ function Reservation() {
         </main>
       </div>
       <div>
-        <footer className={css.reserveContentFooter}>
-          <div className={css.rcfLeft}>
-            @ 2022 Airbnb, Inc, Privacy Terms Sitemap
-          </div>
-          <div className={css.rcfRight}> English (US) $ USD </div>
-        </footer>
+        <footer className={css.reserveContentFooter}> footer </footer>
       </div>
     </div>
   );

@@ -1,10 +1,126 @@
 @import '../../styles/reset.scss';
 
+$theme-border-color: rgb(221, 221, 221);
+$theme-border-line : 1px solid $theme-border-color;
+$theme-font: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+$theme-font-color: rgb(34, 34, 34) !important;
+
+@mixin flex-vh-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flex-v-center {
+	display: flex;
+	align-items: center;
+}
+
+@mixin flex-h-center {
+	display: flex;
+	justify-content: center;
+}
+
+@mixin flex-direction-column {
+	display: flex;
+	flex-direction: column;
+}
+
+* {
+	box-sizing: border-box;
+}
+
 .container {
-    
+	@include flex-direction-column;
+	font-family: $theme-font;
+	background-color: #fff;
+}
+
+.reserveBanner {
+	border-bottom: $theme-border-line;
+}
+
+.reserveBannerInner {
+	@include flex-v-center;
+}
+
+.logoBox {
+	@include flex-v-center;
+}
+
+img.logoToHome {
+	width: 102px;
+}
+
+.reserveContentTitleInner {
+	@include flex-v-center;
+}
+
+.rctText {
+	font-family: inherit;
+	font-size: 30px;
+	font-weight: bold;
+	color: $theme-font-color;
+}
+
+// reserve Contents
+.reserveContent {
+	@include flex-vh-center;
+}
+
+// reserve Content left
+.reserveContentLeft {
+	div {
+		@include flex-v-center;
+	}
+
+}
+
+.rclPriceRateAvg {
+	border: $theme-border-line;
+	border-radius: 12px;
+	color: $theme-font-color;
+	font-size: 16px !important;
+	line-height: 20px !important;
+}
+
+.rclYourTrip {
+
+}
+
+.rclDates {
+
+}
+
+.rclGuests {
+
+}
+
+.rclPayWith {
+	@include flex-direction-column;
+	border-top: $theme-border-line;
+
+	.rclPayWithTitle {
+		span{
+			font-size: 32px;
+		}
+	}
+
 }
 
 
-img.logoToHome {
-	width: 20px;
+
+.rclEnterCoupon {
+
+}
+
+.rclRequirements {
+	
+}
+
+
+// reserve Content Right
+.reserveContentRight {
+	border: .1px solid $theme-border-color;
+	border-radius: 12px;
 }
