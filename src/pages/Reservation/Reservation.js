@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './Reservation.module.scss';
+import footer from '../../components/Footer/Footer';
+import { MdNavigateBefore } from 'react-icons/fa';
 
 function Reservation() {
   const navigate = useNavigate();
   const homepage = 'http://localhost:3000';
+  const airbnbLogo = 'icons/256px-Airbnb_Logo_Bélo.svg.png';
 
   const logoOnClick = () => {
     navigate(homepage);
   };
 
   return (
-    <div className={css.reservePage}>
+    <div className={css.container}>
       <div>
         <header className={css.reserveBanner}>
-          <button
-            className={css.logoToHome}
-            id={css.logoButton}
-            onClick={logoOnClick}
-          >
-            <div className={css.logoBox}>
-              <div className={css.logoIcon}>icon</div>
-              <div className={css.logoText}>logo</div>
-            </div>
-          </button>
+          <div className={css.logoBox}>
+            <img
+              className={css.logoToHome}
+              id={css.logoButton}
+              alt="airbnb"
+              src={airbnbLogo}
+              onClick={logoOnClick}
+            />
+          </div>
         </header>
       </div>
       <div>
