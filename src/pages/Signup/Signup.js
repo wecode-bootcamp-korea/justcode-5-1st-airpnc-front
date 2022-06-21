@@ -45,7 +45,7 @@ function Signup() {
     <div className={css.container}>
       <form className={css.loginWindow} onSubmit={prevent}>
         <div className={css.loginContainer}>
-          <h1 className={css.logo}>AirPnC에 오신 것을 환영합니다.</h1>
+          <h1 className={css.logo}>회원가입</h1>
           <input
             id="id"
             className={css.input}
