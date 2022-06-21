@@ -30,10 +30,19 @@ $theme-font-color: rgb(34, 34, 34) !important;
 	box-sizing: border-box;
 }
 
+svg {
+	font-size: 22px;
+	@include flex-vh-center;
+}
+
 .container {
 	@include flex-direction-column;
 	font-family: $theme-font;
+	font-size: 14px;
+	color: #484848;
 	background-color: #fff;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
 }
 
 .reserveBanner {
@@ -42,6 +51,7 @@ $theme-font-color: rgb(34, 34, 34) !important;
 
 .reserveBannerInner {
 	@include flex-v-center;
+	padding: 20px;
 }
 
 .logoBox {
@@ -52,16 +62,31 @@ img.logoToHome {
 	width: 102px;
 }
 
-.reserveContentTitleInner {
-	@include flex-v-center;
+.reserveContentMain {
+	padding: 40px;
 }
 
-.rctText {
-	font-family: inherit;
-	font-size: 30px;
-	font-weight: bold;
-	color: $theme-font-color;
+.reserveContentTitleInner {
+	@include flex-v-center;
+	margin: 0 0 50px 10px;
+
+	.iconNavigateBefore {
+		@include flex-vh-center;
+		background-color: white;
+		border: none;
+		margin: 0 10px 0 0;
+	}
+
+	.reserveContentTitleText {
+		margin: 0;
+		font-family: inherit;
+		font-size: 30px;
+		font-weight: bold;
+		color: $theme-font-color;
+		align-items: center;
+	}
 }
+
 
 // reserve Contents
 .reserveContent {
@@ -73,54 +98,206 @@ img.logoToHome {
 	div {
 		@include flex-v-center;
 	}
-
 }
 
-.rclPriceRateAvg {
-	border: $theme-border-line;
-	border-radius: 12px;
-	color: $theme-font-color;
-	font-size: 16px !important;
-	line-height: 20px !important;
-}
+.reserveContentLeftInner {
 
-.rclYourTrip {
-
-}
-
-.rclDates {
-
-}
-
-.rclGuests {
-
-}
-
-.rclPayWith {
-	@include flex-direction-column;
-	border-top: $theme-border-line;
-
-	.rclPayWithTitle {
-		span{
-			font-size: 32px;
-		}
+	div,
+	button,
+	input {
+		font-size: 16px;
 	}
 
 }
 
+.rclPriceRateAvgContainer {
+	display: flex;
+	align-items: stretch;
 
+	.rclPriceRateAvg {
+		@include flex-direction-column;
+		align-items: stretch;
+		border: $theme-border-line;
+		border-radius: 12px;
+		color: $theme-font-color;
+		font-size: 16px !important;
+		line-height: 20px !important;
+		padding: 30px 70px 30px 30px;
+		max-width: 500px;
+	}
+	
+	p {
+		padding: 0 0 5px 0;
+	}
+
+	.priceRateSummary {
+		font-weight: bold;
+	}
+}
+
+.rclYourtripContainer {
+
+	.rclYourTrip {
+
+	}
+
+	.rclDates {}
+
+	.rclGuests {}
+}
+
+
+////// Pay with //////
+.rclPayWithContainer {
+	@include flex-direction-column;
+	align-items: stretch;
+	padding: 30px 0;
+	border-top: $theme-border-line;
+
+	input,
+	button {
+		padding: 10px 20px;
+	}
+
+	.rclPayWith {
+		@include flex-direction-column;
+		align-items: stretch;
+		justify-content: space-between;
+
+		.rclPayWithHeader {
+			@include flex-direction-column;
+			align-items: stretch;
+
+			.rclPayWithTitle {
+				@include flex-direction-column;
+				justify-content: space-between;
+				align-items: stretch;
+
+				span {
+					text-align: left;
+					font-size: 32px;
+				}
+			}
+
+			.payOptionIcons {
+				div {
+					padding: 5px;
+
+					svg {
+						font-size: 22px;
+					}
+				}
+			}
+		}
+
+		.payOptionSelector {
+			@include flex-direction-column;
+			align-items: stretch;
+
+			.payOptionSelectorBtn {
+				background-color: white;
+				border: $theme-border-line;
+				border-radius: 8px;
+				max-width: 600px;
+			}
+		}
+
+		.cardInfo {
+			display: flex;
+			justify-content: space-between;
+
+			.onCard {
+				@include flex-direction-column;
+				align-items: stretch;
+
+				.cardInfoForm {
+					@include flex-direction-column;
+					align-items: stretch;
+					border: $theme-border-line;
+					border-radius: 8px;
+
+					.cardNumber {
+						@include flex-direction-column;
+						align-items: stretch;
+						border-bottom: $theme-border-line;
+
+						.cardNumberInput {
+							border: none;
+						}
+					}
+
+					.cardOtherInfo {
+						.cardExpiration {
+							input {
+								border: none;
+							}
+						}
+
+						.cardCVV {
+							input {
+								border: none;
+							}
+						}
+					}
+				}
+
+				.personalInfoPostalCode {
+					@include flex-direction-column;
+					align-items: stretch;
+					border: $theme-border-line;
+					border-radius: 8px;
+
+					.cardPostalCodeInput {
+						border: none;
+					}
+				}
+
+				.personalInfoCountry {
+					@include flex-direction-column;
+					align-items: stretch;
+					border: $theme-border-line;
+					border-radius: 8px;
+
+					.cardCountryInput {
+						border: none;
+					}
+				}
+			}
+		}
+	}
+}
 
 .rclEnterCoupon {
-
+	p {
+		font-weight: bold;
+		font-size: 18px;
+		text-decoration: underline;
+	}
 }
 
-.rclRequirements {
-	
-}
+
+
+
+
+
+
+
+
+
+
+
+.rclRequirements {}
 
 
 // reserve Content Right
 .reserveContentRight {
 	border: .1px solid $theme-border-color;
 	border-radius: 12px;
+}
+
+
+@media screen and (max-width: 700px) {
+  .reserveContentRight {
+    display: none;
+  }
 }

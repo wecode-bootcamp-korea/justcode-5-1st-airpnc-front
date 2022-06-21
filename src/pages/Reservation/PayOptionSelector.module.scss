@@ -1,0 +1,29 @@
+@import '../../styles/reset.scss';
+
+$theme-border-color: rgb(221, 221, 221);
+$theme-border-line : 1px solid $theme-border-color;
+$theme-font: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+$theme-font-color: rgb(34, 34, 34) !important;
+$tooltip-shadow: 0 0 2px 0 lightgrey;
+
+.container {
+	position: relative;
+}
+
+.dropDown {	
+	background-color: white;
+	position: absolute;
+	border-radius: 5px;
+	right: 10px;
+	display: none;
+}
+
+.dropDownVisible {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	box-shadow: $tooltip-shadow;
+	position: absolute;
+	border-radius: 5px;
+	right: 10px;
+}
