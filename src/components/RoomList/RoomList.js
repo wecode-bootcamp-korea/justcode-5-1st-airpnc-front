@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Detail from '../../pages/Detail/Detail';
 import css from './RoomList.module.scss';
 
 function RoomList({ image, name, price }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
+  const data = {
+    name: name,
+    image: image,
+    price: price,
+  };
+  const goToDetail = () => {
+    navigate('/detail', { state: { ...data } });
+  };
 
   const sliderImage = {
     backgroundImage: `url(${image[currentIndex].url})`,
@@ -20,17 +31,19 @@ function RoomList({ image, name, price }) {
       : setCurrentIndex((currentIndex = 0));
   };
 
-  console.log(currentIndex > 4);
-
   return (
     <>
       <div className={css.container}>
-        <div className={css.sliderStyle} style={sliderImage}></div>
+        <div
+          className={css.sliderStyle}
+          style={sliderImage}
+          onClick={goToDetail}
+        ></div>
         <button className={css.prevBtnStyle} onClick={onClickPrev}>
-          prev
+          &lt;
         </button>
         <button className={css.nextBtnStyle} onClick={onClickNext}>
-          next
+          &gt;
         </button>
         <p>{name}</p>
         <p>{price}</p>

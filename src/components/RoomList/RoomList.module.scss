@@ -18,6 +18,10 @@
     transition: 0.5s;
 }
 
+.sliderStyle:hover {
+    cursor: pointer;
+}
+
 .prevBtnStyle {
     position: absolute;
     top: 150px;
@@ -26,5 +30,5 @@
 .nextBtnStyle {
     position: absolute;
     top: 150px;
-    left: 309px;
+    left: 327px;
 }

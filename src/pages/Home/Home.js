@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import RoomList from '../../components/RoomList/RoomList';
+import RoomTypeBar from '../../components/RoomTypeBar/RoomTypeBar';
+import Detail from '../Detail/Detail';
 import css from './Home.module.scss';
 
 function Home() {
@@ -139,11 +142,14 @@ function Home() {
   ];
 
   return (
-    <div className={css.container}>
-      {data.map(data => (
-        <RoomList image={data.image} name={data.name} price={data.price} />
-      ))}
-    </div>
+    <>
+      <RoomTypeBar />
+      <div className={css.container}>
+        {data.map(data => (
+          <RoomList image={data.image} name={data.name} price={data.price} />
+        ))}
+      </div>
+    </>
   );
 }
 
