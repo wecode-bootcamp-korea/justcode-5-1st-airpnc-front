@@ -1,2 +1,8 @@
 .container {
+  //   border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 1px 1px 10px 1px gray;
+  background-color: aqua;
 }
