@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Detail from '../../pages/Detail/Detail';
 import css from './RoomList.module.scss';
 
 function RoomList({ image, name, price }) {
@@ -31,15 +30,6 @@ function RoomList({ image, name, price }) {
       : setCurrentIndex((currentIndex = 0));
   };
 
-  const btnClick = e => {
-    console.log(e);
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    console.log(e);
-  };
-
   return (
     <>
       <div className={css.container}>
@@ -54,13 +44,8 @@ function RoomList({ image, name, price }) {
         <button className={css.nextBtnStyle} onClick={onClickNext}>
           &gt;
         </button>
-        <p>{name}</p>
-        <p>{price}</p>
-        <form onSubmit={onSubmit}>
-          <button onClick={btnClick} value={123}>
-            like
-          </button>
-        </form>
+        <p className={css.name}>{name}</p>
+        <p className={css.price}>{price}원</p>
       </div>
     </>
   );
