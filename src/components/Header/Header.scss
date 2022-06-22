@@ -1,0 +1,77 @@
+.container {
+  //   border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 1px 1px 10px 1px gray;
+}
+
+.logo {
+  //   border: 1px solid black;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  justify-content: center;
+  background-color: white;
+  color: rgb(255, 56, 92);
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.search {
+  box-shadow: 1px 1px 10px 1px gray;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  color: rgb(255, 56, 92);
+  font-weight: 600;
+  width: 300px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.container_right {
+  // border: 1px solid blue;
+  color: rgb(255, 56, 92);
+  display: flex;
+  align-items: center;
+  width: 200px;
+  justify-content: space-between;
+  margin-right: 5px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.container_menu {
+  // border: 1px solid rebeccapurple;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 999px;
+  width: 1cm;
+  align-items: center;
+}
+
+.container_login {
+  // border: 1px solid rebeccapurple;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  width: 2cm;
+  cursor: pointer;
+}
+
+.container_signup {
+  // border: 1px solid rebeccapurple;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  width: 2cm;
+  cursor: pointer;
+}
+
+.container_myPage {
+  // border: 1px solid rebeccapurple;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}

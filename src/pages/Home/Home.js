@@ -1,10 +1,10 @@
 import React from 'react';
 import css from './Home.module.scss';
-
+import Header from '../../components/Header/Header';
 function Home() {
   return (
     <div className={css.container}>
-      <a href="https://www.naver.com/">메인화면</a>
+      <Header />
     </div>
   );
 }
