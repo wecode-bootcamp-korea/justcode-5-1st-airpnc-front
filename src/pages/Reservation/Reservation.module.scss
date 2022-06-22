@@ -1,56 +1,5 @@
 @import '../../styles/reset.scss';
-
-$theme-border-color: rgb(221, 221, 221);
-$theme-border-line : 1px solid $theme-border-color;
-$theme-font: 'AirbnbCereal_W_Md Med', Montserrat;
-//Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
-$theme-font-color: rgb(34, 34, 34) !important;
-
-@mixin flex-vh-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-@mixin flex-v-center {
-	display: flex;
-	align-items: center;
-}
-
-@mixin flex-h-center {
-	display: flex;
-	justify-content: center;
-}
-
-@mixin flex-direction-column {
-	display: flex;
-	flex-direction: column;
-}
-
-@mixin h1 {
-	font-family: inherit;
-	font-size: 30px;
-	font-weight: bold;
-	color: $theme-font-color;
-}
-
-@mixin h2 {
-	font-family: inherit;
-	font-size: 21px;
-	font-weight: bold;
-	color: $theme-font-color;
-}
-
-@mixin h3 {
-	font-family: inherit;
-	font-size: 16px;
-	font-weight: bold;
-	color: $theme-font-color;
-}
-
-* {
-	box-sizing: border-box;
-}
+@import './ReservationPageCommon.scss';
 
 svg {
 	font-size: 22px;
@@ -60,6 +9,7 @@ svg {
 .container {
 	@include flex-direction-column;
 	font-family: $theme-font;
+	font-color: $theme-font-color;
 	font-size: 14px;
 	color: #484848;
 	background-color: #fff;
@@ -85,7 +35,7 @@ img.logoToHome {
 }
 
 .reserveContentBody {
-	@include flex-vh-center;
+	@include flex-vh-center;	
 }
 
 .reserveContentMain {
@@ -116,10 +66,9 @@ img.logoToHome {
 
 // reserve Contents
 .reserveContentSection {
-	
 	.reserveContent {
 		
-		left: 30px;
+	
 		@include flex-vh-center;
 	}
 
@@ -211,7 +160,7 @@ img.logoToHome {
 			}
 		}
 
-		.rclDates {
+		.rclDates, .rclGuests {
 			@include flex-direction-column;
 			align-items: flex-start;
 
@@ -219,15 +168,10 @@ img.logoToHome {
 				@include h3;
 			}
 
-		}
-
-		.rclGuests {
-			@include flex-direction-column;
-			align-items: flex-start;
-
-			h3 {
-				@include h3;
+			p {
+				margin-top: 10px;
 			}
+
 		}
 	}
 
@@ -460,19 +404,103 @@ img.logoToHome {
 }
 
 // reserve Content Right
-.reserveContentRight {
-	position: fixed;
-	top: 24%;
-	border: .1px solid $theme-border-color;
-	border-radius: 12px;
-}
-
-
 @media screen and (max-width: 700px) {
 	.reserveContentRight {
 		display: none;
 	}
 }
+
+.reserveContentRight {
+	position: fixed;
+	top: 25%;
+	border: .1px solid $theme-border-color;
+	border-radius: 12px;
+	max-width: 400px;
+	margin-left: 55px;
+	.rcrPinnedBox {
+		padding: 20px;
+		.rcrAccommodationSummary {
+			.rcrAccommodationSummaryInner {
+				display: flex;
+				.accommodationPhotoBox{
+					.accommodationPhoto{
+						width: 130px;
+						height: 100px;
+						border-radius: 8px;
+					}
+				}
+
+				.accommodationDescription {
+					position: relative;
+					padding: 0 10px;
+					.roomType {
+						
+					}
+
+					.roomName {
+						margin-top: 10px;
+						margin-bottom: 10px;
+						font-size: 16px;	
+					}
+
+					.roomEtcInfo {
+						position: absolute;
+						bottom: 5px;
+						svg {
+							font-size: 13px;
+						}
+						@include flex-v-center;
+						
+						.roomRate {
+							@include flex-v-center;
+						}
+						
+						.roomHostType {
+							@include flex-v-center;
+						}
+						
+
+					}
+				}
+			}
+
+		}
+		.rcrAircover {
+			margin: 30px 0;
+			border-top: $theme-border-line;
+			border-bottom: $theme-border-line;
+			.rcrAircoverInner {
+				padding: 25px 0;
+				font-size: 16px;
+			}
+		}
+
+		.rcrPriceDetails {
+			margin: 20px 0;
+			.rcrPriceDetailsInner {
+				h2 {
+					@include h2;
+				}
+
+				.rcrPriceBreakDown {
+					@include flex-direction-column;
+
+					.priceByNights {
+						display: flex;
+					}
+					
+				}
+			}
+
+		}
+		
+		.rcrTotal {
+
+		}
+	}
+}
+
+
 
 .reserveContentFooter {
 	position: relative;

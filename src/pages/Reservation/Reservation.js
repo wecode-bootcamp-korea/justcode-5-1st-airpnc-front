@@ -3,16 +3,56 @@ import { useNavigate } from 'react-router-dom';
 import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
+import CardInfoCountrySelector from './CardInfoCountrySelector';
 import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
-import { RiArrowDropDownLine } from 'react-icons/ri';
+import { RiArrowDropDownLine, RiMedalFill } from 'react-icons/ri';
 import { TiTags, TiStarFullOutline } from 'react-icons/ti';
-import { BiMedal } from 'react-icons/bi';
 ///////////////////////////////////////////////////
 /* temporary import for test // need to be deleted*/
+// temp mock data
+// img and icons
+const profileImgCat = '/images/profile/cat.png';
+const roomCabin = '/images/room_rep/cabin.png';
+//
+const priceRateSummary = 'Good Price';
+const priceRateDetail =
+  'Your dates are $456 CAD less than the avg. nightly rate over the last 3 months.';
+
+const requirements = {
+  title: 'Message the host',
+  message: `Let the host know why you're travelling and when you'll check in.`,
+};
+const host = {
+  profileImg: profileImgCat,
+  name: 'Sarah',
+  joinedIn: '2018',
+};
+
+const room = {
+  name: 'Winter Wonderland, 3BR, FirePlace, Farm',
+  type: 'Entire Villa',
+  repImg: roomCabin,
+  rate: 4.9,
+  rateCnt: 11,
+  hostType: 'superhost',
+  price: 400000,
+};
+const reservation = {
+  checkin: `2022.06.10`,
+  checkout: `2022.06.14`,
+  guests: 4,
+};
+
+const airbnbConst = {
+  customerAgreement: `By selecting the button below, I agree to the Host's House Rules, Airbnb's Rebooking and Refund Policy, and that Airbnb can charge my payment method if I’m responsible for damage.`,
+  aircover: `Your booking is potected by aircover`,
+  nonRefundable: `This reservation is non-refundable.`,
+};
 
 //////////////////////////////////////////////////
+
 function Reservation() {
   const navigate = useNavigate();
   const homepage = 'http://localhost:3000';
@@ -22,14 +62,45 @@ function Reservation() {
     navigate(homepage);
   };
 
-  const [isDropDownVisible, setDropDownVisible] = useState(false);
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays - 1;
+  };
+
+  const getTotalAmount = () => {
+    return (
+      room.price * getTotalNights(reservation.checkin, reservation.checkout)
+    );
+  };
+
+  const [totalNights, setTotalNights] = useState(
+    getTotalNights(reservation.checkin, reservation.checkout)
+  );
+
+  const [totalAmount, setTotalAmount] = useState(getTotalAmount());
+
+  useEffect(() => {
+    setTotalNights(getTotalNights(reservation.checkin, reservation.checkout));
+    setTotalAmount(getTotalAmount());
+  }, [reservation.checkin]);
+
+  const [isPayOptVisible, setPayOptVisible] = useState(false);
   const payOptionSelector = () => {
     console.log('pay option selector is clicked');
   };
 
-  const dropDownCloseHandler = e => {
-    setDropDownVisible(e);
-    console.log(`closeHandler called ${isDropDownVisible}`);
+  const payOptCloseHandler = e => {
+    setPayOptVisible(e);
+    console.log(`closeHandler called ${isPayOptVisible}`);
+  };
+
+  const [isCountryOptVisible, setCountryOptVisible] = useState(false);
+  const countryOptCloseHandler = e => {
+    setPayOptVisible(e);
+    console.log(`closeHandler called ${isPayOptVisible}`);
   };
 
   // CardNumber Input Control
@@ -46,7 +117,6 @@ function Reservation() {
 
   const setCardExpireDateFormat = input => {
     if (input < 3) {
-      console.log(input);
       return input;
     } else {
       return input;
@@ -101,31 +171,18 @@ function Reservation() {
     }
   }
 
-  const airbnbConst = {
-    customerAgreement: `By selecting the button below, I agree to the Host's House Rules, Airbnb's Rebooking and Refund Policy, and that Airbnb can charge my payment method if I’m responsible for damage.`,
-    aircover: `Your booking is potected by aircover`,
-    nonRefundable: `This reservation is non-refundable.`,
+  const yourTripDate = () => {
+    let checkin = new Date(reservation.checkin).toDateString().split(' ');
+    let checkout = new Date(reservation.checkout).toDateString().split(' ');
+    if (checkin[3] === checkout[3]) {
+      if (checkin[1] === checkin[1]) {
+        return `${checkin[1]}. ${checkin[2]} - ${checkout[2]}`; // same year and month
+      } else {
+        return `${checkin[1]}. ${checkin[2]} -  ${checkout[1]}. ${checkout[2]}`;
+      }
+    }
+    return `${checkin[3]} ${checkin[1]}. ${checkin[2]} - ${checkout[3]} ${checkout[1]}. ${checkout[2]}`;
   };
-
-  // temp mock data
-  const priceRateSummary = 'Good Price';
-  const priceRateDetail =
-    'Your dates are $456 CAD less than the avg. nightly rate over the last 3 months.';
-  const yourTripDate = 'Jul. 4 - 9';
-  const yourTripGuests = '1 guest';
-
-  const requirements = {
-    title: 'Message the host',
-    message: `Let the host know why you're travelling and when you'll check in.`,
-  };
-  const profileImgCat = '/images/profile/cat.png';
-  const host = {
-    profileImg: profileImgCat,
-    name: 'Sarah',
-    joinedIn: '2018',
-  };
-
-  /////////////////
 
   return (
     <div className={css.container}>
@@ -178,11 +235,14 @@ function Reservation() {
                       </div>
                       <div className={`${css.rclDates}`}>
                         <h3>Dates</h3>
-                        <p>{yourTripDate}</p>
+                        <p className={css.yourTripDate}>{yourTripDate()}</p>
                       </div>
                       <div className={`${css.rclGuests}`}>
                         <h3>Guests</h3>
-                        <p>{yourTripGuests}</p>
+                        <p>
+                          {reservation.guests}
+                          {reservation.guests > 1 ? ' guests' : ' guest'}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -211,8 +271,8 @@ function Reservation() {
                           className={css.payOptionSelectorBtn}
                           id="dropdown-selector-pay-option-btn"
                           onClick={() => {
-                            console.log(isDropDownVisible);
-                            setDropDownVisible(!isDropDownVisible);
+                            console.log(isPayOptVisible);
+                            setPayOptVisible(!isPayOptVisible);
                           }}
                         >
                           <div className={css.payOptionSelectorInner}>
@@ -226,8 +286,8 @@ function Reservation() {
                               <RiArrowDropDownLine />
                             </div>
                             <PayOptionSelector
-                              show={isDropDownVisible}
-                              onClose={dropDownCloseHandler}
+                              show={isPayOptVisible}
+                              onClose={payOptCloseHandler}
                             />
                           </div>
                         </button>
@@ -339,8 +399,8 @@ function Reservation() {
                               className={css.cardCountryBtn}
                               id="dropdown-selector-pay-option-btn"
                               onClick={() => {
-                                console.log(isDropDownVisible);
-                                setDropDownVisible(!isDropDownVisible);
+                                console.log(isPayOptVisible);
+                                setCountryOptVisible(!isCountryOptVisible);
                               }}
                             >
                               <div className={css.cardCountryInner}>
@@ -350,9 +410,9 @@ function Reservation() {
                                 <div className={css.cardCountryArrowDrop}>
                                   <RiArrowDropDownLine />
                                 </div>
-                                <PayOptionSelector
-                                  show={isDropDownVisible}
-                                  onClose={dropDownCloseHandler}
+                                <CardInfoCountrySelector
+                                  show={isCountryOptVisible}
+                                  onClose={countryOptCloseHandler}
                                 />
                               </div>
                             </button>
@@ -428,20 +488,79 @@ function Reservation() {
                   </div>
                 </div>
               </section>
-              <aside>
+              <section>
                 <div className={css.reserveContentRight}>
                   <div className={css.rcrPinnedBox}>
                     <div className={css.rcrAccommodationSummary}>
-                      Entire home
+                      <div className={css.rcrAccommodationSummaryInner}>
+                        <div className={css.accommodationPhotoBox}>
+                          <img
+                            className={css.accommodationPhoto}
+                            alt="where?"
+                            src={room.repImg}
+                          />
+                        </div>
+                        <div className={css.accommodationDescription}>
+                          <div className={css.roomType}>{room.type}</div>
+                          <div className={css.roomName}>{room.name}</div>
+                          <div className={css.roomEtcInfo}>
+                            <div className={css.roomRate}>
+                              <TiStarFullOutline />
+                              {room.rate}({room.rateCnt}reviews)
+                            </div>
+                            <p>&nbsp; • &nbsp;</p>
+                            <div className={css.roomHostType}>
+                              <RiMedalFill />
+                              {room.hostType}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className={css.rcrAircover}>
-                      Your booking is potected by aircover
+                      <div className={css.rcrAircoverInner}>
+                        {airbnbConst.aircover}
+                      </div>
                     </div>
-                    <div className={css.rcrPriceDetails}> Price details </div>
-                    <div className={css.rcrTotal}> Total (USD) $ </div>
+                    <div className={css.rcrPriceDetails}>
+                      <div className={css.rcrPriceDetailsInner}>
+                        <h2>Price details</h2>
+                        <div className={css.rcrPriceBreakDown}>
+                          <div className={css.priceByNights}>
+                            <div className={css.priceByNightsDetail}>
+                              {room.price} * {totalNights} nights
+                            </div>
+                            <div>{totalAmount}</div>
+                          </div>
+                          <div>
+                            <div>Cleaning fee</div>
+                            <div>
+                              {(parseFloat(totalAmount) * 0.084).toFixed(0)}
+                            </div>
+                          </div>
+                          <div>
+                            <div>Service fee</div>
+                            <div>
+                              {(parseFloat(totalAmount) * 0.17).toFixed(0)}
+                            </div>
+                          </div>
+                          <div>
+                            <div>Occupancy taxed and fees</div>
+                            <div>{totalAmount}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={css.rcrTotal}>
+                      ToTal (KRW)
+                      {Intl.NumberFormat('kr-KR', {
+                        style: 'currency',
+                        currency: 'KRW',
+                      }).format(Number(totalAmount))}
+                    </div>
                   </div>
                 </div>
-              </aside>
+              </section>
             </div>
           </section>
         </main>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import css from './PayOptionSelector.module.scss';
+import css from './CardInfoCountrySelector.module.scss';
 import { MdClose } from 'react-icons/md';
 
-const PayOptionSelector = props => {
+const CardInfoCountrySelector = props => {
   const [show, setShow] = useState(false);
 
   const closeHandler = e => {
@@ -37,13 +37,13 @@ const PayOptionSelector = props => {
                 </button>
               </div>
               <div className={css.dropdownHeaderTextBox}>
-                <p></p>
+                <p>Country/region</p>
               </div>
             </div>
             <div className={css.dropDownSelectors}>
-              <div>Credit Card</div>
-              <div>Paypal</div>
-              <div>Google Pay</div>
+              <div>Canada</div>
+              <div>Korea</div>
+              <div>United States</div>
             </div>
           </div>
         </div>
@@ -52,4 +52,4 @@ const PayOptionSelector = props => {
   );
 };
 
-export default PayOptionSelector;
+export default CardInfoCountrySelector;
