@@ -1,8 +1,10 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import css from './Detail.module.scss';
 
 function Detail() {
-  return <div className={css.container}>상세페이지</div>;
+  const data = useLocation();
+  return <div className={css.container}>{data.state.name}</div>;
 }
 
 export default Detail;
