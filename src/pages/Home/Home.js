@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RoomList from '../../components/RoomList/RoomList';
 import RoomTypeBar from '../../components/RoomTypeBar/RoomTypeBar';
 import css from './Home.module.scss';
-
+import Header from '../../components/Header/Header';
 function Home() {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -14,7 +14,9 @@ function Home() {
   }, []);
 
   return (
+
     <>
+    <Header />
       <RoomTypeBar />
       <div className={css.container}>
         {data.map(data => {
