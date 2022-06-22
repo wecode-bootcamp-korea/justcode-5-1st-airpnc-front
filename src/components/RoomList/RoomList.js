@@ -31,6 +31,15 @@ function RoomList({ image, name, price }) {
       : setCurrentIndex((currentIndex = 0));
   };
 
+  const btnClick = e => {
+    console.log(e);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    console.log(e);
+  };
+
   return (
     <>
       <div className={css.container}>
@@ -47,6 +56,11 @@ function RoomList({ image, name, price }) {
         </button>
         <p>{name}</p>
         <p>{price}</p>
+        <form onSubmit={onSubmit}>
+          <button onClick={btnClick} value={123}>
+            like
+          </button>
+        </form>
       </div>
     </>
   );
