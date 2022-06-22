@@ -4,7 +4,7 @@ import RoomList from '../../components/RoomList/RoomList';
 import RoomTypeBar from '../../components/RoomTypeBar/RoomTypeBar';
 import Detail from '../Detail/Detail';
 import css from './Home.module.scss';
-
+import Header from '../../components/Header/Header';
 function Home() {
   const data = [
     {
@@ -142,7 +142,9 @@ function Home() {
   ];
 
   return (
+
     <>
+    <Header />
       <RoomTypeBar />
       <div className={css.container}>
         {data.map(data => (
