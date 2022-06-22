@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import classnames from 'classnames';
 import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
@@ -8,7 +7,12 @@ import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine } from 'react-icons/ri';
+import { TiTags } from 'react-icons/ti';
+///////////////////////////////////////////////////
+/* temporary import for test // need to be deleted*/
+import { CgProfile } from 'react-icons/cg';
 
+//////////////////////////////////////////////////
 function Reservation() {
   const navigate = useNavigate();
   const homepage = 'http://localhost:3000';
@@ -33,8 +37,6 @@ function Reservation() {
   const [isCardNumberInputActive, setCardNumberInputActive] = useState(false);
 
   const setInputPlaceholder = (id, str) => {
-    console.log(`id: ${id}, str: ${str}`);
-    //document.querySelector('#cardNumberInput').placeholder = str;
     document.getElementById(id).placeholder = str;
   };
 
@@ -58,7 +60,7 @@ function Reservation() {
   const [isCardPostalCodeInputActive, setCardPostalCodeInputActive] =
     useState(false);
 
-  const [cardCountry, setCardCountry] = useState('');
+  const [cardInfoCountry, setCardCountry] = useState('Country/region');
   const [isCardCountryVisible, setCardCountryVisible] = useState(false);
 
   const [isCardDropDown, setCardDropDown] = useState(false);
@@ -97,6 +99,20 @@ function Reservation() {
   const priceRateSummary = 'Good Price';
   const priceRateDetail =
     'Your dates are $456 CAD less than the avg. nightly rate over the last 3 months.';
+  const yourTripDate = 'Jul. 4 - 9';
+  const yourTripGuests = '1 guest';
+
+  const requirements = {
+    title: 'Message the host',
+    message: `Let the host know why you're travelling and when you'll check in.`,
+  };
+
+  const host = {
+    profileImg: CgProfile,
+    name: 'Sarah',
+    joinedIn: '2018',
+  };
+
   /////////////////
 
   return (
@@ -114,7 +130,7 @@ function Reservation() {
           </div>
         </div>
       </header>
-      <div>
+      <body className={css.reserveContentBody}>
         <main className={css.reserveContentMain} id="reserve-content">
           <section>
             <div className={css.reserveContentTitle}>
@@ -128,7 +144,7 @@ function Reservation() {
               </div>
             </div>
           </section>
-          <section>
+          <section className={css.reserveContentSection}>
             <div className={css.reserveContent}>
               <section>
                 <div className={css.reserveContentLeft}>
@@ -138,24 +154,25 @@ function Reservation() {
                     >
                       <p className={css.priceRateSummary}>{priceRateSummary}</p>
                       <p className={css.priceRateDetail}>{priceRateDetail}</p>
+                      <div className={css.iconPriceTag}>
+                        <TiTags />
+                      </div>
                     </div>
                   </div>
                   <div className={css.rclYourTripContainer}>
-                    <div
-                      className={`${css.rclYourTrip} ${css.reserveContentLeftInner}`}
-                    >
-                      Your trip
+                    <div className={`${css.rclYourTrip}`}>
+                      <div className={css.rclYouTripTitle}>
+                        <h2>Your trip</h2>
+                      </div>
+                      <div className={`${css.rclDates}`}>
+                        <h3>Dates</h3>
+                        <p>{yourTripDate}</p>
+                      </div>
+                      <div className={`${css.rclGuests}`}>
+                        <h3>Guests</h3>
+                        <p>{yourTripGuests}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    className={`${css.rclDates} ${css.reserveContentLeftInner}`}
-                  >
-                    Dates
-                  </div>
-                  <div
-                    className={`${css.rclGuests} ${css.reserveContentLeftInner}`}
-                  >
-                    Guests
                   </div>
                   <div className={css.rclPayWithContainer}>
                     <div
@@ -285,7 +302,7 @@ function Reservation() {
                               </div>
                             </div>
                           </div>
-                          <div className={css.personalInfoPostalCode}>
+                          <div className={css.cardInfoPostalCode}>
                             <input
                               className={css.cardPostalCodeInput}
                               id="cardCVVInput"
@@ -305,22 +322,61 @@ function Reservation() {
                               }}
                             />
                           </div>
-                          <div className={css.personalInfoCountry}>
-                            <p>dropdown to be inserted</p>
+                          <div className={css.cardInfoCountry}>
+                            <button
+                              className={css.cardCountryBtn}
+                              id="dropdown-selector-pay-option-btn"
+                              onClick={() => {
+                                console.log(isDropDownVisible);
+                                setDropDownVisible(!isDropDownVisible);
+                              }}
+                            >
+                              <div className={css.cardCountryInner}>
+                                <div className={css.cardCountryDescription}>
+                                  <span>{cardInfoCountry}</span>
+                                </div>
+                                <div className={css.cardCountryArrowDrop}>
+                                  <RiArrowDropDownLine />
+                                </div>
+                                <PayOptionSelector
+                                  show={isDropDownVisible}
+                                  onClose={dropDownCloseHandler}
+                                />
+                              </div>
+                            </button>
                           </div>
                         </div>
+                      </div>
+                      <div
+                        className={`${css.rclEnterCoupon} ${css.reserveContentLeftInner}`}
+                      >
+                        <p>Enter a coupon</p>
                       </div>
                     </div>
                   </div>
                   <div
-                    className={`${css.rclEnterCoupon} ${css.reserveContentLeftInner}`}
-                  >
-                    <p>Enter a coupon</p>
-                  </div>
-                  <div
                     className={`${css.rclRequirements} ${css.reserveContentLeftInner}`}
                   >
-                    'Required for your trip'
+                    <div className={css.rclRequirementsInner}>
+                      <h2>Required for your trip</h2>
+                      <h3>{requirements.title}</h3>
+                      <p>{requirements.message}</p>
+                      <div className={css.hostProfile}>
+                        <div className={css.hostProfilePhoto}>
+                          {host.profileImg}
+                        </div>
+                        <div className={css.hostProfileDescription}>
+                          <div className={css.hostName}>{host.name}</div>
+                          <div className={css.hostJoinedIn}>
+                            {host.joinedIn}
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className={css.messageToHost}
+                        id="message-to-host"
+                      ></div>
+                    </div>
                   </div>
                   <div
                     className={`${css.rclCancellationPolicy} ${css.reserveContentLeftInner}`}
@@ -361,7 +417,7 @@ function Reservation() {
             </div>
           </section>
         </main>
-      </div>
+      </body>
       <div>
         <footer className={css.reserveContentFooter}> footer </footer>
       </div>

@@ -7,23 +7,26 @@ $theme-font-color: rgb(34, 34, 34) !important;
 $tooltip-shadow: 0 0 2px 0 lightgrey;
 
 .container {
+	display: flex;
+	align-items: stretch;
 	position: relative;
-}
-
-.dropDown {	
-	background-color: white;
-	position: absolute;
-	border-radius: 5px;
-	right: 10px;
-	display: none;
 }
 
 .dropDownVisible {
 	display: flex;
+	align-items: stretch;
 	flex-direction: column;
 	background-color: white;
+	border: $theme-border-line;
+	border-radius: 8px;
 	box-shadow: $tooltip-shadow;
 	position: absolute;
 	border-radius: 5px;
-	right: 10px;
+	top: 50%;
+
+	ui {
+		font-size: 20px;
+		display: block;
+		max-width: 500px;
+	}
 }

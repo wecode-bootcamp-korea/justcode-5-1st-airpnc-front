@@ -13,17 +13,30 @@ const PayOptionSelector = props => {
     setShow(props.show);
   }, [props.show]);
 
+  //const innerComponent = state.map((item) => <></>);
+
+  //function getInnerComponent(state) {
+  //  return state.map((item) => <></>);
+  //}
+
   return (
-    <div
-      className={css.container}
-      onClick={() => {
-        closeHandler(false);
-      }}
-    >
-      <div className={show ? css.dropDownVisible : css.dropDown}>
-        inner selector
-      </div>
+    <div>
+      {show && (
+        <div
+          className={css.container}
+          onClick={() => {
+            closeHandler(false);
+          }}
+        >
+          <div className={`${css.dropDownVisible}`}>
+            <ui>payment&nbsp;option1</ui>
+            <ui>payment&nbsp;option2</ui>
+            <ui>payment&nbsp;option3</ui>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+
 export default PayOptionSelector;

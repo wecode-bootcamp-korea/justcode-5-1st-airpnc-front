@@ -26,6 +26,27 @@ $theme-font-color: rgb(34, 34, 34) !important;
 	flex-direction: column;
 }
 
+@mixin h1 {
+	font-family: inherit;
+	font-size: 30px;
+	font-weight: bold;
+	color: $theme-font-color;
+}
+
+@mixin h2 {
+	font-family: inherit;
+	font-size: 21px;
+	font-weight: bold;
+	color: $theme-font-color;
+}
+
+@mixin h3 {
+	font-family: inherit;
+	font-size: 16px;
+	font-weight: bold;
+	color: $theme-font-color;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -62,6 +83,10 @@ img.logoToHome {
 	width: 102px;
 }
 
+.reserveContentBody {
+	@include flex-vh-center;
+}
+
 .reserveContentMain {
 	padding: 40px;
 }
@@ -89,16 +114,27 @@ img.logoToHome {
 
 
 // reserve Contents
-.reserveContent {
-	@include flex-vh-center;
+.reserveContentSection {
+	
+	.reserveContent {
+		
+		left: 30px;
+		@include flex-vh-center;
+	}
+
 }
 
 // reserve Content left
 .reserveContentLeft {
-	div {
+
+	div,
+	input {
+		//display: flex;
 		@include flex-v-center;
 	}
 }
+
+
 
 .reserveContentLeftInner {
 
@@ -113,8 +149,10 @@ img.logoToHome {
 .rclPriceRateAvgContainer {
 	display: flex;
 	align-items: stretch;
+	padding: 0 5px;
 
 	.rclPriceRateAvg {
+		position: relative;
 		@include flex-direction-column;
 		align-items: stretch;
 		border: $theme-border-line;
@@ -125,32 +163,79 @@ img.logoToHome {
 		padding: 30px 70px 30px 30px;
 		max-width: 500px;
 	}
-	
+
 	p {
-		padding: 0 0 5px 0;
+		padding: 3px 3px 5px 0;
 	}
 
 	.priceRateSummary {
 		font-weight: bold;
+		padding: 0 0 10px 0;
+	}
+
+	.priceRateDetail {}
+
+	.iconPriceTag {
+		position: absolute;
+		top: 19%;
+		right: 5%;
+		margin: 0;
+
+		svg {
+			font-size: 38px;
+		}
 	}
 }
 
-.rclYourtripContainer {
+.rclYourTripContainer {
+	padding: 30px 10px;
 
 	.rclYourTrip {
+		@include flex-direction-column;
+		align-items: flex-start;
 
+		div {
+			margin: 10px 0;
+		}
+
+		p {
+			margin: 5px 0;
+		}
+
+
+		.rclYouTripTitle {
+
+			h2 {
+				@include h2;
+			}
+		}
+
+		.rclDates {
+			@include flex-direction-column;
+			align-items: flex-start;
+
+			h3 {
+				@include h3;
+			}
+
+		}
+
+		.rclGuests {
+			@include flex-direction-column;
+			align-items: flex-start;
+
+			h3 {
+				@include h3;
+			}
+		}
 	}
 
-	.rclDates {}
 
-	.rclGuests {}
 }
 
 
 ////// Pay with //////
 .rclPayWithContainer {
-	@include flex-direction-column;
-	align-items: stretch;
 	padding: 30px 0;
 	border-top: $theme-border-line;
 
@@ -162,7 +247,6 @@ img.logoToHome {
 	.rclPayWith {
 		@include flex-direction-column;
 		align-items: stretch;
-		justify-content: space-between;
 
 		.rclPayWithHeader {
 			@include flex-direction-column;
@@ -170,7 +254,6 @@ img.logoToHome {
 
 			.rclPayWithTitle {
 				@include flex-direction-column;
-				justify-content: space-between;
 				align-items: stretch;
 
 				span {
@@ -180,6 +263,8 @@ img.logoToHome {
 			}
 
 			.payOptionIcons {
+				margin: 5px 0;
+
 				div {
 					padding: 5px;
 
@@ -193,8 +278,9 @@ img.logoToHome {
 		.payOptionSelector {
 			@include flex-direction-column;
 			align-items: stretch;
+			margin: 5px 0;
 
-			.payOptionSelectorBtn {
+			button.payOptionSelectorBtn {
 				background-color: white;
 				border: $theme-border-line;
 				border-radius: 8px;
@@ -205,6 +291,7 @@ img.logoToHome {
 		.cardInfo {
 			display: flex;
 			justify-content: space-between;
+			margin: 5px 0;
 
 			.onCard {
 				@include flex-direction-column;
@@ -215,6 +302,8 @@ img.logoToHome {
 					align-items: stretch;
 					border: $theme-border-line;
 					border-radius: 8px;
+					overflow: hidden;
+					perspective: 1px;
 
 					.cardNumber {
 						@include flex-direction-column;
@@ -230,6 +319,7 @@ img.logoToHome {
 						.cardExpiration {
 							input {
 								border: none;
+								border-right: $theme-border-line;
 							}
 						}
 
@@ -241,63 +331,90 @@ img.logoToHome {
 					}
 				}
 
-				.personalInfoPostalCode {
+				.cardInfoPostalCode {
+					margin: 10px 0;
 					@include flex-direction-column;
 					align-items: stretch;
-					border: $theme-border-line;
-					border-radius: 8px;
 
 					.cardPostalCodeInput {
-						border: none;
+						border: $theme-border-line;
+						border-radius: 8px;
 					}
 				}
 
-				.personalInfoCountry {
+				.cardInfoCountry {
 					@include flex-direction-column;
 					align-items: stretch;
-					border: $theme-border-line;
-					border-radius: 8px;
 
-					.cardCountryInput {
-						border: none;
+					button.cardCountryBtn {
+						border: $theme-border-line;
+						border-radius: 8px;
+						background-color: white;
 					}
 				}
+			}
+		}
+
+		.rclEnterCoupon {
+			margin: 15px 0;
+			padding: 5px;
+			background-color: white;
+			
+			p {
+				font-weight: bold;
+				font-size: 18px;
+				text-decoration: underline;
 			}
 		}
 	}
 }
 
-.rclEnterCoupon {
-	p {
-		font-weight: bold;
-		font-size: 18px;
-		text-decoration: underline;
+
+/// Required for your trip
+.rclRequirements {
+	border-top: $theme-border-line;
+	margin: 5px 0;
+	padding: 40px 0;
+
+	.rclRequirementsInner {
+		@include flex-direction-column;
+		align-items: flex-start;
+		
+		h2 {
+			margin: 5px 0;
+			@include h2;
+		}
+		h3 {
+			margin: 5px 0;
+			@include h3;
+		}
+
+		p {
+			margin: 5px 0;
+			padding: 0 30px 0 0;
+			font-size: 14px;
+		}
+	
 	}
 }
 
 
-
-
-
-
-
-
-
-
-
-
-.rclRequirements {}
-
-
 // reserve Content Right
 .reserveContentRight {
+	position: fixed;
+	top: 24%;
 	border: .1px solid $theme-border-color;
 	border-radius: 12px;
 }
 
 
 @media screen and (max-width: 700px) {
-  .reserveContentRight {
-    display: none;
-  }
+	.reserveContentRight {
+		display: none;
+	}
+}
+
+.reserveContentFooter {
+	position: relative;
+	bottom: 10px;
 }
