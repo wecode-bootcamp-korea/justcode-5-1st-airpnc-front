@@ -1,113 +1,112 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import css from './Signup.module.scss';
+//import "./App.css";
+import { useForm } from 'react-hook-form';
+import { useRef } from 'react';
 
 function Signup() {
-  const navigate = useNavigate();
-  const [identify, setIdentify] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const validation = (idText, pwText, name) => {
-    if (!idText.includes('@')) {
-      return false;
-    }
-    if (pwText.length < 7) {
-      return false;
-    }
+  console.log(watch('email'));
 
-    if (name.length < 7) {
-      return false;
-    }
+  const password = useRef();
+  password.current = watch('password');
 
-    return true;
-  };
-
-  const handleLogin = () => {
-    console.log(1);
-
-    fetch('http://52.79.143.176:8000/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: identify,
-        password: password,
-      }),
-    })
-      .then(response => response.json())
-      .then(result => console.log('결과: ', result));
-  };
-
-  const valid = validation(identify, password, name);
-
-  const prevent = event => {
-    event.preventDefault();
+  const onSubmit = data => {
+    console.log('data', data);
   };
 
   return (
     <div className={css.container}>
-      <form className={css.loginWindow} onSubmit={prevent}>
-        <div className={css.loginContainer}>
-          <h1 className={css.logo}>회원가입</h1>
-          <h1 className="information">회원가입 정보를 입력해주세요.</h1>
-          <input
-            id="id"
-            className={css.input}
-            name="identify"
-            type="text"
-            value={identify}
-            onChange={event => {
-              setIdentify(event.target.value);
-            }}
-          />
-          <input
-            id="pw"
-            className={css.input}
-            name="password"
-            type="password"
-            placeholder="패스워드"
-            value={password}
-            onChange={event => {
-              setPassword(event.target.value);
-            }}
-          />
-          <input
-            id="name"
-            className={css.input}
-            name="name"
-            type="text"
-            placeholder="이름"
-            value={name}
-            onChange={event => {
-              setName(event.target.value);
-            }}
-          />
-          <input
-            id="phone"
-            className={css.input}
-            name="phone"
-            type="text"
-            placeholder="전화번호"
-            // value={password}
-            onChange={event => {
-              setPhone(event.target.value);
-            }}
-          />
-          <button
-            className={
-              valid
-                ? `${css.login_button} ${css.active}`
-                : `${css.login_button} ${css.inactive}`
-            }
-            disabled={!valid}
-            onClick={handleLogin}
-          >
-            회원가입
-          </button>
-        </div>
+      <h1 className={css.title}>회원가입 정보를 입력해주세요.</h1>
+      <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+        <label className={css.label}>Email</label>
+        <input
+          className={css.input}
+          placeholder="example@gmail.com"
+          name="email"
+          type="email"
+          {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+        />
+        {errors.email && errors.email.type === 'required' && (
+          <p className={css.p}>이메일은 필수 항목입니다.</p>
+        )}
+        {/* {errors.email?.type === "required" && "This email field is required"} */}
+
+        <label className={css.label}>Name</label>
+        <input
+          className={css.input}
+          name="name"
+          type="text"
+          {...register('name', { required: true, maxLength: 10 })}
+        />
+        {errors.name && errors.name.type === 'required' && (
+          <p className={css.p}>이름은 필수 항목입니다.</p>
+        )}
+        {errors.name && errors.name.type === 'maxLength' && (
+          <p className={css.p}>입력한 내용이 최대 길이를 초과합니다.</p>
+        )}
+
+        <label className={css.label}>Password</label>
+        <input
+          className={css.input}
+          name="password"
+          type="password"
+          {...register('password', { required: true, minLength: 7 })}
+        />
+        {errors.password && errors.password.type === 'required' && (
+          <p className={css.p}>패스워드는 필수 항목입니다.</p>
+        )}
+        {errors.password && errors.password.type === 'minLength' && (
+          <p className={css.p}>패스워드는 7자 이상이어야 합니다.</p>
+        )}
+
+        <label className={css.label}>Password Confirm</label>
+        <input
+          className={css.input}
+          name="password_confirm"
+          type="password"
+          {...register('password_confirm', {
+            required: true,
+            validate: value => value === password.current,
+          })}
+        />
+        {errors.password_confirm &&
+          errors.password_confirm.type === 'required' && (
+            <p className={css.p}>패스워드 확인은 필수 항목입니다.</p>
+          )}
+        {errors.password_confirm &&
+          errors.password_confirm.type === 'validate' && (
+            <p className={css.p}>패스워드가 매치하지 않습니다.</p>
+          )}
+
+        <label className={css.label}>Mobile number</label>
+        <input
+          className={css.input}
+          type="tel"
+          {...register('mobile_number', {
+            required: true,
+            maxLength: 11,
+            minLength: 8,
+          })}
+        />
+        {errors.mobile_number && errors.mobile_number.type === 'required' && (
+          <p className={css.p}>휴대전화 번호는 필수 항목입니다.</p>
+        )}
+        {errors.mobile_number && errors.mobile_number.type === 'maxLength' && (
+          <p className={css.p}>11자 이하로 입력해주세요.</p>
+        )}
+        {errors.mobile_number && errors.mobile_number.type === 'minLength' && (
+          <p className={css.p}>8자 이상으로 입력해주세요.</p>
+        )}
+
+        <input className={css.signup_button} type="submit" />
       </form>
     </div>
   );
