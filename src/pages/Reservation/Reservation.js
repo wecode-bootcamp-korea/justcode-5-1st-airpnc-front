@@ -66,6 +66,12 @@ function Reservation() {
   const [isCardDropDown, setCardDropDown] = useState(false);
   const [iscardDropDownVisible, setCardDropDownVisible] = useState(false);
 
+  const [isPayClicked, setConfirmAndPay] = useState(false);
+
+  const handleConfirmBtn = () => {
+    console.log('button clicked');
+  };
+
   //input validation
   function checkValidity(aID, aSearchTerm, aMsg) {
     let elem = document.getElementById(aID);
@@ -94,6 +100,12 @@ function Reservation() {
       document.body.appendChild(newAlert);
     }
   }
+
+  const airbnbConst = {
+    customerAgreement: `By selecting the button below, I agree to the Host's House Rules, Airbnb's Rebooking and Refund Policy, and that Airbnb can charge my payment method if I’m responsible for damage.`,
+    aircover: `Your booking is potected by aircover`,
+    nonRefundable: `This reservation is non-refundable.`,
+  };
 
   // temp mock data
   const priceRateSummary = 'Good Price';
@@ -130,7 +142,7 @@ function Reservation() {
           </div>
         </div>
       </header>
-      <body className={css.reserveContentBody}>
+      <div className={css.reserveContentBody}>
         <main className={css.reserveContentMain} id="reserve-content">
           <section>
             <div className={css.reserveContentTitle}>
@@ -180,7 +192,7 @@ function Reservation() {
                     >
                       <div className={css.rclPayWithHeader}>
                         <div className={css.rclPayWithTitle}>
-                          <span>Pay with</span>
+                          <h2>Pay with</h2>
                         </div>
                         <div className={css.payOptionIcons}>
                           <div className={css.cardIconVisa}>
@@ -386,26 +398,33 @@ function Reservation() {
                   <div
                     className={`${css.rclCancellationPolicy} ${css.reserveContentLeftInner}`}
                   >
-                    <h2>Cancellation Policy</h2>
-                    <p>
-                      This reservation in non-refundable.
-                      <span>Learn more</span>
-                    </p>
+                    <div className={css.rclCancellationPolicyInner}>
+                      <h2>Cancellation Policy</h2>
+                      <p>
+                        {airbnbConst.nonRefundable}&nbsp;
+                        <span>Learn more</span>
+                      </p>
+                    </div>
                   </div>
                   <div
                     className={`${css.rclCovid19Policy} ${css.reserveContentLeftInner}`}
-                  >
-                    covid 19
-                  </div>
+                  ></div>
                   <div
                     className={`${css.rclAgreementUpon} ${css.reserveContentLeftInner}`}
                   >
-                    agreement
+                    <div className={css.rclAgreementUponInner}>
+                      <p>{airbnbConst.customerAgreement}</p>
+                    </div>
                   </div>
                   <div
                     className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
                   >
-                    Confirm and pay Airbnb
+                    <button
+                      className={css.rclConfirmAndPayBtn}
+                      id="confirm-pay-btn"
+                    >
+                      Confirm and pay • Airbnb
+                    </button>
                   </div>
                 </div>
               </section>
@@ -426,7 +445,7 @@ function Reservation() {
             </div>
           </section>
         </main>
-      </body>
+      </div>
       <div>
         <footer className={css.reserveContentFooter}> footer </footer>
       </div>

@@ -2,7 +2,8 @@
 
 $theme-border-color: rgb(221, 221, 221);
 $theme-border-line : 1px solid $theme-border-color;
-$theme-font: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+$theme-font: 'AirbnbCereal_W_Md Med', Montserrat;
+//Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 $theme-font-color: rgb(34, 34, 34) !important;
 
 @mixin flex-vh-center {
@@ -188,7 +189,7 @@ img.logoToHome {
 }
 
 .rclYourTripContainer {
-	padding: 30px 10px;
+	padding: 30px 5px;
 
 	.rclYourTrip {
 		@include flex-direction-column;
@@ -256,9 +257,8 @@ img.logoToHome {
 				@include flex-direction-column;
 				align-items: stretch;
 
-				span {
-					text-align: left;
-					font-size: 32px;
+				h2 {					
+					@include h2;
 				}
 			}
 
@@ -417,7 +417,47 @@ img.logoToHome {
 ///////////////////////////////////
 
 // Cancellation Policy
+.rclCancellationPolicy {
+	border-top: $theme-border-line;
+	.rclCancellationPolicyInner {
+		@include flex-direction-column;
+		align-items: stretch;
+		margin-top: 30px;
+		h2 {
+			margin: 0 0 20px 0;
+			@include h2;
+		}
+		p {
+			margin: 5px 0;
+			span {
+				font-weight: bold;
+				text-decoration: underline;
+			}
+		}
+	}
+}
 
+.rclAgreementUpon {
+	border-top: $theme-border-line;
+	margin-top: 30px;
+	.rclAgreementUponInner{
+		p {
+			margin: 30px 0;
+			font-size: 12px;
+			max-width: 400px;
+		}
+	}
+}
+
+.rclConfirmAndPayBtn {
+	padding: 18px 35px;
+	border: none;
+	border-radius: 8px;
+	background-color: #e21960;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
 
 // reserve Content Right
 .reserveContentRight {
