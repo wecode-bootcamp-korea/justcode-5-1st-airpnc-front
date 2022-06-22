@@ -7,16 +7,16 @@ import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import { TiTags } from 'react-icons/ti';
+import { TiTags, TiStarFullOutline } from 'react-icons/ti';
+import { BiMedal } from 'react-icons/bi';
 ///////////////////////////////////////////////////
 /* temporary import for test // need to be deleted*/
-import { CgProfile } from 'react-icons/cg';
 
 //////////////////////////////////////////////////
 function Reservation() {
   const navigate = useNavigate();
   const homepage = 'http://localhost:3000';
-  const airbnbLogo = 'icons/256px-Airbnb_Logo_Bélo.svg.png';
+  const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
   const logoOnClick = () => {
     navigate(homepage);
@@ -106,9 +106,9 @@ function Reservation() {
     title: 'Message the host',
     message: `Let the host know why you're travelling and when you'll check in.`,
   };
-
+  const profileImgCat = '/images/profile/cat.png';
   const host = {
-    profileImg: CgProfile,
+    profileImg: profileImgCat,
     name: 'Sarah',
     joinedIn: '2018',
   };
@@ -362,13 +362,18 @@ function Reservation() {
                       <h3>{requirements.title}</h3>
                       <p>{requirements.message}</p>
                       <div className={css.hostProfile}>
-                        <div className={css.hostProfilePhoto}>
-                          {host.profileImg}
+                        <div className={css.hostProfilePhotoContainer}>
+                          <img
+                            className={css.hostProfilePhoto}
+                            id="host-img"
+                            alt="host"
+                            src={host.profileImg}
+                          />
                         </div>
                         <div className={css.hostProfileDescription}>
                           <div className={css.hostName}>{host.name}</div>
                           <div className={css.hostJoinedIn}>
-                            {host.joinedIn}
+                            Joined In {host.joinedIn}
                           </div>
                         </div>
                       </div>
@@ -381,7 +386,11 @@ function Reservation() {
                   <div
                     className={`${css.rclCancellationPolicy} ${css.reserveContentLeftInner}`}
                   >
-                    Cancellation Policy
+                    <h2>Cancellation Policy</h2>
+                    <p>
+                      This reservation in non-refundable.
+                      <span>Learn more</span>
+                    </p>
                   </div>
                   <div
                     className={`${css.rclCovid19Policy} ${css.reserveContentLeftInner}`}
