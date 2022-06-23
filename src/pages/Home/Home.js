@@ -13,12 +13,28 @@ function Home() {
       setData(json);
     })();
   }, []);
-  /*return boolean ? setWish([wishs, ...wish]) : wish.splice(wish.indexOf(wishs));*/
+  /*return boolean ? setWish([...wish, data[Number(wishs) - 1]]) : wish.splice(wish.findIndex(i => i.id == wishs)));*/
+  /*
+  const wishsright = wish.splice(alreadySelectedIndex + 1);
+    const wishsleft = wish.splice(0, alreadySelectedIndex);
+  alreadySelectedIndex === -1
+      ? setWish([...wish, newSelected])
+      : setWish([...wishsleft, ...wishsright]);
+      */
   const btnClick = e => {
     const wishs = e.target.value;
-    setWish([...wish, data[Number(wishs) - 1]]);
+    const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
+    console.log(alreadySelectedIndex === -1);
+    if (alreadySelectedIndex === -1) {
+      setWish([...wish, data[Number(wishs) - 1]]);
+    } else {
+      const wishsright = wish.splice(alreadySelectedIndex + 1);
+      const wishsleft = wish.splice(0, alreadySelectedIndex);
+      setWish([...wishsleft, ...wishsright]);
+    }
   };
 
+  console.log(wish);
   return (
     <>
       <Header />
