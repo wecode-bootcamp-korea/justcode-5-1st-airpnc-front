@@ -1,0 +1,57 @@
+.CommentWrapper {
+  margin: 2rem 0;
+}
+
+.Comment {
+  margin: 0 auto;
+  width: 600px;
+}
+
+.CommentTextInput {
+  padding: 10px 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px 8px 0 0;
+  outline: none;
+}
+
+.CommentText {
+  padding: 10px 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  outline: none;
+}
+
+.CommentBtn {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem auto 5rem;
+  width: 600px;
+}
+
+.NoticeBtn {
+  padding: 10px 20px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+}
+
+.Btn {
+  padding: 10px 20px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: #ddd;
+  }
+}
+
+.CommentLists {
+  display: block;
+}

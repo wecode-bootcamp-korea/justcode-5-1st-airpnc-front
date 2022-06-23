@@ -1,5 +1,6 @@
 .container {
-  //   border: 1px solid red;
+  // border: 1px solid red;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,7 +8,6 @@
 }
 
 .logo {
-  //   border: 1px solid black;
   display: flex;
   align-items: center;
   width: fit-content;
@@ -31,7 +31,6 @@
 }
 
 .container_right {
-  // border: 1px solid blue;
   color: rgb(255, 56, 92);
   display: flex;
   align-items: center;
@@ -42,7 +41,6 @@
   font-weight: 600;
 }
 .container_menu {
-  // border: 1px solid rebeccapurple;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -52,7 +50,6 @@
 }
 
 .container_login {
-  // border: 1px solid rebeccapurple;
   border-radius: 999px;
   display: flex;
   justify-content: center;
@@ -61,7 +58,6 @@
 }
 
 .container_signup {
-  // border: 1px solid rebeccapurple;
   border-radius: 999px;
   display: flex;
   justify-content: center;
@@ -70,7 +66,6 @@
 }
 
 .container_myPage {
-  // border: 1px solid rebeccapurple;
   cursor: pointer;
   display: flex;
   justify-content: center;

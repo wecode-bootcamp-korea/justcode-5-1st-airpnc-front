@@ -142,9 +142,8 @@ function Home() {
   ];
 
   return (
-
     <>
-    <Header />
+      <Header />
       <RoomTypeBar />
       <div className={css.container}>
         {data.map(data => (
