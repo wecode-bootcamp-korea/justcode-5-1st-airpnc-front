@@ -35,10 +35,12 @@ img.logoToHome {
 }
 
 .reserveContentBody {
-	@include flex-vh-center;	
+	@include flex-v-center;
 }
 
 .reserveContentMain {
+	margin-left: auto;
+	margin-right: auto;
 	padding: 40px;
 }
 
@@ -66,10 +68,11 @@ img.logoToHome {
 
 // reserve Contents
 .reserveContentSection {
+	@include flex-vh-center;
 	.reserveContent {
-		
+		@include flex-vh-center
 	
-		@include flex-vh-center;
+	
 	}
 
 }
@@ -268,9 +271,15 @@ img.logoToHome {
 						}
 
 						.cardCVV {
-							input {
+							.cardCVVInput {
 								border: none;
+
+								&:focus {
+									overflow: hidden;
+									perspective: 1px;
+								}
 							}
+							
 						}
 					}
 				}
@@ -401,6 +410,10 @@ img.logoToHome {
 	color: white;
 	font-weight: bold;
 	font-size: 20px;
+
+	&:hover {
+		cursor: pointer;
+	}	
 }
 
 // reserve Content Right
@@ -410,14 +423,19 @@ img.logoToHome {
 	}
 }
 
-.reserveContentRight {
-	position: fixed;
-	top: 25%;
-	border: .1px solid $theme-border-color;
-	border-radius: 12px;
-	max-width: 400px;
-	margin-left: 55px;
+.reserveContentRightSection {
+	.reserveContentRight {
+		display: flex;
+		align-items: flex-start;
+		max-width: 430px;
+		min-width: 375px;
+		margin: 0 55px;
+
+position: fixed;
+top: 20%;
 	.rcrPinnedBox {
+		border-radius: 12px;
+		border: .1px solid $theme-border-color;
 		padding: 20px;
 		.rcrAccommodationSummary {
 			.rcrAccommodationSummaryInner {
@@ -431,7 +449,6 @@ img.logoToHome {
 				}
 
 				.accommodationDescription {
-					position: relative;
 					padding: 0 10px;
 					.roomType {
 						
@@ -443,9 +460,7 @@ img.logoToHome {
 						font-size: 16px;	
 					}
 
-					.roomEtcInfo {
-						position: absolute;
-						bottom: 5px;
+					.roomEtcInfo {						
 						svg {
 							font-size: 13px;
 						}
@@ -479,25 +494,31 @@ img.logoToHome {
 			margin: 20px 0;
 			.rcrPriceDetailsInner {
 				h2 {
+					margin-bottom: 20px;
 					@include h2;
 				}
 
 				.rcrPriceBreakDown {
 					@include flex-direction-column;
 
-					.priceByNights {
+					.priceByNights, .priceCleaning, .priceServiceFee, .priceTaxes {
 						display: flex;
+						justify-content: space-between;
+						margin: 10px 0;
 					}
-					
 				}
 			}
-
 		}
 		
 		.rcrTotal {
-
+			display: flex;
+			justify-content: space-between;
+			border-top: $theme-border-line;
+			padding: 30px 0 10px 0;
+			@include h3;
 		}
 	}
+}
 }
 
 

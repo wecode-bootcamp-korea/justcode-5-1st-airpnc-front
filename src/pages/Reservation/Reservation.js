@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
 import CardInfoCountrySelector from './CardInfoCountrySelector';
+import ReservationConfirmed from './ReservationConfirmed';
+import ReservationNotValid from './ReservationNotValid';
 import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
@@ -62,6 +64,19 @@ function Reservation() {
     navigate(homepage);
   };
 
+  // useState for reservation //
+  const [guests, setGuests] = useState(reservation.guests);
+  const [checkin, setCheckin] = useState(reservation.checkin);
+  const [checkout, setCheckout] = useState(reservation.checkout);
+
+  useEffect(() => {
+    setCheckin(reservation.checkin);
+  }, [reservation.checkin]);
+
+  useEffect(() => {
+    setCheckout(reservation.checkout);
+  }, [reservation.checkout]);
+
   const getTotalNights = (date1, date2) => {
     let checkin = new Date(date1);
     let checkout = new Date(date2);
@@ -71,9 +86,7 @@ function Reservation() {
   };
 
   const getTotalAmount = () => {
-    return (
-      room.price * getTotalNights(reservation.checkin, reservation.checkout)
-    );
+    return room.price * getTotalNights(checkin, checkout);
   };
 
   const [totalNights, setTotalNights] = useState(
@@ -82,64 +95,104 @@ function Reservation() {
 
   const [totalAmount, setTotalAmount] = useState(getTotalAmount());
 
-  useEffect(() => {
+  useMemo(() => {
     setTotalNights(getTotalNights(reservation.checkin, reservation.checkout));
     setTotalAmount(getTotalAmount());
-  }, [reservation.checkin]);
+  }, [reservation.checkin, reservation.checkout]);
 
   const [isPayOptVisible, setPayOptVisible] = useState(false);
-  const payOptionSelector = () => {
-    console.log('pay option selector is clicked');
-  };
 
   const payOptCloseHandler = e => {
     setPayOptVisible(e);
-    console.log(`closeHandler called ${isPayOptVisible}`);
   };
 
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
   const countryOptCloseHandler = e => {
     setPayOptVisible(e);
-    console.log(`closeHandler called ${isPayOptVisible}`);
   };
 
   // CardNumber Input Control
   const [cardNumber, setCardNumber] = useState('');
-  const [isCardNumberInputActive, setCardNumberInputActive] = useState(false);
-
+  const [isCardNumberValid, setCardNumberValidity] = useState(false);
+  useMemo(() => {
+    let text = cardNumber.replace(/\s/g, '');
+    let pattern = /[0-9]{12}/;
+    pattern.test(text)
+      ? setCardNumberValidity(true)
+      : setCardNumberValidity(false);
+  }, [cardNumber]);
   const setInputPlaceholder = (id, str) => {
     document.getElementById(id).placeholder = str;
   };
 
   const [cardExpiration, setCardExpiration] = useState('');
-  const [isCardExpirationInputActive, setCardExpirationInputActive] =
-    useState(false);
+  const [isCardExpirationValid, setCardExpirationValidity] = useState(false);
 
-  const setCardExpireDateFormat = input => {
-    if (input < 3) {
-      return input;
-    } else {
-      return input;
-    }
-  };
+  useMemo(() => {
+    let text = cardExpiration;
+    let pattern = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
+    pattern.test(text)
+      ? setCardExpirationValidity(true)
+      : setCardExpirationValidity(false);
+  }, [cardExpiration]);
 
   const [cardCVV, setCardCVV] = useState('');
-  const [isCardCVVInputActive, setCardCVVInputActive] = useState(false);
+  const [isCardCVVValid, setCardCVVValidity] = useState(false);
+  useMemo(() => {
+    let text = cardCVV;
+    let pattern = /[0-9]{3}/;
+    pattern.test(text) ? setCardCVVValidity(true) : setCardCVVValidity(false);
+  }, [cardCVV]);
 
   const [cardPostalCode, setCardPostalCode] = useState('');
-  const [isCardPostalCodeInputActive, setCardPostalCodeInputActive] =
-    useState(false);
+  const [isCardPostalCodeValid, setCardPostalCodeValidity] = useState(false);
+  useMemo(() => {
+    let text = cardPostalCode;
+    let pattern = /[0-9]{6}/;
+    pattern.test(text)
+      ? setCardPostalCodeValidity(true)
+      : setCardPostalCodeValidity(false);
+  }, [cardPostalCode]);
 
   const [cardInfoCountry, setCardCountry] = useState('Country/region');
-  const [isCardCountryVisible, setCardCountryVisible] = useState(false);
+  const [isPayable, setPayable] = useState(false);
 
-  const [isCardDropDown, setCardDropDown] = useState(false);
-  const [iscardDropDownVisible, setCardDropDownVisible] = useState(false);
+  useMemo(() => {
+    if (
+      isCardNumberValid &&
+      isCardExpirationValid &&
+      isCardCVVValid &&
+      isCardPostalCodeValid
+    ) {
+      setPayable(true);
+    } else {
+      setPayable(false);
+    }
+  }, [
+    isCardNumberValid,
+    isCardExpirationValid,
+    isCardCVVValid,
+    isCardPostalCodeValid,
+  ]);
 
-  const [isPayClicked, setConfirmAndPay] = useState(false);
-
+  const [isConfirmedVisible, setConfirmationVisible] = useState(false);
   const handleConfirmBtn = () => {
-    console.log('button clicked');
+    console.log('payable');
+    setConfirmationVisible(!isConfirmedVisible);
+  };
+
+  const confirmationCloseHandler = e => {
+    setConfirmationVisible(e);
+  };
+
+  const [isNotConfirmedVisible, setConfirmationFailedVisible] = useState(false);
+  const notPayable = () => {
+    console.log('not payable');
+    setConfirmationFailedVisible(!isNotConfirmedVisible);
+  };
+
+  const confirmationFailedCloseHandler = e => {
+    setConfirmationFailedVisible(e);
   };
 
   //input validation
@@ -172,16 +225,29 @@ function Reservation() {
   }
 
   const yourTripDate = () => {
-    let checkin = new Date(reservation.checkin).toDateString().split(' ');
-    let checkout = new Date(reservation.checkout).toDateString().split(' ');
-    if (checkin[3] === checkout[3]) {
-      if (checkin[1] === checkin[1]) {
-        return `${checkin[1]}. ${checkin[2]} - ${checkout[2]}`; // same year and month
+    let checkinDate = new Date(checkin).toDateString().split(' ');
+    let checkoutDate = new Date(checkout).toDateString().split(' ');
+    if (checkinDate[3] === checkoutDate[3]) {
+      if (checkinDate[1] === checkoutDate[1]) {
+        return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month
       } else {
-        return `${checkin[1]}. ${checkin[2]} -  ${checkout[1]}. ${checkout[2]}`;
+        return `${checkinDate[1]}. ${checkinDate[2]} -  ${checkoutDate[1]}. ${checkoutDate[2]}`;
       }
     }
-    return `${checkin[3]} ${checkin[1]}. ${checkin[2]} - ${checkout[3]} ${checkout[1]}. ${checkout[2]}`;
+    return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
+  };
+
+  const currencyFomatter = (num, currency) => {
+    let type = 'en-US';
+    let custom = 'USD';
+    if (currency === 'kr') {
+      type = 'kr-KR';
+      custom = 'KRW';
+    }
+    return Intl.NumberFormat(type, {
+      style: 'currency',
+      currency: custom,
+    }).format(Number(num));
   };
 
   return (
@@ -271,7 +337,6 @@ function Reservation() {
                           className={css.payOptionSelectorBtn}
                           id="dropdown-selector-pay-option-btn"
                           onClick={() => {
-                            console.log(isPayOptVisible);
                             setPayOptVisible(!isPayOptVisible);
                           }}
                         >
@@ -330,9 +395,9 @@ function Reservation() {
                                   id="cardExpirationInput"
                                   type="text"
                                   placeholder="Expiration Date"
-                                  value={setCardExpireDateFormat(
-                                    cardExpiration
-                                  )}
+                                  pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+                                  maxLength="5"
+                                  value={cardExpiration}
                                   autoComplete="off"
                                   onFocus={event => {
                                     setInputPlaceholder(
@@ -357,6 +422,8 @@ function Reservation() {
                                   className={css.cardCVVInput}
                                   id="cardCVVInput"
                                   type="text"
+                                  pattern="[0-9]{3}"
+                                  maxLength="3"
                                   placeholder="CVV"
                                   value={cardCVV}
                                   autoComplete="off"
@@ -380,6 +447,8 @@ function Reservation() {
                               id="cardCVVInput"
                               type="text"
                               placeholder="Postal code"
+                              pattern="[0-9]{6}"
+                              maxLength="6"
                               value={cardPostalCode}
                               autoComplete="off"
                               onFocus={event => {
@@ -399,7 +468,6 @@ function Reservation() {
                               className={css.cardCountryBtn}
                               id="dropdown-selector-pay-option-btn"
                               onClick={() => {
-                                console.log(isPayOptVisible);
                                 setCountryOptVisible(!isCountryOptVisible);
                               }}
                             >
@@ -482,13 +550,29 @@ function Reservation() {
                     <button
                       className={css.rclConfirmAndPayBtn}
                       id="confirm-pay-btn"
+                      onClick={event => {
+                        isPayable ? handleConfirmBtn(event) : notPayable();
+                      }}
                     >
                       Confirm and pay • Airbnb
                     </button>
+                    {isPayable ? (
+                      <ReservationConfirmed
+                        show={isConfirmedVisible}
+                        onClose={confirmationCloseHandler}
+                        yourTripDate={yourTripDate()}
+                        guests={guests}
+                      />
+                    ) : (
+                      <ReservationNotValid
+                        show={isNotConfirmedVisible}
+                        onClose={confirmationFailedCloseHandler}
+                      />
+                    )}
                   </div>
                 </div>
               </section>
-              <section>
+              <section className={css.reserveContentRightSection}>
                 <div className={css.reserveContentRight}>
                   <div className={css.rcrPinnedBox}>
                     <div className={css.rcrAccommodationSummary}>
@@ -528,35 +612,40 @@ function Reservation() {
                         <div className={css.rcrPriceBreakDown}>
                           <div className={css.priceByNights}>
                             <div className={css.priceByNightsDetail}>
-                              {room.price} * {totalNights} nights
+                              {currencyFomatter(room.price, 'kr')} &nbsp;x&nbsp;
+                              {totalNights}
+                              &nbsp;nights
                             </div>
-                            <div>{totalAmount}</div>
+                            <div>{currencyFomatter(totalAmount, 'kr')}</div>
                           </div>
-                          <div>
+                          <div className={css.priceCleaning}>
                             <div>Cleaning fee</div>
                             <div>
-                              {(parseFloat(totalAmount) * 0.084).toFixed(0)}
+                              {currencyFomatter(
+                                (parseFloat(totalAmount) * 0.084).toFixed(0),
+                                'kr'
+                              )}
                             </div>
                           </div>
-                          <div>
+                          <div className={css.priceServiceFee}>
                             <div>Service fee</div>
                             <div>
-                              {(parseFloat(totalAmount) * 0.17).toFixed(0)}
+                              {currencyFomatter(
+                                (parseFloat(totalAmount) * 0.17).toFixed(0),
+                                'kr'
+                              )}
                             </div>
                           </div>
-                          <div>
+                          <div className={css.priceTaxes}>
                             <div>Occupancy taxed and fees</div>
-                            <div>{totalAmount}</div>
+                            <div>{currencyFomatter(totalAmount, 'kr')}</div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className={css.rcrTotal}>
-                      ToTal (KRW)
-                      {Intl.NumberFormat('kr-KR', {
-                        style: 'currency',
-                        currency: 'KRW',
-                      }).format(Number(totalAmount))}
+                      <div>ToTal (KRW)</div>
+                      <div>{currencyFomatter(totalAmount, 'kr')}</div>
                     </div>
                   </div>
                 </div>

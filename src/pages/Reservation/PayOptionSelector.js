@@ -24,7 +24,7 @@ const PayOptionSelector = props => {
     <div>
       {show && (
         <div className={css.container}>
-          <div className={css.dropDown} id="drop-down">
+          <div className={css.dropDown} id="pay-option-drop-down">
             <div className={css.dropDownHeader}>
               <div className={css.dropdownCloseBtnBox}>
                 <button

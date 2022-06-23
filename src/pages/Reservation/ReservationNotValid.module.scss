@@ -2,12 +2,19 @@
 @import './ReservationPageCommon.scss';
 
 .container {
-	display: flex;
-	position: relative;
+	position: fixed;
+	left: 30%;
+	top: 40%;
+	-ms-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	z-index: 3;
 	font-family: $theme-font;
 	font-color: $theme-font-color;
-	
-	.dropDown {
+
+
+	.reservationNotValidmessage {
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
@@ -17,33 +24,39 @@
 		box-shadow: $tooltip-shadow;
 		position: absolute;
 		border-radius: 5px;
-		
-		.dropDownHeader {
+
+		.messageHeader {
 			display: flex;
 			border-bottom: $theme-border-line;
-			.dropdownCloseBtnBox {
-				.dropdownCloseBtn {
+
+			.CloseBtnBox {
+				.CloseBtn {
 					padding: 10px;
 					background-color: white;
 					border: none;
 				}
+
 				svg {
-					font-size: 15px;
+					font-size: 20px;
 				}
 			}
-			.dropdownHeaderTextBox {
+
+			.confirmationFailedHeaderTextBox {
 				min-height: 30px;
-				margin-left: 40px;
+				margin-left: 60px;
 				margin-right: 80px;
+
 				p {
-					padding: 15px;
-					@include h3;
+					padding: 60px 40px;
+					@include h2;
+					
 				}
 			}
-			
+
 		}
-		.dropDownSelectors {
-			display:flex;
+
+		.messageContents {
+			display: flex;
 			flex-direction: column;
 			align-items: stretch;
 			align-content: center;
@@ -54,8 +67,6 @@
 				border-bottom: $theme-border-line;
 			}
 		}
-		
+
 	}
-
-
 }

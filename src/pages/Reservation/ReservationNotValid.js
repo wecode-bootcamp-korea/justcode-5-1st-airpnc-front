@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import css from './CardInfoCountrySelector.module.scss';
+import css from './ReservationNotValid.module.scss';
 import { MdClose } from 'react-icons/md';
 
-const CardInfoCountrySelector = props => {
+const ReservationNotValid = props => {
   const [show, setShow] = useState(false);
 
   const closeHandler = e => {
-    setShow(false);
-    props.onClose(false);
+    setShow(!show);
+    props.onClose(!show);
   };
 
   useEffect(() => {
@@ -24,26 +24,24 @@ const CardInfoCountrySelector = props => {
     <div>
       {show && (
         <div className={css.container}>
-          <div className={css.dropDown} id="country-drop-down">
-            <div className={css.dropDownHeader}>
-              <div className={css.dropdownCloseBtnBox}>
+          <div
+            className={css.reservationNotValidmessage}
+            id="reservation-not-valid"
+          >
+            <div className={css.messageHeader}>
+              <div className={css.CloseBtnBox}>
                 <button
-                  className={css.dropdownCloseBtn}
+                  className={css.CloseBtn}
                   onClick={() => {
-                    closeHandler(false);
+                    closeHandler();
                   }}
                 >
                   <MdClose />
                 </button>
               </div>
-              <div className={css.dropdownHeaderTextBox}>
-                <p>Country/region</p>
+              <div className={css.confirmationFailedHeaderTextBox}>
+                <p>Please&nbsp;check&nbsp;payment&nbsp;option</p>
               </div>
-            </div>
-            <div className={css.dropDownSelectors}>
-              <div>Canada</div>
-              <div>Korea</div>
-              <div>United States</div>
             </div>
           </div>
         </div>
@@ -52,4 +50,4 @@ const CardInfoCountrySelector = props => {
   );
 };
 
-export default CardInfoCountrySelector;
+export default ReservationNotValid;
