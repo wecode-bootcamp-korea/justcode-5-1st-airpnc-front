@@ -45,11 +45,13 @@ const CardInfoCountrySelector = props => {
               </div>
             </div>
             <div className={css.dropDownSelectors}>
-              <div onClick={props.setValue('Canada')}>
-                <p>Canada</p>
-              </div>
-              <div>Korea</div>
-              <div>United States</div>
+              {countries.map(country => (
+                <CountryList
+                  key={countries.indexOf(country)}
+                  setValue={props.setValue}
+                  country={country}
+                />
+              ))}
             </div>
           </div>
         </div>

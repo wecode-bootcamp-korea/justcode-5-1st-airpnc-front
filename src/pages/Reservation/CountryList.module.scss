@@ -2,20 +2,27 @@
 @import './ReservationPageCommon.scss';
 
 .container {
-
+	@include flex-v-center;
 	font-family: $theme-font;
-	font-color: $theme-font-color;
+	color: $theme-font-color;
+	min-height: 40px;
+	border-bottom: $theme-border-line;
 
+	&:hover {
+		cursor: pointer;
+	}
 	
-		min-height: 40px;
-		border-bottom: $theme-border-line;
-		p {
-			display: block;
-			width: 100%;
-			padding-left: 0;
-			border: none;
-			background-color: white;
-			text-align: left;
-		}
-	
+	p {
+		display: block;
+		width: 100%;
+		padding-left: 0;
+		border: none;
+		background-color: white;
+		text-align: left;
+	}
+
+	svg {
+		opacity: 0;
+	}
+
 }

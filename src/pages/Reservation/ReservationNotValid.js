@@ -6,8 +6,8 @@ const ReservationNotValid = props => {
   const [show, setShow] = useState(false);
 
   const closeHandler = e => {
-    setShow(!show);
-    props.onClose(!show);
+    setShow(false);
+    props.onClose(false);
   };
 
   useEffect(() => {
