@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
-function RoomList({ image, name, price }) {
+function RoomList({ image, name, price, won, sytle }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const data = {
@@ -32,20 +32,25 @@ function RoomList({ image, name, price }) {
 
   return (
     <>
-      <div className={css.container}>
+      <div className={css.container} style={sytle}>
         <div
           className={css.sliderStyle}
           style={sliderImage}
           onClick={goToDetail}
         ></div>
-        <button className={css.prevBtnStyle} onClick={onClickPrev}>
-          &lt;
-        </button>
-        <button className={css.nextBtnStyle} onClick={onClickNext}>
-          &gt;
-        </button>
         <p className={css.name}>{name}</p>
-        <p className={css.price}>{price}원</p>
+        <p className={css.price}>
+          {price}
+          {won}
+        </p>
+        <div className={css.btn}>
+          <button className={css.prevBtnStyle} onClick={onClickPrev}>
+            &lt;
+          </button>
+          <button className={css.nextBtnStyle} onClick={onClickNext}>
+            &gt;
+          </button>
+        </div>
       </div>
     </>
   );
