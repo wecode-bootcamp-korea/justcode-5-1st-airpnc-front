@@ -57,7 +57,7 @@ const airbnbConst = {
 
 function Reservation() {
   const navigate = useNavigate();
-  const homepage = 'http://localhost:3000';
+  const homepage = '../';
   const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
   const logoOnClick = () => {
