@@ -69,10 +69,9 @@ img.logoToHome {
 // reserve Contents
 .reserveContentSection {
 	@include flex-vh-center;
+
 	.reserveContent {
 		@include flex-vh-center
-	
-	
 	}
 
 }
@@ -163,7 +162,8 @@ img.logoToHome {
 			}
 		}
 
-		.rclDates, .rclGuests {
+		.rclDates,
+		.rclGuests {
 			@include flex-direction-column;
 			align-items: flex-start;
 
@@ -204,7 +204,7 @@ img.logoToHome {
 				@include flex-direction-column;
 				align-items: stretch;
 
-				h2 {					
+				h2 {
 					@include h2;
 				}
 			}
@@ -279,7 +279,7 @@ img.logoToHome {
 									perspective: 1px;
 								}
 							}
-							
+
 						}
 					}
 				}
@@ -312,7 +312,7 @@ img.logoToHome {
 			margin: 15px 0;
 			padding: 5px;
 			background-color: white;
-			
+
 			p {
 				font-weight: bold;
 				font-size: 18px;
@@ -332,11 +332,12 @@ img.logoToHome {
 	.rclRequirementsInner {
 		@include flex-direction-column;
 		align-items: flex-start;
-		
+
 		h2 {
 			margin: 5px 0;
 			@include h2;
 		}
+
 		h3 {
 			margin: 5px 0;
 			@include h3;
@@ -348,18 +349,20 @@ img.logoToHome {
 			font-size: 14px;
 		}
 
-		.hostProfile{
+		.hostProfile {
 			margin: 10px;
+
 			.hostProfilePhotoContainer {
 				img.hostProfilePhoto {
 					width: 40px;
 					margin: 10px;
 				}
 			}
-	
+
 			.hostProfileDescription {
 				@include flex-direction-column;
 				align-items: flex-start;
+
 				.hostName {
 					@include h3
 				}
@@ -367,21 +370,26 @@ img.logoToHome {
 		}
 	}
 }
+
 ///////////////////////////////////
 
 // Cancellation Policy
 .rclCancellationPolicy {
 	border-top: $theme-border-line;
+
 	.rclCancellationPolicyInner {
 		@include flex-direction-column;
 		align-items: stretch;
 		margin-top: 30px;
+
 		h2 {
 			margin: 0 0 20px 0;
 			@include h2;
 		}
+
 		p {
 			margin: 5px 0;
+
 			span {
 				font-weight: bold;
 				text-decoration: underline;
@@ -393,7 +401,8 @@ img.logoToHome {
 .rclAgreementUpon {
 	border-top: $theme-border-line;
 	margin-top: 30px;
-	.rclAgreementUponInner{
+
+	.rclAgreementUponInner {
 		p {
 			margin: 30px 0;
 			font-size: 12px;
@@ -413,7 +422,7 @@ img.logoToHome {
 
 	&:hover {
 		cursor: pointer;
-	}	
+	}
 }
 
 // reserve Content Right
@@ -431,97 +440,85 @@ img.logoToHome {
 		min-width: 375px;
 		margin: 0 55px;
 
-position: fixed;
-top: 20%;
-	.rcrPinnedBox {
-		border-radius: 12px;
-		border: .1px solid $theme-border-color;
-		padding: 20px;
-		.rcrAccommodationSummary {
-			.rcrAccommodationSummaryInner {
-				display: flex;
-				.accommodationPhotoBox{
-					.accommodationPhoto{
-						width: 130px;
-						height: 100px;
-						border-radius: 8px;
+		position: fixed;
+		top: 20%;
+
+		.rcrPinnedBox {
+			border-radius: 12px;
+			border: .1px solid $theme-border-color;
+			padding: 20px;
+
+			.rcrAccommodationSummary {
+				.rcrAccommodationSummaryInner {
+					display: flex;
+
+					.accommodationPhotoBox {
+						.accommodationPhoto {
+							width: 130px;
+							height: 100px;
+							border-radius: 8px;
+						}
+					}
+
+					.accommodationDescription {
+						padding: 0 10px;
+
+						.roomType {}
+
+						.roomName {
+							margin-top: 10px;
+							margin-bottom: 10px;
+							font-size: 16px;
+						}
+
+						.roomEtcInfo {
+							svg {
+								font-size: 13px;
+							}
+
+							@include flex-v-center;
+
+							.roomRate {
+								@include flex-v-center;
+							}
+
+							.roomHostType {
+								@include flex-v-center;
+							}
+
+
+						}
 					}
 				}
 
-				.accommodationDescription {
-					padding: 0 10px;
-					.roomType {
-						
+			}
+
+			.rcrAircover {
+				margin: 30px 0;
+				border-top: $theme-border-line;
+				border-bottom: $theme-border-line;
+
+				.rcrAircoverInner {
+					padding: 25px 0;
+					font-size: 16px;
+				}
+			}
+
+			.rcrPriceDetails {
+				.rcrPriceDetailsInner {
+					h2 {
+						padding: 5px 0;
+						@include h2;
 					}
 
-					.roomName {
-						margin-top: 10px;
+					.rcrPriceBreakDown {
 						margin-bottom: 10px;
-						font-size: 16px;	
-					}
-
-					.roomEtcInfo {						
-						svg {
-							font-size: 13px;
-						}
-						@include flex-v-center;
-						
-						.roomRate {
-							@include flex-v-center;
-						}
-						
-						.roomHostType {
-							@include flex-v-center;
-						}
-						
-
 					}
 				}
 			}
-
-		}
-		.rcrAircover {
-			margin: 30px 0;
-			border-top: $theme-border-line;
-			border-bottom: $theme-border-line;
-			.rcrAircoverInner {
-				padding: 25px 0;
-				font-size: 16px;
-			}
-		}
-
-		.rcrPriceDetails {
-			margin: 20px 0;
-			.rcrPriceDetailsInner {
-				h2 {
-					margin-bottom: 20px;
-					@include h2;
-				}
-
-				.rcrPriceBreakDown {
-					@include flex-direction-column;
-
-					.priceByNights, .priceCleaning, .priceServiceFee, .priceTaxes {
-						display: flex;
-						justify-content: space-between;
-						margin: 10px 0;
-					}
-				}
-			}
-		}
-		
-		.rcrTotal {
-			display: flex;
-			justify-content: space-between;
-			border-top: $theme-border-line;
-			padding: 30px 0 10px 0;
-			@include h3;
 		}
 	}
 }
-}
-
-
 
 .reserveContentFooter {
 	position: relative;

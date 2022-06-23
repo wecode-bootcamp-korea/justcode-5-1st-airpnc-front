@@ -6,12 +6,12 @@ import PriceBreakDown from './PriceBreakDown';
 const reservationPage = '../reservation';
 
 const ReservationBox = props => {
+  const { room, reservation } = props;
   const navigate = useNavigate();
   const isBtnActive = () => {
     return true;
   };
   const handleReservationBtn = () => {
-    console.log('clicked');
     if (isBtnActive) {
       navigate(reservationPage);
     }
@@ -32,7 +32,7 @@ const ReservationBox = props => {
             </button>
           </div>
           <div className={css.priceBreakDown}>
-            <PriceBreakDown />
+            <PriceBreakDown room={room} reservation={reservation} />
           </div>
         </div>
       </div>

@@ -13,12 +13,7 @@
 }
 .priceDetails {
 	margin: 20px 0;
-	.priceDetailsInner {
-		h2 {
-			margin-bottom: 20px;
-			@include h2;
-		}
-
+	
 		.priceBreakDown {
 			@include flex-direction-column;
 
@@ -27,7 +22,7 @@
 				justify-content: space-between;
 				margin: 10px 0;
 			}
-		}
+		
 	}
 }
 
@@ -35,6 +30,6 @@
 	display: flex;
 	justify-content: space-between;
 	border-top: $theme-border-line;
-	padding: 30px 0 10px 0;
+	padding: 30px 0 0 0;
 	@include h3;
 }

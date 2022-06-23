@@ -4,6 +4,7 @@ import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
 import CardInfoCountrySelector from './CardInfoCountrySelector';
+import PriceBreakDown from './PriceBreakDown';
 import ReservationConfirmed from './ReservationConfirmed';
 import ReservationNotValid from './ReservationNotValid';
 import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
@@ -11,13 +12,11 @@ import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine, RiMedalFill } from 'react-icons/ri';
 import { TiTags, TiStarFullOutline } from 'react-icons/ti';
+
 ///////////////////////////////////////////////////
-/* temporary import for test // need to be deleted*/
-// temp mock data
-// img and icons
+/////      img and icons
 const profileImgCat = '/images/profile/cat.png';
-const roomCabin = '/images/room_rep/cabin.png';
-//
+
 const priceRateSummary = 'Good Price';
 const priceRateDetail =
   'Your dates are $456 CAD less than the avg. nightly rate over the last 3 months.';
@@ -26,6 +25,8 @@ const requirements = {
   title: 'Message the host',
   message: `Let the host know why you're travelling and when you'll check in.`,
 };
+
+/////////// MockData ///////////////////
 const host = {
   profileImg: profileImgCat,
   name: 'Sarah',
@@ -33,18 +34,21 @@ const host = {
 };
 
 const room = {
-  name: 'Winter Wonderland, 3BR, FirePlace, Farm',
+  id: 1,
+  name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
   type: 'Entire Villa',
-  repImg: roomCabin,
+  price: 603000,
   rate: 4.9,
   rateCnt: 11,
   hostType: 'superhost',
-  price: 400000,
+  repImg: '/images/room_rep/cabin.png',
 };
+
 const reservation = {
-  checkin: `2022.06.10`,
-  checkout: `2022.06.14`,
+  id: 1,
   guests: 4,
+  checkin: '2022-06-10 23:55:45.000000',
+  checkout: '2022-06-14 23:55:45.000000',
 };
 
 const airbnbConst = {
@@ -55,7 +59,7 @@ const airbnbConst = {
 
 //////////////////////////////////////////////////
 
-function Reservation() {
+const Reservation = props => {
   const navigate = useNavigate();
   const homepage = '../';
   const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
@@ -65,40 +69,22 @@ function Reservation() {
   };
 
   // useState for reservation //
-  const [guests, setGuests] = useState(reservation.guests);
+  // todo: edit option for dates and guests
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
+  const [guests, setGuests] = useState(reservation.guests);
 
   useEffect(() => {
-    setCheckin(reservation.checkin);
-  }, [reservation.checkin]);
+    reservation.checkin = checkin;
+  }, [checkin]);
 
   useEffect(() => {
-    setCheckout(reservation.checkout);
-  }, [reservation.checkout]);
+    reservation.checkout = checkout;
+  }, [checkout]);
 
-  const getTotalNights = (date1, date2) => {
-    let checkin = new Date(date1);
-    let checkout = new Date(date2);
-    let diff = Math.abs(checkout.getTime() - checkin.getTime());
-    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
-    return noofdays - 1;
-  };
-
-  const getTotalAmount = () => {
-    return room.price * getTotalNights(checkin, checkout);
-  };
-
-  const [totalNights, setTotalNights] = useState(
-    getTotalNights(reservation.checkin, reservation.checkout)
-  );
-
-  const [totalAmount, setTotalAmount] = useState(getTotalAmount());
-
-  useMemo(() => {
-    setTotalNights(getTotalNights(reservation.checkin, reservation.checkout));
-    setTotalAmount(getTotalAmount());
-  }, [reservation.checkin, reservation.checkout]);
+  useEffect(() => {
+    reservation.guests = guests;
+  }, [guests]);
 
   const [isPayOptVisible, setPayOptVisible] = useState(false);
 
@@ -114,6 +100,7 @@ function Reservation() {
   // CardNumber Input Control
   const [cardNumber, setCardNumber] = useState('');
   const [isCardNumberValid, setCardNumberValidity] = useState(false);
+
   useMemo(() => {
     let text = cardNumber.replace(/\s/g, '');
     let pattern = /[0-9]{12}/;
@@ -177,7 +164,6 @@ function Reservation() {
 
   const [isConfirmedVisible, setConfirmationVisible] = useState(false);
   const handleConfirmBtn = () => {
-    console.log('payable');
     setConfirmationVisible(!isConfirmedVisible);
   };
 
@@ -187,7 +173,6 @@ function Reservation() {
 
   const [isNotConfirmedVisible, setConfirmationFailedVisible] = useState(false);
   const notPayable = () => {
-    console.log('not payable');
     setConfirmationFailedVisible(!isNotConfirmedVisible);
   };
 
@@ -235,19 +220,6 @@ function Reservation() {
       }
     }
     return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
-  };
-
-  const currencyFomatter = (num, currency) => {
-    let type = 'en-US';
-    let custom = 'USD';
-    if (currency === 'kr') {
-      type = 'kr-KR';
-      custom = 'KRW';
-    }
-    return Intl.NumberFormat(type, {
-      style: 'currency',
-      currency: custom,
-    }).format(Number(num));
   };
 
   return (
@@ -610,42 +582,12 @@ function Reservation() {
                       <div className={css.rcrPriceDetailsInner}>
                         <h2>Price details</h2>
                         <div className={css.rcrPriceBreakDown}>
-                          <div className={css.priceByNights}>
-                            <div className={css.priceByNightsDetail}>
-                              {currencyFomatter(room.price, 'kr')} &nbsp;x&nbsp;
-                              {totalNights}
-                              &nbsp;nights
-                            </div>
-                            <div>{currencyFomatter(totalAmount, 'kr')}</div>
-                          </div>
-                          <div className={css.priceCleaning}>
-                            <div>Cleaning fee</div>
-                            <div>
-                              {currencyFomatter(
-                                (parseFloat(totalAmount) * 0.084).toFixed(0),
-                                'kr'
-                              )}
-                            </div>
-                          </div>
-                          <div className={css.priceServiceFee}>
-                            <div>Service fee</div>
-                            <div>
-                              {currencyFomatter(
-                                (parseFloat(totalAmount) * 0.17).toFixed(0),
-                                'kr'
-                              )}
-                            </div>
-                          </div>
-                          <div className={css.priceTaxes}>
-                            <div>Occupancy taxed and fees</div>
-                            <div>{currencyFomatter(totalAmount, 'kr')}</div>
-                          </div>
+                          <PriceBreakDown
+                            room={room}
+                            reservation={reservation}
+                          />
                         </div>
                       </div>
-                    </div>
-                    <div className={css.rcrTotal}>
-                      <div>ToTal (KRW)</div>
-                      <div>{currencyFomatter(totalAmount, 'kr')}</div>
                     </div>
                   </div>
                 </div>
@@ -659,6 +601,6 @@ function Reservation() {
       </div>
     </div>
   );
-}
+};
 
 export default Reservation;
