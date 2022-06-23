@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
 
-const reservationPage = '../reservation';
+const reservationPage = '/reservation';
 
 const ReservationBox = props => {
   const { room, reservation } = props;

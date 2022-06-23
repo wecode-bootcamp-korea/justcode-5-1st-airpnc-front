@@ -44,7 +44,7 @@ const PriceBreakDown = props => {
     price.byNights + price.cleaningFee + price.serviceFee + price.tax;
 
   return (
-    <div class={css.container}>
+    <div className={css.container}>
       <div className={css.priceDetails}>
         <div className={css.priceBreakDown}>
           <div className={css.priceByNights}>

@@ -52,6 +52,14 @@
 			div {
 				min-height: 40px;
 				border-bottom: $theme-border-line;
+				p {
+					display: block;
+					width: 100%;
+					padding-left: 0;
+					border: none;
+					background-color: white;
+					text-align: left;
+				}
 			}
 		}
 		

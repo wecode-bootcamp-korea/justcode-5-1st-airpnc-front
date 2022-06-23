@@ -28,6 +28,10 @@ svg {
 
 .logoBox {
 	@include flex-v-center;
+
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 img.logoToHome {
@@ -46,13 +50,17 @@ img.logoToHome {
 
 .reserveContentTitleInner {
 	@include flex-v-center;
-	margin: 0 0 50px 10px;
+	margin: 0 0 50px 0;
 
 	.iconNavigateBefore {
 		@include flex-vh-center;
 		background-color: white;
 		border: none;
 		margin: 0 10px 0 0;
+		padding: 0;
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	.reserveContentTitleText {
@@ -71,7 +79,9 @@ img.logoToHome {
 	@include flex-vh-center;
 
 	.reserveContent {
-		@include flex-vh-center
+		// TO Do 
+		// pusehd when content right position is set to 'fixed'
+		@include flex-h-center  
 	}
 
 }
@@ -99,16 +109,15 @@ img.logoToHome {
 }
 
 .rclPriceRateAvgContainer {
-	display: flex;
-	align-items: stretch;
+	display: block;
 	padding: 0 5px;
+	border: $theme-border-line;
+	border-radius: 12px;
+	position: relative;
 
 	.rclPriceRateAvg {
-		position: relative;
 		@include flex-direction-column;
 		align-items: stretch;
-		border: $theme-border-line;
-		border-radius: 12px;
 		color: $theme-font-color;
 		font-size: 16px !important;
 		line-height: 20px !important;
@@ -124,19 +133,22 @@ img.logoToHome {
 		font-weight: bold;
 		padding: 0 0 10px 0;
 	}
-
-	.priceRateDetail {}
-
+	.priceRateDetail {
+	
+	}
+	
 	.iconPriceTag {
 		position: absolute;
 		top: 19%;
-		right: 5%;
+		right: 30%;
 		margin: 0;
 
 		svg {
-			font-size: 38px;
+			font-size: 35px;
+			color: $theme-color;
 		}
 	}
+
 }
 
 .rclYourTripContainer {
@@ -235,91 +247,115 @@ img.logoToHome {
 			}
 		}
 
-		.cardInfo {
-			display: flex;
-			justify-content: space-between;
-			margin: 5px 0;
+		.payOptionSelectorInner {
+			position: relative;
 
-			.onCard {
+			.payOptionSelectorIcon {
+			margin-right: 10px;
+		}
+
+		.payOptionSelectorArrowDrop {
+			position: absolute;
+			right: 1px;
+			padding: 0;
+			margin: 0;
+		}
+	}
+
+	.cardInfo {
+		display: flex;
+		justify-content: space-between;
+		margin: 5px 0;
+
+		.onCard {
+			@include flex-direction-column;
+			align-items: stretch;
+
+			.cardInfoForm {
+				@include flex-direction-column;
+				align-items: stretch;
+				border: $theme-border-line;
+				border-radius: 8px;
+				overflow: hidden;
+				perspective: 1px;
+
+				.cardNumber {
+					@include flex-direction-column;
+					align-items: stretch;
+					border-bottom: $theme-border-line;
+
+					.cardNumberInput {
+						border: none;
+					}
+				}
+
+				.cardOtherInfo {
+					.cardExpiration {
+						input {
+							border: none;
+							border-right: $theme-border-line;
+						}
+					}
+
+					.cardCVV {
+						.cardCVVInput {
+							border: none;
+
+							&:focus {
+								overflow: hidden;
+								perspective: 1px;
+							}
+						}
+
+					}
+				}
+			}
+
+			.cardInfoPostalCode {
+				margin: 10px 0;
 				@include flex-direction-column;
 				align-items: stretch;
 
-				.cardInfoForm {
-					@include flex-direction-column;
-					align-items: stretch;
+				.cardPostalCodeInput {
 					border: $theme-border-line;
 					border-radius: 8px;
-					overflow: hidden;
-					perspective: 1px;
-
-					.cardNumber {
-						@include flex-direction-column;
-						align-items: stretch;
-						border-bottom: $theme-border-line;
-
-						.cardNumberInput {
-							border: none;
-						}
-					}
-
-					.cardOtherInfo {
-						.cardExpiration {
-							input {
-								border: none;
-								border-right: $theme-border-line;
-							}
-						}
-
-						.cardCVV {
-							.cardCVVInput {
-								border: none;
-
-								&:focus {
-									overflow: hidden;
-									perspective: 1px;
-								}
-							}
-
-						}
-					}
-				}
-
-				.cardInfoPostalCode {
-					margin: 10px 0;
-					@include flex-direction-column;
-					align-items: stretch;
-
-					.cardPostalCodeInput {
-						border: $theme-border-line;
-						border-radius: 8px;
-					}
-				}
-
-				.cardInfoCountry {
-					@include flex-direction-column;
-					align-items: stretch;
-
-					button.cardCountryBtn {
-						border: $theme-border-line;
-						border-radius: 8px;
-						background-color: white;
-					}
 				}
 			}
-		}
 
-		.rclEnterCoupon {
-			margin: 15px 0;
-			padding: 5px;
-			background-color: white;
+			.cardInfoCountry {
+				@include flex-direction-column;
+				align-items: stretch;
 
-			p {
-				font-weight: bold;
-				font-size: 18px;
-				text-decoration: underline;
+				button.cardCountryBtn {
+					border: $theme-border-line;
+					border-radius: 8px;
+					background-color: white;
+				}
 			}
 		}
 	}
+	.cardCountryInner{
+		position: relative;
+	.cardCountryArrowDrop {
+		position: absolute;
+		right: 1px;
+		padding: 0;
+		margin: 0;
+	}
+}
+
+	.rclEnterCoupon {
+		margin: 15px 0;
+		padding: 5px;
+		background-color: white;
+
+		p {
+			font-weight: bold;
+			font-size: 18px;
+			text-decoration: underline;
+		}
+	}
+}
 }
 
 
@@ -415,7 +451,7 @@ img.logoToHome {
 	padding: 18px 35px;
 	border: none;
 	border-radius: 8px;
-	background-color: #e21960;
+	background-color: $theme-color;
 	color: white;
 	font-weight: bold;
 	font-size: 20px;
@@ -440,8 +476,10 @@ img.logoToHome {
 		min-width: 375px;
 		margin: 0 55px;
 
-		position: fixed;
-		top: 20%;
+		// TO DO : when position set to 'fixed' 
+		// contentLeft is set to be at center instead of centent
+		//position: fixed;
+		//top: 20%;
 
 		.rcrPinnedBox {
 			border-radius: 12px;

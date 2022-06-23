@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import Home from '../Home/Home';
 import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
@@ -12,14 +13,14 @@ import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine, RiMedalFill } from 'react-icons/ri';
 import { TiTags, TiStarFullOutline } from 'react-icons/ti';
+import { IoDiamondOutline } from 'react-icons/io5';
 
 ///////////////////////////////////////////////////
 /////      img and icons
 const profileImgCat = '/images/profile/cat.png';
 
-const priceRateSummary = 'Good Price';
-const priceRateDetail =
-  'Your dates are $456 CAD less than the avg. nightly rate over the last 3 months.';
+const priceRateSummary = 'This is a rare find.';
+const priceRateDetail = `Sarah's place is usually booked.`;
 
 const requirements = {
   title: 'Message the host',
@@ -61,11 +62,12 @@ const airbnbConst = {
 
 const Reservation = props => {
   const navigate = useNavigate();
-  const homepage = '../';
+  const homepage = '/';
+  const detailpage = '/detail';
   const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
-  const logoOnClick = () => {
-    navigate(homepage);
+  const handleNavigateBtn = address => {
+    navigate(address);
   };
 
   // useState for reservation //
@@ -232,7 +234,9 @@ const Reservation = props => {
               id={css.logoButton}
               alt="airbnb"
               src={airbnbLogo}
-              onClick={logoOnClick}
+              onClick={event => {
+                handleNavigateBtn(homepage);
+              }}
             />
           </div>
         </div>
@@ -242,7 +246,12 @@ const Reservation = props => {
           <section>
             <div className={css.reserveContentTitle}>
               <div className={css.reserveContentTitleInner}>
-                <button className={css.iconNavigateBefore}>
+                <button
+                  className={css.iconNavigateBefore}
+                  onClick={event => {
+                    handleNavigateBtn(detailpage);
+                  }}
+                >
                   <MdNavigateBefore />
                 </button>
                 <h1 className={css.reserveContentTitleText}>
@@ -262,7 +271,7 @@ const Reservation = props => {
                       <p className={css.priceRateSummary}>{priceRateSummary}</p>
                       <p className={css.priceRateDetail}>{priceRateDetail}</p>
                       <div className={css.iconPriceTag}>
-                        <TiTags />
+                        <IoDiamondOutline />
                       </div>
                     </div>
                   </div>
@@ -439,6 +448,7 @@ const Reservation = props => {
                             <button
                               className={css.cardCountryBtn}
                               id="dropdown-selector-pay-option-btn"
+                              value={cardInfoCountry}
                               onClick={() => {
                                 setCountryOptVisible(!isCountryOptVisible);
                               }}
@@ -453,6 +463,7 @@ const Reservation = props => {
                                 <CardInfoCountrySelector
                                   show={isCountryOptVisible}
                                   onClose={countryOptCloseHandler}
+                                  setValue={setCardCountry}
                                 />
                               </div>
                             </button>
