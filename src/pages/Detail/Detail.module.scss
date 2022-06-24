@@ -1,5 +1,139 @@
 @import '../../styles/reset.scss';
 
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+// @mixin flex-space-around {
+//   display: flex;
+//   justify-content: space-around;
+// }
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+}
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  //   align-items: center;
+}
+@mixin pa-ma-border-bottom {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+@mixin profile-img-size {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 .container {
+  width: 1200px;
+  margin: 0 auto;
+  @include flex-column-center;
+}
 
+.header_container {
+  @include flex-column;
+  .function_container {
+    @include flex-space-between;
+  }
+  .function_group {
+    @include flex-align-center;
+  }
+}
+.image_container {
+  @include flex-center;
+  position: relative;
+  margin-bottom: 30px;
+  .image_box {
+    @include flex-center;
+    flex-wrap: wrap;
+    .sub {
+      width: 50%;
+    }
+  }
+  .display_button {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+  }
+}
+
+.room_detail_container {
+  @include flex-center;
+  .room_detail {
+    padding-right: 40px;
+    .header {
+      @include flex-align-center;
+      @include pa-ma-border-bottom;
+      .profile_image {
+        @include profile-img-size;
+      }
+      .room_contents {
+      }
+    }
+    .noti {
+      @include pa-ma-border-bottom;
+      .contents {
+        @include flex-align-center;
+        margin-bottom: 30px;
+      }
+    }
+    .insurance {
+      @include pa-ma-border-bottom;
+    }
+    .description {
+      @include pa-ma-border-bottom;
+    }
+    .facilities {
+      @include pa-ma-border-bottom;
+      .contents {
+        margin-bottom: 30px;
+      }
+    }
+    .calendar {
+      @include pa-ma-border-bottom;
+    }
+  }
+  .reservation {
+    width: 300px;
+    background-color: pink;
+    position: sticky;
+  }
+}
+.additional_inform {
+  width: 900px;
+  //   @include pa-ma-border-bottom;
+  .review {
+    @include pa-ma-border-bottom;
+    .score {
+      @include flex-align-center;
+    }
+    .review_box {
+      .contents {
+        .profile {
+          @include flex-align-center;
+          .profile_image {
+            @include profile-img-size;
+          }
+        }
+      }
+    }
+  }
+  //   .instruction_container {
+  //     .instruction {
+  //       @include flex-space-between;
+  //       padding-right: 40px;
+  //     }
+  //   }
 }

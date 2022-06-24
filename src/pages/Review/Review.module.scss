@@ -1,5 +1,24 @@
 @import '../../styles/reset.scss';
 
 .container {
-
+  .header {
+    margin-bottom: 50px;
+    .route {
+    }
+    h1 {
+      font-size: 30px;
+    }
+  }
+  .tab {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+  }
+  .review_container {
+    .review_box {
+      .review_title {
+        background-color: lightgray;
+      }
+    }
+  }
 }
