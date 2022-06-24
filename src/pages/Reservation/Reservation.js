@@ -15,8 +15,8 @@ import { RiArrowDropDownLine, RiMedalFill } from 'react-icons/ri';
 import { TiTags, TiStarFullOutline } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
 
-///////////////////////////////////////////////////
-/////      img and icons
+///////////////////////////////////////////////
+/////            img and icons         ////////
 const profileImgCat = '/images/profile/cat.png';
 
 const priceRateSummary = 'This is a rare find.';
@@ -27,7 +27,9 @@ const requirements = {
   message: `Let the host know why you're travelling and when you'll check in.`,
 };
 
-/////////// MockData ///////////////////
+///////////////////////////////////////////////
+///////////////// MockData ///////////////////
+// Need to be removed
 const host = {
   profileImg: profileImgCat,
   name: 'Sarah',
@@ -58,7 +60,7 @@ const airbnbConst = {
   nonRefundable: `This reservation is non-refundable.`,
 };
 
-//////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
   const navigate = useNavigate();
@@ -66,6 +68,7 @@ const Reservation = props => {
   const detailpage = '/detail';
   const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
+  // To Do : move to home and detail should pass room and reservation
   const handleNavigateBtn = address => {
     navigate(address);
   };
@@ -74,7 +77,7 @@ const Reservation = props => {
   const reservation = useLocation().state.reservation;
 
   // useState for reservation //
-  // todo: edit option for dates and guests
+  // To Do : edit option for dates and guests
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
   const [guests, setGuests] = useState(reservation.guests);

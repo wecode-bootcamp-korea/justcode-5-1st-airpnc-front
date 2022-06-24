@@ -22,13 +22,15 @@ const reservation = {
   checkout: '2022-06-14',
 };
 
+//<div className={css.container}>
+//      <ReservationBox room={room} reservation={reservation} />
+//</div>
+
 ////////////////
-function Detail() {
-  return (
-    <div className={css.container}>
-      <ReservationBox room={room} reservation={reservation} />
-    </div>
-  );
+function Detail() {  
+  const data = useLocation();
+  console.log(data);
+  return <div className={css.container}>{data.state.name}</div>;
 }
 
 export default Detail;
