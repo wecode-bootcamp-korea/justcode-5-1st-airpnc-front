@@ -1,155 +1,87 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import RoomList from '../../components/RoomList/RoomList';
-import RoomTypeBar from '../../components/RoomTypeBar/RoomTypeBar';
-import Detail from '../Detail/Detail';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
-function Home() {
-  const data = [
-    {
-      name: '몰디브',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '8,000,123',
-    },
-    {
-      name: '필리핀',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '9,234,123',
-    },
-    {
-      name: '크로아티아',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '1,234',
-    },
-    {
-      name: '태국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '일본',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '중국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '미국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '영국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '영국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '영국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '영국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-    {
-      name: '영국',
-      image: [
-        { url: 'https://ifh.cc/g/x1WbXD.jpg' },
-        { url: 'https://ifh.cc/g/NbgqVO.jpg' },
-        { url: 'https://ifh.cc/g/rgW8Zq.jpg' },
-        { url: 'https://ifh.cc/g/bNZrzD.jpg' },
-        { url: 'https://ifh.cc/g/a0dFSn.jpg' },
-      ],
-      price: '234,552',
-    },
-  ];
+import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer/Footer';
 
+function Home() {
+  const [data, setData] = useState([]);
+  const [wish, setWish] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/roomData.json');
+      const json = await res.json();
+      setData(json);
+    })();
+  }, []);
+  /*return boolean ? setWish([...wish, data[Number(wishs) - 1]]) : wish.splice(wish.findIndex(i => i.id == wishs)));*/
+  /*
+  const wishsright = wish.splice(alreadySelectedIndex + 1);
+    const wishsleft = wish.splice(0, alreadySelectedIndex);
+  alreadySelectedIndex === -1
+      ? setWish([...wish, newSelected])
+      : setWish([...wishsleft, ...wishsright]);
+      */
+  const btnClick = e => {
+    const wishs = e.target.value;
+    console.log(wishs);
+    const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
+    console.log(alreadySelectedIndex === -1);
+    if (alreadySelectedIndex === -1) {
+      setWish([...wish, data[Number(wishs) - 1]]);
+    } else {
+      const wishsright = wish.splice(alreadySelectedIndex + 1);
+      const wishsleft = wish.splice(0, alreadySelectedIndex);
+      setWish([...wishsleft, ...wishsright]);
+    }
+  };
+
+  console.log(wish);
+
+  const imageSize = {
+    width: '350px',
+    height: '320px',
+    marginBottom: '100px',
+  };
+
+  const goWishList = () => {
+    navigate('/wishlist', { state: [...wish] });
+  };
   return (
     <>
       <Header />
+<<<<<<< HEAD
       <RoomTypeBar />
+=======
+      <div onClick={goWishList}>wish</div>
+>>>>>>> main
       <div className={css.container}>
-        {data.map(data => (
-          <RoomList image={data.image} name={data.name} price={data.price} />
-        ))}
+        {data.map((data, ind) => {
+          return (
+            <>
+              <RoomList
+                key={ind}
+                image={data.image}
+                name={data.name}
+                price={data.price}
+                sytle={imageSize}
+                won={'원'}
+              />
+              <button
+                key={data.id}
+                className={css.btn}
+                onClick={btnClick}
+                value={data.id}
+              >
+                like
+              </button>
+            </>
+          );
+        })}
       </div>
+      <Footer />
     </>
   );
 }

@@ -1,0 +1,18 @@
+@import '../../styles/reset.scss';
+
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+@mixin pa-ma-border-bottom {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+.review {
+  background-color: white;
+  @include pa-ma-border-bottom;
+  .score {
+    @include flex-align-center;
+  }
+}
