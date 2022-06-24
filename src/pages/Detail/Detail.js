@@ -9,8 +9,8 @@ const room = {
   name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
   type: 'Entire Villa',
   price: 603000,
-  rate: 4.9,
-  rateCnt: 11,
+  score: 4.9,
+  reviewCnt: 11,
   hostType: 'superhost',
   repImg: '/images/room_rep/cabin.png',
 };

@@ -9,7 +9,7 @@ svg {
 .container {
 	@include flex-direction-column;
 	font-family: $theme-font;
-	font-color: $theme-font-color;
+	color: $theme-font-color;
 	font-size: 14px;
 	color: #484848;
 	background-color: #fff;
@@ -65,6 +65,7 @@ img.logoToHome {
 
 	.reserveContentTitleText {
 		margin: 0;
+		padding-left: 15px;
 		font-family: inherit;
 		font-size: 30px;
 		font-weight: bold;
@@ -114,7 +115,7 @@ img.logoToHome {
 .rclPriceRateAvgContainer {
 	@include flex-v-center;
 	display: block;
-	padding: 0 5px;
+	padding: 0 5px 5px 5px;
 	border: $theme-border-line;
 	border-radius: 12px;
 	position: relative;
@@ -144,7 +145,7 @@ img.logoToHome {
 	.iconPriceTag {
 		position: absolute;
 		top: 19%;
-		right: 30%;
+		right: 8%;
 		margin: 0;
 
 		svg {
@@ -342,7 +343,7 @@ img.logoToHome {
 					border: $theme-border-line;
 					border-radius: 8px;
 					background-color: white;
-					
+
 					&:hover {
 						cursor: pointer;
 					}

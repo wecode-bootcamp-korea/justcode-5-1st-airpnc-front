@@ -270,7 +270,7 @@ const Reservation = props => {
                     >
                       <p className={css.priceRateSummary}>{priceRateSummary}</p>
                       <p className={css.priceRateDetail}>{priceRateDetail}</p>
-                      <div className={css.iconPriceTag}>
+                      <div className={css.iconPriceTag} id="price-tag">
                         <IoDiamondOutline />
                       </div>
                     </div>
@@ -608,7 +608,9 @@ const Reservation = props => {
         </main>
       </div>
       <div>
-        <footer className={css.reserveContentFooter}> footer </footer>
+        <footer className={css.reserveContentFooter}>
+          ! footer need to be added here!
+        </footer>
       </div>
     </div>
   );

@@ -11,8 +11,7 @@
 	transform: translate(-50%, -50%);
 	z-index: 3;
 	font-family: $theme-font;
-	font-color: $theme-font-color;
-
+	color: $theme-font-color;
 
 	.confirmationMessage {
 		display: flex;
