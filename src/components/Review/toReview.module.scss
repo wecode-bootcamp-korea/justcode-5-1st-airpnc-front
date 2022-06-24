@@ -1,0 +1,11 @@
+@import '../../styles/reset.scss';
+
+.container {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  img {
+    width: 50px;
+    height: auto;
+  }
+}

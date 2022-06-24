@@ -1,0 +1,22 @@
+@import '../../styles/reset.scss';
+.container {
+  display: flex;
+  flex-direction: column;
+  .myReview {
+    background-color: white;
+    display: flex;
+    //   align-items: center;
+    img {
+      width: 50px;
+      height: auto;
+    }
+    .room_info {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .page_button {
+    display: flex;
+    align-self: center;
+  }
+}
