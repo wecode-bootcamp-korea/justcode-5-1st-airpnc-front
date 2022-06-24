@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './Header.scss';
-// import ActivatedNav from './ActivatedNav';
-// import LoginPop from './LoginPop';
 import { useNavigate } from 'react-router-dom';
+import ActivatedHeader from './ActivatedHeader';
+// import LoginPop from './LoginPop';
 
 import { IoAirplaneOutline } from 'react-icons/io5';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 
 function Header() {
-  // const [isClickedNav, setIsClickedNav] = useState(false);
+  const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
   const [Signup, ClickedSignUp] = useState(false);
@@ -29,7 +29,7 @@ function Header() {
     if (localStorage.getItem('back_token')) {
       Signup(!ClickedSignUp);
     } else {
-      navigate('/');
+      navigate('/Signup');
     }
   };
   const isMyPaged = () => {
@@ -37,7 +37,7 @@ function Header() {
     if (localStorage.getItem('back_token')) {
       Mypage(!ClickedMypage);
     } else {
-      navigate('/');
+      navigate('/Mypage');
     }
   };
   const isLogined = () => {
@@ -45,7 +45,7 @@ function Header() {
     if (localStorage.getItem('back_token')) {
       Login(!ClickedLogin);
     } else {
-      navigate('/');
+      navigate('/Login');
     }
   };
 
@@ -56,12 +56,8 @@ function Header() {
           <IoAirplaneOutline size="40" />
           <div>AirPnc</div>
         </div>
-        <p className="search">
-          <FaSearch />
-          검색 시작하기
-        </p>
-        {/* {isClickedNav ? (
-          <ActivatedNav
+        {isClickedNav ? (
+          <ActivatedHeader
             setIsClickedNav={setIsClickedNav}
             isClickedNav={isClickedNav}
           />
@@ -72,7 +68,7 @@ function Header() {
               검색 시작하기
             </p>
           </div>
-        )} */}
+        )}
         <div className="container_right">
           <div className="container_menu">
             <div type="button" onClick={isMenued}>
