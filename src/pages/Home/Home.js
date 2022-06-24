@@ -52,11 +52,7 @@ function Home() {
   return (
     <>
       <Header />
-<<<<<<< HEAD
-      <RoomTypeBar />
-=======
       <div onClick={goWishList}>wish</div>
->>>>>>> main
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
