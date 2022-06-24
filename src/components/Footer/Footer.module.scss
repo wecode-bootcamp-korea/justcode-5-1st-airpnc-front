@@ -1,8 +1,21 @@
 .container {
   //   border: 1px solid red;
+  //display: flex;
+  //justify-content: space-between;
+  //align-items: center;
+  //box-shadow: 1px 1px 10px 1px gray;
+  border-top: 1px solid rgb(235, 235, 235);
+  background-color: #ffffff;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 60px;
+  width: 100%;
+}
+
+.footer1 {
+  background-color: #ffffff;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 1px 1px 10px 1px gray;
-  background-color: aqua;
 }
