@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useInsertionEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
@@ -11,7 +11,6 @@ const airbnbConst = {
 //////////////////////
 
 const reservationPage = '/reservation';
-
 const ReservationBox = props => {
   const { room, reservation } = props;
   const [checkin, setCheckIn] = useState(reservation.checkin);
@@ -19,11 +18,11 @@ const ReservationBox = props => {
   const [guests, setGuests] = useState(reservation.guests);
 
   useMemo(() => {
-    reservation.chekin = checkin;
+    reservation.checkin = checkin;
   }, [checkin]);
 
-  useMemo(() => {
-    reservation.chekout = checkout;
+  useEffect(() => {
+    reservation.checkout = checkout;
   }, [checkout]);
 
   useMemo(() => {
@@ -79,16 +78,10 @@ const ReservationBox = props => {
                     className={css.checkInInput}
                     id="checkin-input"
                     type="date"
-                    placeholder={checkin.split(' ')[0]}
-                    value={checkin.split(' ')[0]}
+                    value={checkin}
                     autoComplete="off"
                     onChange={event => {
                       setCheckIn(event.target.value);
-                    }}
-                    onClick={event => {
-                      console.log(checkin);
-                      console.log(`room: ${room}`);
-                      console.log(`reservation ${reservation}`);
                     }}
                   />
                 </div>
@@ -97,14 +90,10 @@ const ReservationBox = props => {
                     className={css.checkOutInput}
                     id="checkout-input"
                     type="date"
-                    placeholder={checkout.split(' ')[0]}
-                    value={checkout.split(' ')[0]}
+                    value={checkout}
                     autoComplete="off"
                     onChange={event => {
                       setCheckOut(event.target.value);
-                    }}
-                    onClick={event => {
-                      console.log(checkout);
                     }}
                   />
                 </div>

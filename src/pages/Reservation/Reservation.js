@@ -215,8 +215,61 @@ const Reservation = props => {
   }
 
   const yourTripDate = () => {
+    return yourTripDateIgnoreTimezone();
+  };
+
+  const yourTripDateWithTimezone = () => {
     let checkinDate = new Date(checkin).toDateString().split(' ');
     let checkoutDate = new Date(checkout).toDateString().split(' ');
+    if (checkinDate[3] === checkoutDate[3]) {
+      if (checkinDate[1] === checkoutDate[1]) {
+        return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month
+      } else {
+        return `${checkinDate[1]}. ${checkinDate[2]} -  ${checkoutDate[1]}. ${checkoutDate[2]}`;
+      }
+    }
+    return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
+  };
+
+  const yourTripDateIgnoreTimezone = () => {
+    let checkinArr = checkin.split('-');
+    let checkoutArr = checkout.split('-');
+    let monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'June',
+      'July',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    let checkinMonth = monthNames[Number(checkinArr[1]) - 1];
+    let checkoutMonth = monthNames[Number(checkoutArr[1]) - 1];
+    return `${checkinMonth}. ${checkinArr[2]} - ${checkoutMonth}. ${checkoutArr[2]}`;
+  };
+
+  const yourTripDateRemoveTimezone = () => {
+    let checkinTimezone = new Date(checkin);
+    let checkoutTimezone = new Date(checkout);
+    const TimezoneOffsetCheckIn = checkinTimezone.getTimezoneOffset() * 60000;
+    const TimezoneOffsetCheckOut = checkoutTimezone.getTimezoneOffset() * 60000;
+    const checkinDate = new Date(
+      checkinTimezone.getTime() - TimezoneOffsetCheckIn
+    )
+      .toDateString()
+      .split(' ');
+
+    const checkoutDate = new Date(
+      checkoutTimezone.getTime() - TimezoneOffsetCheckIn
+    )
+      .toDateString()
+      .split(' ');
+
     if (checkinDate[3] === checkoutDate[3]) {
       if (checkinDate[1] === checkoutDate[1]) {
         return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month

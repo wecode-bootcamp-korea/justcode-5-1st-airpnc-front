@@ -18,13 +18,12 @@ const room = {
 const reservation = {
   id: 1,
   guests: 4,
-  checkin: '2022-06-10 23:55:45.000000',
-  checkout: '2022-06-14 23:55:45.000000',
+  checkin: '2022-06-10',
+  checkout: '2022-06-14',
 };
 
 ////////////////
 function Detail() {
-  const data = useLocation();
   return (
     <div className={css.container}>
       <ReservationBox room={room} reservation={reservation} />
