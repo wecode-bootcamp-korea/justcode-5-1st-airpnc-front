@@ -52,6 +52,7 @@ const ReservationBox = props => {
         <div className={css.containerInner}>
           <div className={css.roomInfo}>
             <div className={css.pricePerNightBox}>
+              <span>₩</span>
               <span className={css.pricePerNight} id="price-per-night">
                 {room.price}
               </span>
@@ -64,7 +65,7 @@ const ReservationBox = props => {
               <div className={css.roomRate} id="room-score">
                 {room.score}
               </div>
-              <span> · </span>
+              <span>&nbsp;·&nbsp;&nbsp;</span>
               <div className={css.roomReviewCnt} id="review-count">
                 {room.reviewCnt} reviews
               </div>
