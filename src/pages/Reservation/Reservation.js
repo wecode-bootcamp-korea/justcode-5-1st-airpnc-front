@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Home from '../Home/Home';
 import css from './Reservation.module.scss';
 import footer from '../../components/Footer/Footer';
@@ -34,23 +34,23 @@ const host = {
   joinedIn: '2018',
 };
 
-const room = {
-  id: 1,
-  name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
-  type: 'Entire Villa',
-  price: 603000,
-  rate: 4.9,
-  rateCnt: 11,
-  hostType: 'superhost',
-  repImg: '/images/room_rep/cabin.png',
-};
+// const room = {
+//   id: 1,
+//   name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
+//   type: 'Entire Villa',
+//   price: 603000,
+//   rate: 4.9,
+//   rateCnt: 11,
+//   hostType: 'superhost',
+//   repImg: '/images/room_rep/cabin.png',
+// };
 
-const reservation = {
-  id: 1,
-  guests: 4,
-  checkin: '2022-06-10 23:55:45.000000',
-  checkout: '2022-06-14 23:55:45.000000',
-};
+// const reservation = {
+//   id: 1,
+//   guests: 4,
+//   checkin: '2022-06-10 23:55:45.000000',
+//   checkout: '2022-06-14 23:55:45.000000',
+// };
 
 const airbnbConst = {
   customerAgreement: `By selecting the button below, I agree to the Host's House Rules, Airbnb's Rebooking and Refund Policy, and that Airbnb can charge my payment method if I’m responsible for damage.`,
@@ -69,6 +69,9 @@ const Reservation = props => {
   const handleNavigateBtn = address => {
     navigate(address);
   };
+
+  const room = useLocation().state.room;
+  const reservation = useLocation().state.reservation;
 
   // useState for reservation //
   // todo: edit option for dates and guests

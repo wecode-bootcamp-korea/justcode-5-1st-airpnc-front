@@ -28,7 +28,7 @@ const ReservationBox = props => {
 
   useMemo(() => {
     reservation.guests = guests;
-  }, [checkin]);
+  }, [guests]);
 
   const isBtnActive = () => {
     return true;
@@ -37,7 +37,9 @@ const ReservationBox = props => {
   const navigate = useNavigate();
   const handleReservationBtn = () => {
     if (isBtnActive) {
-      navigate(reservationPage);
+      navigate(reservationPage, {
+        state: { room: room, reservation: reservation },
+      });
     }
   };
 
@@ -85,6 +87,8 @@ const ReservationBox = props => {
                     }}
                     onClick={event => {
                       console.log(checkin);
+                      console.log(`room: ${room}`);
+                      console.log(`reservation ${reservation}`);
                     }}
                   />
                 </div>
