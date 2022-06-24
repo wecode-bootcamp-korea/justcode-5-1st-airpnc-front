@@ -73,6 +73,7 @@ const Reservation = props => {
     navigate(address);
   };
 
+  // use room, reservation info from useLocation when reservationBox is imported to detail page
   const room = useLocation().state.room;
   const reservation = useLocation().state.reservation;
 

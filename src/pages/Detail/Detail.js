@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
+import ReservationBox from '../Reservation/ReservationBox';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // // or for Day.js
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -22,6 +23,27 @@ import {
   FaCarAlt,
   FaTv,
 } from 'react-icons/fa';
+
+// Mock Data for testing //
+const room = {
+  id: 1,
+  name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
+  type: 'Entire Villa',
+  price: 603000,
+  score: 4.9,
+  reviewCnt: 11,
+  hostType: 'superhost',
+  repImg: '/images/room_rep/cabin.png',
+};
+
+const reservation = {
+  id: 1,
+  guests: 4,
+  checkin: '2022-06-10',
+  checkout: '2022-06-14',
+};
+
+//////////////////////////
 
 function Detail() {
   const data = useLocation();
@@ -150,7 +172,11 @@ function Detail() {
             </div>
           </div>
         </div>
-        <div className={css.reservation}>reservation and payment</div>
+        <div className={css.reservation}>
+          <div className={css.container}>
+            <ReservationBox room={room} reservation={reservation} />
+          </div>
+        </div>
       </section>
       <section className={css.additional_inform}>
         <DisplayReview />
