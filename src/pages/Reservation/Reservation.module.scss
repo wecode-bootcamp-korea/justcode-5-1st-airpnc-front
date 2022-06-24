@@ -114,6 +114,7 @@ img.logoToHome {
 
 }
 
+// Price Average Rate
 .rclPriceRateAvgContainer {
 	@include flex-v-center;
 	display: block;
@@ -154,12 +155,12 @@ img.logoToHome {
 			color: $theme-color;
 		}
 	}
-
 }
 
+// Your trip
 .rclYourTripContainer {
 	padding: 30px 5px;
-	@include flex-v-center;
+	display: block;
 
 	.rclYourTrip {
 		@include flex-direction-column;
@@ -183,21 +184,63 @@ img.logoToHome {
 
 		.rclDates,
 		.rclGuests {
-			@include flex-direction-column;
-			align-items: flex-start;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
 
-			h3 {
-				@include h3;
+			div:nth-child(1) {
+				@include flex-direction-column;
+				align-items: flex-start;
+
+				h3 {
+					@include h3;
+				}
+
+				p {
+					margin-top: 10px;
+				}
+			}
+			div:nth-child(2) {
+				display: flex;
+			.editBtn {
+				border: none;
+				text-decoration: underline;
+				background-color: white;
+				font-weight: bold;
+				font-size: 14px;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 
-			p {
-				margin-top: 10px;
+			.editInput {
+				display: flex;
+				align-items: flex-end;
+				border: none;
+				text-decoration: underline;
+				background-color: white;
+				font-weight: bold;
+				font-size: 14px;
+				color: white;
+				width: 2em;
+				line-height: 25px;
+
+				&:focus {
+					outline: none;
+				}
 			}
 
+			input[type=number]::-webkit-inner-spin-button, 
+			input[type=number]::-webkit-outer-spin-button {  
+			   opacity: 1;
+				 width: 30px;
+				 height: 30px;
+				 background-color: white;
+			}
+		}
 		}
 	}
-
-
 }
 
 
@@ -376,6 +419,14 @@ img.logoToHome {
 				font-size: 18px;
 				text-decoration: underline;
 			}
+		}
+		input:focus, textarea:focus {
+			outline: none;
+			// border: 1px solid $theme-color;
+			// border-color: red;
+			// box-shadow: 0 0 3px red;
+			// -moz-box-shadow: 0 0 3px red;
+			// -webkit-box-shadow: 0 0 3px red;
 		}
 	}
 }

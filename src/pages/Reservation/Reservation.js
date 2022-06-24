@@ -5,15 +5,14 @@ import css from './Reservation.module.scss';
 import Footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
 import CardInfoCountrySelector from './CardInfoCountrySelector';
-import PriceBreakDown from './PriceBreakDown';
 import ReservationConfirmed from './ReservationConfirmed';
 import ReservationNotValid from './ReservationNotValid';
 import PinnedBox from './modals/PinnedBox';
 import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
-import { RiArrowDropDownLine, RiMedalFill } from 'react-icons/ri';
-import { TiTags, TiStarFullOutline } from 'react-icons/ti';
+import { RiArrowDropDownLine } from 'react-icons/ri';
+import { TiTag } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
 
 /////////////////////////////////////////////////////////////////////
@@ -342,15 +341,35 @@ const Reservation = props => {
                         <h2>Your trip</h2>
                       </div>
                       <div className={`${css.rclDates}`}>
-                        <h3>Dates</h3>
-                        <p className={css.yourTripDate}>{yourTripDate()}</p>
+                        <div>
+                          <h3>Dates</h3>
+                          <p className={css.yourTripDate}>{yourTripDate()}</p>
+                        </div>
+                        <div>
+                          <button className={css.editBtn}>Edit</button>
+                        </div>
                       </div>
                       <div className={`${css.rclGuests}`}>
-                        <h3>Guests</h3>
-                        <p>
-                          {reservation.guests}
-                          {reservation.guests > 1 ? ' guests' : ' guest'}
-                        </p>
+                        <div>
+                          <h3>Guests</h3>
+                          <p>
+                            {guests}
+                            {guests > 1 ? ' guests' : ' guest'}
+                          </p>
+                        </div>
+                        <div>
+                          <button className={css.editBtn}>Edit</button>
+                          <input
+                            className={css.editInput}
+                            id="guest-edit"
+                            type="number"
+                            value={guests}
+                            onChange={event => {
+                              setGuests(event.target.value);
+                            }}
+                            max="20"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -497,11 +516,17 @@ const Reservation = props => {
                               value={cardPostalCode}
                               autoComplete="off"
                               onFocus={event => {
-                                setInputPlaceholder(event.target.id, '');
+                                setInputPlaceholder(
+                                  event.target.id,
+                                  'Postal Code'
+                                );
                                 setCardPostalCode(event.target.value);
                               }}
                               onBlur={event => {
-                                setInputPlaceholder(event.target.id, '');
+                                setInputPlaceholder(
+                                  event.target.id,
+                                  'Postal Code'
+                                );
                               }}
                               onChange={event => {
                                 setCardPostalCode(event.target.value);
