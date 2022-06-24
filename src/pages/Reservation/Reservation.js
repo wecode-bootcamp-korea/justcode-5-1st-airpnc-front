@@ -8,6 +8,7 @@ import CardInfoCountrySelector from './CardInfoCountrySelector';
 import PriceBreakDown from './PriceBreakDown';
 import ReservationConfirmed from './ReservationConfirmed';
 import ReservationNotValid from './ReservationNotValid';
+import PinnedBox from './modals/PinnedBox';
 import { MdNavigateBefore, MdCreditCard } from 'react-icons/md';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { GrAmex } from 'react-icons/gr';
@@ -15,8 +16,8 @@ import { RiArrowDropDownLine, RiMedalFill } from 'react-icons/ri';
 import { TiTags, TiStarFullOutline } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
 
-///////////////////////////////////////////////
-/////            img and icons         ////////
+/////////////////////////////////////////////////////////////////////
+/////                    img and icons                       ////////
 const profileImgCat = '/images/profile/cat.png';
 
 const priceRateSummary = 'This is a rare find.';
@@ -27,8 +28,8 @@ const requirements = {
   message: `Let the host know why you're travelling and when you'll check in.`,
 };
 
-///////////////////////////////////////////////
-///////////////// MockData ///////////////////
+///////////////////////////////////////////////////////////////////
+/////////////////            MockData           ///////////////////
 // Need to be removed
 const host = {
   profileImg: profileImgCat,
@@ -189,7 +190,7 @@ const Reservation = props => {
     setConfirmationFailedVisible(e);
   };
 
-  //input validation
+  // TO DO : input validation on 'pay with' section
   function checkValidity(aID, aSearchTerm, aMsg) {
     let elem = document.getElementById(aID);
     let invalid = elem.value.indexOf(aSearchTerm) < 0;
@@ -269,7 +270,7 @@ const Reservation = props => {
       .split(' ');
 
     const checkoutDate = new Date(
-      checkoutTimezone.getTime() - TimezoneOffsetCheckIn
+      checkoutTimezone.getTime() - TimezoneOffsetCheckOut
     )
       .toDateString()
       .split(' ');
@@ -427,6 +428,7 @@ const Reservation = props => {
                                 onChange={event => {
                                   setCardNumber(event.target.value);
                                 }}
+                                required
                               />
                             </div>
                             <div className={css.cardOtherInfo}>
@@ -456,6 +458,7 @@ const Reservation = props => {
                                   onChange={event => {
                                     setCardExpiration(event.target.value);
                                   }}
+                                  required
                                 />
                               </div>
                               <div className={css.cardCVV}>
@@ -478,6 +481,7 @@ const Reservation = props => {
                                   onChange={event => {
                                     setCardCVV(event.target.value);
                                   }}
+                                  required
                                 />
                               </div>
                             </div>
@@ -485,7 +489,7 @@ const Reservation = props => {
                           <div className={css.cardInfoPostalCode}>
                             <input
                               className={css.cardPostalCodeInput}
-                              id="cardCVVInput"
+                              id="card-cvv-input"
                               type="text"
                               placeholder="Postal code"
                               pattern="[0-9]{6}"
@@ -502,6 +506,7 @@ const Reservation = props => {
                               onChange={event => {
                                 setCardPostalCode(event.target.value);
                               }}
+                              required
                             />
                           </div>
                           <div className={css.cardInfoCountry}>
@@ -616,52 +621,11 @@ const Reservation = props => {
                 </div>
               </section>
               <section className={css.reserveContentRightSection}>
-                <div className={css.reserveContentRight}>
-                  <div className={css.rcrPinnedBox}>
-                    <div className={css.rcrAccommodationSummary}>
-                      <div className={css.rcrAccommodationSummaryInner}>
-                        <div className={css.accommodationPhotoBox}>
-                          <img
-                            className={css.accommodationPhoto}
-                            alt="where?"
-                            src={room.repImg}
-                          />
-                        </div>
-                        <div className={css.accommodationDescription}>
-                          <div className={css.roomType}>{room.type}</div>
-                          <div className={css.roomName}>{room.name}</div>
-                          <div className={css.roomEtcInfo}>
-                            <div className={css.roomRate}>
-                              <TiStarFullOutline />
-                              {room.rate}({room.rateCnt}reviews)
-                            </div>
-                            <p>&nbsp; • &nbsp;</p>
-                            <div className={css.roomHostType}>
-                              <RiMedalFill />
-                              {room.hostType}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className={css.rcrAircover}>
-                      <div className={css.rcrAircoverInner}>
-                        {airbnbConst.aircover}
-                      </div>
-                    </div>
-                    <div className={css.rcrPriceDetails}>
-                      <div className={css.rcrPriceDetailsInner}>
-                        <h2>Price details</h2>
-                        <div className={css.rcrPriceBreakDown}>
-                          <PriceBreakDown
-                            room={room}
-                            reservation={reservation}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <PinnedBox
+                  room={room}
+                  reservation={reservation}
+                  airbnbConst={airbnbConst}
+                />
               </section>
             </div>
           </section>

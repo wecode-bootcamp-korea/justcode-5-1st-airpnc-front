@@ -483,104 +483,10 @@ img.logoToHome {
 	}
 }
 
-// reserve Content Right
-@media screen and (max-width: 700px) {
-	.reserveContentRight {
-		display: none;
-	}
-}
-
 .reserveContentRightSection {
-	.reserveContentRight {
-		display: flex;
-		align-items: flex-start;
-		max-width: 430px;
-		min-width: 375px;
-		margin: 0 55px;
-
-		// TO DO : when position set to 'fixed' 
-		// contentLeft is set to be at center instead of centent
-		//position: fixed;
-		//top: 20%;
-
-		.rcrPinnedBox {
-			border-radius: 12px;
-			border: .1px solid $theme-border-color;
-			padding: 20px;
-
-			.rcrAccommodationSummary {
-				.rcrAccommodationSummaryInner {
-					display: flex;
-
-					.accommodationPhotoBox {
-						.accommodationPhoto {
-							width: 130px;
-							height: 100px;
-							border-radius: 8px;
-						}
-					}
-
-					.accommodationDescription {
-						padding: 0 10px;
-
-						.roomType {}
-
-						.roomName {
-							margin-top: 10px;
-							margin-bottom: 10px;
-							font-size: 16px;
-						}
-
-						.roomEtcInfo {
-							svg {
-								font-size: 13px;
-							}
-
-							@include flex-v-center;
-
-							.roomRate {
-								@include flex-v-center;
-							}
-
-							.roomHostType {
-								@include flex-v-center;
-							}
-
-
-						}
-					}
-				}
-
-			}
-
-			.rcrAircover {
-				margin: 30px 0;
-				border-top: $theme-border-line;
-				border-bottom: $theme-border-line;
-
-				.rcrAircoverInner {
-					padding: 25px 0;
-					font-size: 16px;
-				}
-			}
-
-			.rcrPriceDetails {
-				.rcrPriceDetailsInner {
-					h2 {
-						padding: 5px 0;
-						@include h2;
-					}
-
-					.rcrPriceBreakDown {
-						margin-bottom: 10px;
-					}
-				}
-			}
-		}
-	}
 }
 
 .reserveContentFooter {
-	position: relative;
+	position:relative;	
 	bottom: 10px;
 }

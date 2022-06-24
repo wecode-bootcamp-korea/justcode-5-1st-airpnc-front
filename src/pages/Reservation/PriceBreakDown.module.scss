@@ -11,22 +11,25 @@
 	margin: 0;
 	-webkit-font-smoothing: antialiased;
 }
+
 .priceDetails {
 	margin: 20px 0;
-	
-		.priceBreakDown {
-			@include flex-direction-column;
 
-			.priceByNights, .priceCleaning, .priceServiceFee, .priceTaxes {
-				display: flex;
-				justify-content: space-between;
-				margin: 10px 0;
+	.priceBreakDown {
+		@include flex-direction-column;
 
-				div:nth-child(1) {
-					text-decoration: underline;
-				}
+		.priceByNights,
+		.priceCleaning,
+		.priceServiceFee,
+		.priceTaxes {
+			display: flex;
+			justify-content: space-between;
+			margin: 10px 0;
+
+			div:nth-child(1) {
+				text-decoration: underline;
 			}
-		
+		}
 	}
 }
 
