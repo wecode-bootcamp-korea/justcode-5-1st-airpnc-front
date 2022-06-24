@@ -1,0 +1,21 @@
+@import '../../styles/reset.scss';
+
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin profile-img-size {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.contents {
+  .profile {
+    @include flex-align-center;
+    .profile_image {
+      @include profile-img-size;
+    }
+  }
+}
