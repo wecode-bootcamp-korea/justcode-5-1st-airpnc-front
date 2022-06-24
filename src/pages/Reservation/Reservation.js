@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Home from '../Home/Home';
 import css from './Reservation.module.scss';
-import footer from '../../components/Footer/Footer';
+import Footer from '../../components/Footer/Footer';
 import PayOptionSelector from './PayOptionSelector';
 import CardInfoCountrySelector from './CardInfoCountrySelector';
 import PriceBreakDown from './PriceBreakDown';
@@ -633,7 +633,7 @@ const Reservation = props => {
       </div>
       <div>
         <footer className={css.reserveContentFooter}>
-          ! footer need to be added here!
+          <Footer />
         </footer>
       </div>
     </div>
