@@ -208,6 +208,8 @@ function Detail() {
       )}
     </div>
   );
+  // console.log(data);
+  // return <div className={css.container}>{data.state.name}</div>;
 }
 
 export default Detail;
