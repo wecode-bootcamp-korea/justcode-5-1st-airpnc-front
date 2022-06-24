@@ -27,14 +27,18 @@ function WishList() {
           return (
             <div className={css.wishList}>
               <RoomList
-                key={data.id}
+                key={data.ind}
                 id={data.id}
                 image={data.image}
                 sytle={imageSize}
               />
-              <div className={css.info}>
-                <div key={ind}>{data.name}</div>
-                <div key={ind + 1}>{data.price}원</div>
+              <div key={ind + 2} className={css.info}>
+                <div className={css.name} key={ind}>
+                  {data.name}
+                </div>
+                <div className={css.price} key={ind + 1}>
+                  {data.price}원
+                </div>
               </div>
             </div>
           );

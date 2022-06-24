@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [data, setData] = useState([]);
@@ -55,20 +53,24 @@ function Home() {
       <Header />
       <div onClick={goWishList}>wish</div>
       <div className={css.container}>
-        {data.map(data => {
+        {data.map((data, ind) => {
           return (
             <>
               <RoomList
-                key={data.id}
-                id={data.id}
+                key={ind}
                 image={data.image}
                 name={data.name}
                 price={data.price}
                 sytle={imageSize}
                 won={'원'}
               />
-              <button className={css.btn} onClick={btnClick} value={data.id}>
-                <FontAwesomeIcon icon={faHeart} />
+              <button
+                key={data.id}
+                className={css.btn}
+                onClick={btnClick}
+                value={data.id}
+              >
+                like
               </button>
             </>
           );
