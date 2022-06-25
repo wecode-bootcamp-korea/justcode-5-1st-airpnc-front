@@ -3,6 +3,7 @@ import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer/Footer';
 
 function Home() {
   const [data, setData] = useState([]);
@@ -68,6 +69,7 @@ function Home() {
           );
         })}
       </div>
+      <Footer />
     </>
   );
 }
