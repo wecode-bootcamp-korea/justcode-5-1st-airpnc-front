@@ -9,7 +9,8 @@
       { "url": "https://ifh.cc/g/KpCpKn.jpg" },
       { "url": "https://ifh.cc/g/Jp7btS.jpg" }
     ],
-    "price": "8,000,123"
+    "price": "8,000,123",
+    "liked": false
   },
   {
     "id": 2,
@@ -21,7 +22,8 @@
       { "url": "https://ifh.cc/g/z04HB1.jpg" },
       { "url": "https://ifh.cc/g/XG5ns4.jpg" }
     ],
-    "price": "9,234,123"
+    "price": "9,234,123",
+    "liked": false
   },
   {
     "id": 3,
@@ -33,7 +35,8 @@
       { "url": "https://ifh.cc/g/W3HhVQ.webp" },
       { "url": "https://ifh.cc/g/3aagY0.jpg" }
     ],
-    "price": "1,234"
+    "price": "1,234",
+    "liked": false
   },
   {
     "id": 4,
@@ -45,7 +48,8 @@
       { "url": "https://ifh.cc/g/xBoOCx.jpg" },
       { "url": "https://ifh.cc/g/Zn0d66.jpg" }
     ],
-    "price": "234,559"
+    "price": "234,559",
+    "liked": false
   },
   {
     "id": 5,
@@ -57,7 +61,8 @@
       { "url": "https://ifh.cc/g/GQ4mP5.jpg" },
       { "url": "https://ifh.cc/g/QmZJA9.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 6,
@@ -69,7 +74,8 @@
       { "url": "https://ifh.cc/g/Bao9ym.jpg" },
       { "url": "https://ifh.cc/g/HotbXd.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 7,
@@ -81,7 +87,8 @@
       { "url": "https://ifh.cc/g/ZZmpfn.jpg" },
       { "url": "https://ifh.cc/g/W8NP7c.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 8,
@@ -93,7 +100,8 @@
       { "url": "https://ifh.cc/g/drsJZg.jpg" },
       { "url": "https://ifh.cc/g/ZKMrVq.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 9,
@@ -105,7 +113,8 @@
       { "url": "https://ifh.cc/g/drsJZg.jpg" },
       { "url": "https://ifh.cc/g/ZKMrVq.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 10,
@@ -117,7 +126,8 @@
       { "url": "https://ifh.cc/g/drsJZg.jpg" },
       { "url": "https://ifh.cc/g/ZKMrVq.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 11,
@@ -129,7 +139,8 @@
       { "url": "https://ifh.cc/g/drsJZg.jpg" },
       { "url": "https://ifh.cc/g/ZKMrVq.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   },
   {
     "id": 12,
@@ -141,6 +152,7 @@
       { "url": "https://ifh.cc/g/drsJZg.jpg" },
       { "url": "https://ifh.cc/g/ZKMrVq.jpg" }
     ],
-    "price": "234,552"
+    "price": "234,552",
+    "liked": false
   }
 ]
