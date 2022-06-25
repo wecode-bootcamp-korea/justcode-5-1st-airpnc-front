@@ -25,9 +25,8 @@ function Home() {
       */
   const btnClick = e => {
     const wishs = e.target.value;
-    console.log(wishs);
     const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
-    console.log(alreadySelectedIndex === -1);
+    // console.log(alreadySelectedIndex === -1);
     if (alreadySelectedIndex === -1) {
       setWish([...wish, data[Number(wishs) - 1]]);
     } else {
@@ -37,7 +36,7 @@ function Home() {
     }
   };
 
-  console.log(wish);
+  // console.log(wish);
 
   const imageSize = {
     width: '350px',
@@ -56,14 +55,7 @@ function Home() {
         {data.map((data, ind) => {
           return (
             <>
-              <RoomList
-                key={ind}
-                image={data.image}
-                name={data.name}
-                price={data.price}
-                sytle={imageSize}
-                won={'원'}
-              />
+              <RoomList key={ind} room={data} sytle={imageSize} won={'원'} />
               <button
                 key={data.id}
                 className={css.btn}

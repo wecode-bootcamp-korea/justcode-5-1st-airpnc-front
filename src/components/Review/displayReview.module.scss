@@ -11,7 +11,7 @@
 }
 .review {
   background-color: white;
-  @include pa-ma-border-bottom;
+  // @include pa-ma-border-bottom;
   .score {
     @include flex-align-center;
   }

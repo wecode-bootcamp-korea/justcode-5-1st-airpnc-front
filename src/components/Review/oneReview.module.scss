@@ -17,5 +17,8 @@
     .profile_image {
       @include profile-img-size;
     }
+    .score {
+      @include flex-align-center;
+    }
   }
 }

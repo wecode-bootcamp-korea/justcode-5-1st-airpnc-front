@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
-function RoomList({ image, name, price, won, sytle }) {
+function RoomList({ room, won, sytle }) {
+  console.log(room, 2222222);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const data = {
-    name: name,
-    image: image,
-    price: price,
+    name: room.name,
+    image: room.image,
+    price: room.price,
+    profileImage: room.profileImage,
+    hostname: room.hostname,
+    guests: room.guests,
+    bedrooms: room.bedrooms,
+    beds: room.beds,
+    baths: room.baths,
+    description: room.description,
+    wish: room.wish,
   };
   const goToDetail = () => {
     navigate('/detail', { state: { ...data } });
   };
 
   const sliderImage = {
-    backgroundImage: `url(${image[currentIndex].url})`,
+    backgroundImage: `url(${room.image[currentIndex].url})`,
   };
 
   const onClickPrev = () => {
@@ -38,9 +47,9 @@ function RoomList({ image, name, price, won, sytle }) {
           style={sliderImage}
           onClick={goToDetail}
         ></div>
-        <p className={css.name}>{name}</p>
+        <p className={css.name}>{room.name}</p>
         <p className={css.price}>
-          {price}
+          {room.price}
           {won}
         </p>
         <div className={css.btn}>

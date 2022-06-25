@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
@@ -24,18 +24,33 @@ import {
 } from 'react-icons/fa';
 
 function Detail() {
-  const data = useLocation();
   const [reviewOn, setReviewOn] = useState(false);
-  // const locationName = data.state.name;
+  const [reviews, setReviews] = useState([]);
+  const [avgScore, setAvgScore] = useState();
+  const [wish, setWish] = useState([]);
+  const navigate = useNavigate();
+  const data = useLocation();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/reviewData.json');
+      const json = await res.json();
+      setReviews(json);
+      // console.log(reviews);
+    })();
+  }, []);
+  // console.log(reviews, 111);
+  const getAvgFunc = avgScore => {
+    setAvgScore(avgScore);
+  };
   return (
     <div className={css.container}>
       <section className={css.header_container}>
-        <h1>아다란 클럽 Rannalhi</h1>
+        <h1>{data.state.name}</h1>
         <div className={css.function_container}>
           <div className={css.score}>
             <FaStar />
             <span>
-              4.60 · <strong>후기 15개</strong>
+              {avgScore} · <strong>후기 {reviews.length}개</strong>
             </span>
             <span className={css.location}>스웨덴</span>
           </div>
@@ -44,22 +59,29 @@ function Detail() {
               <FaShare />
               <span className={css.function_text}>공유하기</span>
             </div>
-            <div className={css.function}>
-              <FaRegHeart />
-              <span className={css.function_text}>저장</span>
-            </div>
+            {data.state.wish === 0 ? (
+              <div className={css.function}>
+                <FaRegHeart />
+                <span className={css.function_text}>저장</span>
+              </div>
+            ) : (
+              <div className={css.function}>
+                <FaRegHeart color="red" />
+                <span className={css.function_text}>저장 목록</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
       <section className={css.image_container}>
         <div className={css.image_box}>
-          <img className={css.main} src="https://ifh.cc/g/x1WbXD.jpg"></img>
+          <img className={css.main} src={data.state.image[0].url}></img>
         </div>
         <div className={css.image_box}>
-          <img className={css.sub} src="https://ifh.cc/g/x1WbXD.jpg"></img>
-          <img className={css.sub} src="https://ifh.cc/g/x1WbXD.jpg"></img>
-          <img className={css.sub} src="https://ifh.cc/g/x1WbXD.jpg"></img>
-          <img className={css.sub} src="https://ifh.cc/g/x1WbXD.jpg"></img>
+          <img className={css.sub} src={data.state.image[1].url}></img>
+          <img className={css.sub} src={data.state.image[2].url}></img>
+          <img className={css.sub} src={data.state.image[3].url}></img>
+          <img className={css.sub} src={data.state.image[4].url}></img>
         </div>
         <button className={css.display_button}>
           <FaTh />
@@ -70,11 +92,14 @@ function Detail() {
         <div className={css.room_detail}>
           <div className={css.header}>
             <div className={css.room_contents}>
-              <h2>Rowena님이 호스팅하는 집 전체</h2>
-              <span>최대 인원 4명 침실 3개 침대 4개 간이 욕실</span>
+              <h2>{data.state.hostname}님이 호스팅하는 집 전체</h2>
+              <span>
+                최대 인원 {data.state.guests}명 침실 {data.state.bedrooms}개
+                침대 {data.state.beds}개 욕실{data.state.baths}개
+              </span>
             </div>
             <img
-              src="https://ifh.cc/g/bc20qA.jpg"
+              src={data.state.profileImage}
               className={css.profile_image}
             ></img>
           </div>
@@ -113,11 +138,7 @@ function Detail() {
             <span>더 알아보기</span>
           </div>
           <div className={css.description}>
-            <p>
-              Adaaran Club Rannalhi는 몰디브 최고의 호텔 중 하나이며 몰디브로
-              알려진 이국적인 섬 컬렉션 내에서 남말레 환초 끝에 독점적으로
-              자리잡고 있습니다.{' '}
-            </p>
+            <p>{data.state.description}</p>
             <span>더 보기</span>
           </div>
           <div className={css.facilities}>
@@ -153,8 +174,10 @@ function Detail() {
         <div className={css.reservation}>reservation and payment</div>
       </section>
       <section className={css.additional_inform}>
-        <DisplayReview />
-        <button onClick={() => setReviewOn(true)}>후기 모두 보기</button>
+        <DisplayReview data={reviews} displayCnt={3} getAvg={getAvgFunc} />
+        <button onClick={() => setReviewOn(true)}>
+          후기 {reviews.length}개 모두 보기
+        </button>
         {/* <div className={css.instruction_container}>
           <h2>알아두어야 할 사항</h2>
           <div className={css.instruction}>
@@ -203,13 +226,15 @@ function Detail() {
       </section>
       {reviewOn && (
         <ModalLayout reviewOff={() => setReviewOn(false)}>
-          <DisplayReview />
+          <DisplayReview
+            data={reviews}
+            displayCnt={data.length}
+            getAvg={getAvgFunc}
+          />
         </ModalLayout>
       )}
     </div>
   );
-  // console.log(data);
-  // return <div className={css.container}>{data.state.name}</div>;
 }
 
 export default Detail;

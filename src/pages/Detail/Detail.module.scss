@@ -113,23 +113,7 @@
 }
 .additional_inform {
   width: 900px;
-  //   @include pa-ma-border-bottom;
-  .review {
-    @include pa-ma-border-bottom;
-    .score {
-      @include flex-align-center;
-    }
-    .review_box {
-      .contents {
-        .profile {
-          @include flex-align-center;
-          .profile_image {
-            @include profile-img-size;
-          }
-        }
-      }
-    }
-  }
+  @include pa-ma-border-bottom;
   //   .instruction_container {
   //     .instruction {
   //       @include flex-space-between;
