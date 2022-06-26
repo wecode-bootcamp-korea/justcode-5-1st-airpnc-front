@@ -89,7 +89,9 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
     <div className={css.navigation}>
       <nav>
         <div className={css.room}>
-          <div className={`${css.text} ${css.textHeaderBig}`}>숙소</div>
+          <div className={`${css.text} ${css.textHeaderBig}`}>
+            <span>숙소</span>
+          </div>
         </div>
         <div className={css.searchBarContainer}>
           <div className={css.searchBar} type="button">

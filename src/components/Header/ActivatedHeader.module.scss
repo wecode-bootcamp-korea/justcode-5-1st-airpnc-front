@@ -7,11 +7,17 @@
 	color: $theme-font-color;
 }
 
-
-.textHeaderBig {
-	font-weight: 500;
-	font-size: 19px;
-
+.room {
+	.textHeaderBig {
+		display: flex;
+		justify-content: center;
+		span {
+			font-weight: 500;
+			font-size: 18px;
+			border-bottom: 2px solid black;
+			padding-bottom: 7px;
+		}
+	}
 }
 
 .text {
