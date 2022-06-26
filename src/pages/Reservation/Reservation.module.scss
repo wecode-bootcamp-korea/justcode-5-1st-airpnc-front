@@ -297,6 +297,9 @@ img.logoToHome {
 				border: $theme-border-line;
 				border-radius: 8px;
 				max-width: 600px;
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 

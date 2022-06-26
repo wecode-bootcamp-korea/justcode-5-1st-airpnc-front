@@ -21,11 +21,15 @@
 		.dropDownHeader {
 			display: flex;
 			border-bottom: $theme-border-line;
+			cursor: auto;
 			.dropdownCloseBtnBox {
 				.dropdownCloseBtn {
 					padding: 10px;
 					background-color: white;
 					border: none;
+					&:hover {
+						cursor: pointer;
+					}
 				}
 				svg {
 					font-size: 15px;

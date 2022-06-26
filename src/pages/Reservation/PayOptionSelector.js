@@ -21,7 +21,7 @@ const PayOptionSelector = props => {
   //}
 
   return (
-    <div>
+    <div id="pay-option-drop-down" onMouseLeave={() => closeHandler()}>
       {show && (
         <div className={css.container}>
           <div className={css.dropDown} id="pay-option-drop-down">
@@ -30,7 +30,7 @@ const PayOptionSelector = props => {
                 <button
                   className={css.dropdownCloseBtn}
                   onClick={() => {
-                    closeHandler(false);
+                    setShow(false);
                   }}
                 >
                   <MdClose />

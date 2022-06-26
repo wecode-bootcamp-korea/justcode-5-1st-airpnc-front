@@ -98,12 +98,12 @@ const Reservation = props => {
   const [isPayOptVisible, setPayOptVisible] = useState(false);
 
   const payOptCloseHandler = e => {
-    setPayOptVisible(e);
+    setPayOptVisible(false);
   };
 
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
   const countryOptCloseHandler = e => {
-    setPayOptVisible(e);
+    setCountryOptVisible(false);
   };
 
   // CardNumber Input Control
@@ -172,12 +172,13 @@ const Reservation = props => {
   ]);
 
   const [isConfirmedVisible, setConfirmationVisible] = useState(false);
+
   const handleConfirmBtn = () => {
     setConfirmationVisible(!isConfirmedVisible);
   };
 
   const confirmationCloseHandler = e => {
-    setConfirmationVisible(e);
+    setConfirmationVisible(false);
   };
 
   const [isNotConfirmedVisible, setConfirmationFailedVisible] = useState(false);
@@ -186,7 +187,7 @@ const Reservation = props => {
   };
 
   const confirmationFailedCloseHandler = e => {
-    setConfirmationFailedVisible(e);
+    setConfirmationFailedVisible(false);
   };
 
   // TO DO : input validation on 'pay with' section
@@ -551,6 +552,7 @@ const Reservation = props => {
                                   <RiArrowDropDownLine />
                                 </div>
                                 <CardInfoCountrySelector
+                                  id="country-drop-down"
                                   show={isCountryOptVisible}
                                   onClose={countryOptCloseHandler}
                                   setValue={setCardCountry}
