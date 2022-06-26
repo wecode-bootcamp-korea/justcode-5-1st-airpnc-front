@@ -1,10 +1,8 @@
-@import '../../styles/common.scss';
-@import './ReservationPageCommon.scss';
+@import '../../../styles/common.scss';
 
 .container {
 	display: flex;
 	position: relative;
-	z-index:2;
 	font-family: $theme-font;
 	color: $theme-font-color;
 	
@@ -24,19 +22,16 @@
 			border-bottom: $theme-border-line;
 			cursor: auto;
 			.dropdownCloseBtnBox {
-				@include flex-v-center;
 				.dropdownCloseBtn {
-					padding: 0 15px;
+					padding: 10px;
 					background-color: white;
 					border: none;
-
 					&:hover {
 						cursor: pointer;
 					}
-
-					svg {
-						font-size: 15px;
-					}
+				}
+				svg {
+					font-size: 15px;
 				}
 			}
 			.dropdownHeaderTextBox {
@@ -48,6 +43,7 @@
 					@include h3;
 				}
 			}
+			
 		}
 		.dropDownSelectors {
 			display:flex;
@@ -56,11 +52,9 @@
 			align-content: center;
 			padding: 5px 18px 10px 18px;
 
-			div {
-				@include flex-v-center;
-				min-height: 40px;
-				border-bottom: $theme-border-line;
-			}
 		}
+		
 	}
+
+
 }

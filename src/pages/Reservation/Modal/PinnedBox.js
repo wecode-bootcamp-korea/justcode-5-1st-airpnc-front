@@ -1,4 +1,4 @@
-import PriceBreakDown from '../PriceBreakDown';
+import PriceBreakDown from './PriceBreakDown';
 import css from './PinnedBox.module.scss';
 import { TiTags, TiStarFullOutline } from 'react-icons/ti';
 import { RiMedalFill } from 'react-icons/ri';

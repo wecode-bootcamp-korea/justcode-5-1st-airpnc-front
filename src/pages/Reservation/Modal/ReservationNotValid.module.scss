@@ -1,9 +1,9 @@
-@import '../../styles/common.scss';
+@import '../../../styles/common.scss';
 
 .container {
 	position: fixed;
-	left: 50%;
-	top: 50%;
+	left: 30%;
+	top: 40%;
 	-ms-transform: translate(-50%, -50%);
 	-moz-transform: translate(-50%, -50%);
 	-webkit-transform: translate(-50%, -50%);
@@ -12,7 +12,8 @@
 	font-family: $theme-font;
 	color: $theme-font-color;
 
-	.confirmationMessage {
+
+	.reservationNotValidmessage {
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
@@ -35,25 +36,25 @@
 				}
 
 				svg {
-					font-size: 15px;
+					font-size: 20px;
 				}
 			}
 
-			.confirmationHeaderTextBox {
+			.confirmationFailedHeaderTextBox {
 				min-height: 30px;
 				margin-left: 60px;
 				margin-right: 80px;
 
 				p {
-					padding: 15px;
-					@include h3;
+					padding: 60px 40px;
+					@include h2;
 					
 				}
 			}
 
 		}
 
-		.dropDownSelectors {
+		.messageContents {
 			display: flex;
 			flex-direction: column;
 			align-items: stretch;
@@ -67,6 +68,4 @@
 		}
 
 	}
-
-
 }
