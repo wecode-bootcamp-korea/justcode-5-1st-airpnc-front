@@ -1,5 +1,4 @@
-@import '../../styles/reset.scss';
-@import './ReservationPageCommon.scss';
+@import '../../styles/common.scss';
 
 .container {
 	@include flex-v-center;
