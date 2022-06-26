@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import css from './CardInfoCountrySelector.module.scss';
 import { MdClose } from 'react-icons/md';
-import CountryList from './CountryList';
+import Selections from './Selections';
 
 // MockData //
 const countries = ['Canada', 'Korea', 'Unite States'];
@@ -41,10 +41,10 @@ const CardInfoCountrySelector = props => {
             </div>
             <div className={css.dropDownSelectors}>
               {countries.map(country => (
-                <CountryList
+                <Selections
                   key={countries.indexOf(country)}
                   setValue={props.setValue}
-                  country={country}
+                  option={country}
                 />
               ))}
             </div>

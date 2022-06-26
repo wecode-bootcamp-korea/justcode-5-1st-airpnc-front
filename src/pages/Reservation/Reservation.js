@@ -101,10 +101,25 @@ const Reservation = props => {
     setPayOptVisible(false);
   };
 
+  const [payOption, setPayOption] = useState('Credit or debit card');
+  const [payOptionIcon, setPayOptionIcon] = useState(<MdCreditCard />);
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
+
   const countryOptCloseHandler = e => {
     setCountryOptVisible(false);
   };
+
+  useEffect(() => {
+    if (payOption === 'Visa') {
+      setPayOptionIcon(<SiVisa color="#122d98" />);
+    } else if (payOption === `Amex`) {
+      setPayOptionIcon(<GrAmex color="#2578bc" />);
+    } else if (payOption === 'Master') {
+      setPayOptionIcon(<SiMastercard color="#f26122" />);
+    } else {
+      setPayOptionIcon(<MdCreditCard />);
+    }
+  }, [payOption]);
 
   // CardNumber Input Control
   const [cardNumber, setCardNumber] = useState('');
@@ -404,17 +419,19 @@ const Reservation = props => {
                         >
                           <div className={css.payOptionSelectorInner}>
                             <div className={css.payOptionSelectorIcon}>
-                              <MdCreditCard />
+                              {payOptionIcon}
                             </div>
                             <div className={css.payOptionSelectorDescription}>
-                              <span>Credit or debit card</span>
+                              <span>{payOption}</span>
                             </div>
                             <div className={css.payOptionSelectorArrowDrop}>
                               <RiArrowDropDownLine />
                             </div>
                             <PayOptionSelector
+                              id="pay-option-drop-down"
                               show={isPayOptVisible}
                               onClose={payOptCloseHandler}
+                              setValue={setPayOption}
                             />
                           </div>
                         </button>
