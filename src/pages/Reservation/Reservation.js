@@ -300,6 +300,11 @@ const Reservation = props => {
     return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
   };
 
+  const [isDateEditClicked, setDateEditClicked] = useState(false);
+  const handleDateEditBtn = e => {
+    setDateEditClicked(!isDateEditClicked);
+  };
+
   return (
     <div className={css.container}>
       <header className={css.reserveBanner}>
@@ -362,7 +367,34 @@ const Reservation = props => {
                           <p className={css.yourTripDate}>{yourTripDate()}</p>
                         </div>
                         <div>
-                          <button className={css.editBtn}>Edit</button>
+                          <button
+                            className={`${css.editBtn} ${css.visible}`}
+                            onClick={handleDateEditBtn}
+                          >
+                            Edit
+                          </button>
+                          {isDateEditClicked && (
+                            <div>
+                              <input
+                                className={css.checkInInput}
+                                id="checkin-input-edit"
+                                type="date"
+                                value={checkin}
+                                onChange={event => {
+                                  setCheckin(event.target.value);
+                                }}
+                              />
+                              <input
+                                className={css.checkInInput}
+                                id="checkin-input-edit"
+                                type="date"
+                                value={checkout}
+                                onChange={event => {
+                                  setCheckout(event.target.value);
+                                }}
+                              />
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className={`${css.rclGuests}`}>
