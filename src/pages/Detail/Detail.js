@@ -128,14 +128,14 @@ function Detail() {
           <div className={css.noti}>
             <div className={css.contents}>
               <FaDoorClosed />
-              <div>
+              <div className={css.contents_text}>
                 <h3>셀프 체크인</h3>
                 <span>열쇠 보관함을 이용해 체크인 하세요</span>
               </div>
             </div>
             <div className={css.contents}>
               <FaParking />
-              <div>
+              <div className={css.contents_text}>
                 <h3>무료 주차 혜택을 누리세요</h3>
                 <span>
                   해당 지역에서 무료 주차가 가능한 몇 안 되는 숙소 중
@@ -145,7 +145,7 @@ function Detail() {
             </div>
             <div className={css.contents}>
               <FaCalendarAlt />
-              <div>
+              <div className={css.contents_text}>
                 <h3>8월 2일 전까지 무료로 취소하실 수 있습니다.</h3>
               </div>
             </div>
@@ -181,7 +181,7 @@ function Detail() {
             </ul>
             <button>편의시설 50개 모두 보기</button>
           </div>
-          <div className={css.calendar}>
+          {/* <div className={css.calendar}>
             <div className={css.calendar_header}>
               <h2>체크인 날짜를 선택해주세요.</h2>
               <span>여행 날짜를 입력하여 정확한 요금을 확인하세요</span>
@@ -191,16 +191,19 @@ function Detail() {
               <img></img>
               <span>날짜 지우기</span>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className={css.reservation}>
-          <div className={css.container}>
-            <ReservationBox room={room} reservation={reservation} />
-          </div>
+          <ReservationBox room={room} reservation={reservation} />
         </div>
       </section>
       <section className={css.additional_inform}>
-        <DisplayReview data={reviews} displayCnt={3} getAvg={getAvgFunc} />
+        <DisplayReview
+          data={reviews}
+          displayCnt={4}
+          search={false}
+          getAvg={getAvgFunc}
+        />
         <button onClick={() => setReviewOn(true)}>
           후기 {reviews.length}개 모두 보기
         </button>
@@ -255,6 +258,7 @@ function Detail() {
           <DisplayReview
             data={reviews}
             displayCnt={data.length}
+            search={true}
             getAvg={getAvgFunc}
           />
         </ModalLayout>

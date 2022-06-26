@@ -1,119 +1,127 @@
 @import '../../styles/reset.scss';
 @import './ReservationPageCommon.scss';
 
+// .wrapper {
+//   overflow-y: scroll;
+//   // height: 800px;
+// }
 .container {
-		@include flex-direction-column;
-		font-family: $theme-font;
-		color: $theme-font-color;
-		font-size: 14px;
-		color: #484848;
-		background-color: #fff;
-		margin: 0;
-		-webkit-font-smoothing: antialiased;
-		border: $theme-border-line;
-		border-radius: 10px;
-		box-shadow: $darker-shadow;
-		position: absolute;
-		padding: 30px 20px;
+  @include flex-direction-column;
+  font-family: $theme-font;
+  color: $theme-font-color;
+  font-size: 14px;
+  color: #484848;
+  background-color: #fff;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  border: $theme-border-line;
+  border-radius: 10px;
+  box-shadow: $darker-shadow;
+  padding: 30px 20px;
+  // position: sticky;
+  // height: 600px;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
 }
 
 .roomInfo {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
 }
 
 .roomRateBox {
-	@include flex-vh-center
+  @include flex-vh-center;
 }
 
 .pricePerNightBox {
-	span:nth-child(1) {
-		font-weight: bold;
-	}	
-	.pricePerNight {
-		@include h2;
-	}
+  span:nth-child(1) {
+    font-weight: bold;
+  }
+  .pricePerNight {
+    @include h2;
+  }
 }
 
 .iconStar {
-	svg {
-	font-size: 12px;
-	}
+  svg {
+    font-size: 12px;
+  }
 }
 
 .roomRate {
-	margin: 0 5px;
-	span {
-		font-size: 13px;
-	}
+  margin: 0 5px;
+  span {
+    font-size: 13px;
+  }
 }
 
 .roomReviewCnt {
-	text-decoration: underline;
-	color: gray;
+  text-decoration: underline;
+  color: gray;
 }
 
 .reserveInfoContainer {
-		display: block;
-		margin: 20px 0;
+  display: block;
+  margin: 20px 0;
 
-	.reserveInfoInner {
-		border: $theme-border-line;
-		border-radius: 8px;
-		overflow: hidden;
-		perspective: 1px;
-		.checkInOut {
-			display: flex;
-			justify-content: center;
-			align-items: stretch;
-		}
-	}
+  .reserveInfoInner {
+    border: $theme-border-line;
+    border-radius: 8px;
+    overflow: hidden;
+    perspective: 1px;
+    .checkInOut {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+  }
 }
 
-.checkIn, .checkOut, .guests {
-	width: 100%;
-	
-	input {
-		border: none;
-		padding: 15px;
-		width: 100%;
-		font-size: 16px;
-	}
+.checkIn,
+.checkOut,
+.guests {
+  width: 100%;
+
+  input {
+    border: none;
+    padding: 15px;
+    width: 100%;
+    font-size: 16px;
+  }
 }
 
 .borderRight {
-	border-right: $theme-border-line;
+  border-right: $theme-border-line;
 }
 
 .borderTop {
-	border-top: $theme-border-line;
+  border-top: $theme-border-line;
 }
 
-
-
 .rclConfirmAndPayBtn {
-	width: 100%;
-	padding: 15px 35px;
-	border: none;
-	border-radius: 8px;
-	background-color: $theme-color;
-	color: white;
-	font-weight: bold;
-	font-size: 17px;
+  width: 100%;
+  padding: 15px 35px;
+  border: none;
+  border-radius: 8px;
+  background-color: $theme-color;
+  color: white;
+  font-weight: bold;
+  font-size: 17px;
 
-	&:hover {
-		cursor: pointer;
-	}	
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .chargeAt {
-	margin: 28px 20px 0 20px;
-	.chargeAtTextBox {
-		.chargeAtText {
-			text-align: center;
-			font-size: 14px;
-		}
-	}
+  margin: 28px 20px 0 20px;
+  .chargeAtTextBox {
+    .chargeAtText {
+      text-align: center;
+      font-size: 14px;
+    }
+  }
 }

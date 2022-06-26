@@ -4,6 +4,10 @@
   display: flex;
   align-items: center;
 }
+@mixin flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
 @mixin pa-ma-border-bottom {
   border-bottom: 1px solid lightgray;
   padding-bottom: 30px;
@@ -11,8 +15,34 @@
 }
 .review {
   background-color: white;
+  width: 75%;
+  border-radius: 5px;
   // @include pa-ma-border-bottom;
   .score {
     @include flex-align-center;
+    margin-bottom: 30px;
+    h2 {
+      margin-left: 10px;
+    }
+  }
+  .search_bar {
+    @include flex-align-center;
+    width: 500px;
+    border-radius: 10px;
+    border: 2px solid lightgray;
+    background-color: lightgray;
+    margin-bottom: 20px;
+    padding: 5px;
+    input {
+      border: none;
+      background-color: lightgray;
+      margin-left: 5px;
+    }
+  }
+  .review_box {
+    @include flex-space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 30px;
   }
 }

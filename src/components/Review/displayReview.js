@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import css from './displayReview.module.scss';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaSearch } from 'react-icons/fa';
 import OneReview from '../../components/Review/oneReview';
 
-function DisplayReview({ data, displayCnt, getAvg }) {
+function DisplayReview({ data, displayCnt, search, getAvg }) {
   // console.log(data, 22222);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState(2.5);
@@ -37,9 +37,12 @@ function DisplayReview({ data, displayCnt, getAvg }) {
           {avgScore} · 후기 {data.length}개
         </h2>
       </div>
-      <div className={css.search_bar}>
-        <input type="text" placeholder="후기 검색"></input>
-      </div>
+      {search && (
+        <div className={css.search_bar}>
+          <FaSearch />
+          <input type="text" placeholder="후기 검색" />
+        </div>
+      )}
       <div className={css.review_box}>
         {data.slice(0, displayCnt).map((review, idx) => {
           return <OneReview key={idx} data={review} />;
