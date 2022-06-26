@@ -244,7 +244,7 @@ const Reservation = props => {
       'Mar',
       'Apr',
       'May',
-      'June',
+      'Jun',
       'July',
       'Aug',
       'Sep',
