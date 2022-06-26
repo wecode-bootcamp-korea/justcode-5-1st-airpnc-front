@@ -1,10 +1,23 @@
+@import '../../styles/common.scss';
+
 .container {
-  // border: 1px solid red;
-  background-color: white;
+  border: $theme-border-line;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 1px 1px 10px 1px gray;
+  background-color: white;
+  padding: 25px 100px;
+  font-family: $theme-font;
+  color: $theme-font-color;
+
+  &.search_closed {
+    align-items: center;
+  }
+
+  &.search_open {
+    align-items: flex-start;
+    
+  }
+
 }
 
 .logo {
@@ -13,8 +26,9 @@
   width: fit-content;
   justify-content: center;
   background-color: white;
-  color: rgb(255, 56, 92);
+  color: $theme-color;
   font-size: 30px;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -23,7 +37,6 @@
   border-radius: 999px;
   display: flex;
   justify-content: center;
-  color: rgb(255, 56, 92);
   font-weight: 600;
   width: 300px;
   padding: 10px;
@@ -31,7 +44,6 @@
 }
 
 .container_right {
-  color: rgb(255, 56, 92);
   display: flex;
   align-items: center;
   width: 200px;

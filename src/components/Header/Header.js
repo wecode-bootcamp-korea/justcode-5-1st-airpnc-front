@@ -8,6 +8,8 @@ import { IoAirplaneOutline } from 'react-icons/io5';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 
+const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
+
 function Header() {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
@@ -51,9 +53,13 @@ function Header() {
 
   return (
     <div>
-      <div className="container">
+      <div
+        className={`container ${
+          isClickedNav ? 'search_open' : 'search_closed'
+        }`}
+      >
         <div className="logo" onClick={() => navigate('/')}>
-          <IoAirplaneOutline size="40" />
+          <IoAirplaneOutline size="30" />
           <div>AirPnc</div>
         </div>
         {isClickedNav ? (

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import './ActivatedHeader.scss';
+import css from './ActivatedHeader.module.scss';
 
 function SearchNav({ setIsClickedNav, isClickedNav }) {
   const [whichIsClicked, setWhichIsClicked] = useState('');
@@ -78,22 +78,24 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
   };
 
   return (
-    <div className="Navigation">
+    <div className={css.navigation}>
       <nav>
-        <div className="Room">
-          <div className="text">숙소</div>
+        <div className={css.room}>
+          <div className={`${css.text} ${css.textHeaderBig}`}>숙소</div>
         </div>
-        <div className="SearchBarContainer">
-          <div className="SearchBar" type="button">
+        <div className={css.searchBarContainer}>
+          <div className={css.searchBar} type="button">
             <div
-              className="Location"
+              className={css.location}
               whichIsClicked={whichIsClicked}
               onClick={() => userSelectThis('location')}
             >
-              <div className="LocationDiv">
-                <span className="LocationText">위치</span>
+              <div className={css.locationDiv}>
+                <span className={`${css.locationText} ${css.textHeaderSmall}`}>
+                  위치
+                </span>
                 <input
-                  classnem="LocationInput"
+                  classnem={`${css.locationInput} ${css.textInput}`}
                   placeholder="어디로 여행가세요?"
                   value={searchLocation}
                   onChange={changeLocationInput}
@@ -102,14 +104,16 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
               </div>
             </div>
             <div
-              className="CheckIn"
+              className={css.checkIn}
               whichIsClicked={whichIsClicked}
               onClick={() => userSelectThis('checkIn')}
             >
-              <div className="CheckInDiv">
-                <span className="CheckInText">체크인</span>
+              <div className={css.checkInDiv}>
+                <span className={`${css.checkInText} ${css.textHeaderSmall}`}>
+                  체크인
+                </span>
                 <input
-                  className="CheckInInput"
+                  className={css.checkInInput}
                   placeholder="날짜입력"
                   value={checkInDate}
                   onChange={changeLocationInput}
@@ -118,14 +122,16 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
               </div>
             </div>
             <div
-              className="CheckOut"
+              className={css.checkOut}
               whichIsClicked={whichIsClicked}
               onClick={() => userSelectThis('checkOut')}
             >
-              <div className="CheckOutDiv">
-                <span className="CheckOutText">체크아웃</span>
+              <div className={css.checkOutDiv}>
+                <span className={`${css.checkOutText}  ${css.textHeaderSmall}`}>
+                  체크아웃
+                </span>
                 <input
-                  className="CheckOutInput"
+                  className={css.checkOutInput}
                   placeholder="날짜 입력"
                   value={checkOutDate}
                   onChange={changeLocationInput}
@@ -133,10 +139,9 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
                 />
               </div>
             </div>
-
-            <button className="PersonNum" whichIsClicked={whichIsClicked}>
+            <button className={css.personNum} whichIsClicked={whichIsClicked}>
               <div
-                className="PersonDiv"
+                className={css.personDiv}
                 onClick={() => userSelectThis('personNum')}
               >
                 {/* <span className="PersonText">인원</span>
@@ -146,12 +151,12 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
                   : '게스트 추가'}
               </span> */}
               </div>
-              <div className="MapContainer">
+              <div className={css.mapContainer}>
                 {whichIsClicked === 'personNum' &&
                   personCardData.map(card => {
                     return (
                       <span
-                        className="Person"
+                        className={css.person}
                         key={card.id}
                         id={card.id}
                         title={card.title}
@@ -166,14 +171,15 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
                   })}
               </div>
               <div
-                className="SearchZoom"
+                className={css.searchZoom}
                 type="button"
                 onClick={() => {
-                  return goToListPage(), setIsClickedNav(!isClickedNav);
+                  goToListPage();
+                  setIsClickedNav(!isClickedNav);
                 }}
                 disabled={searchBtnDisabled}
               >
-                <FaSearch className="search" />
+                <FaSearch className={css.searchIcon} />
               </div>
             </button>
           </div>
