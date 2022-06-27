@@ -707,7 +707,7 @@ const Reservation = props => {
           </section>
         </main>
       </div>
-      <div>
+      <div className={css.reserveFooterContainer}>
         <footer className={css.reserveContentFooter}>
           <Footer />
         </footer>
