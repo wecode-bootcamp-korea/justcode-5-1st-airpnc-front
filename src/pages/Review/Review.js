@@ -4,18 +4,27 @@ import ToReview from '../../components/Review/toReview';
 import MyReview from '../../components/Review/myReview';
 import ModalLayout from '../../components/Modal/modalLayout';
 import MakeReview from './modals/makeReview';
-import { FaAngleRight } from 'react-icons/fa';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 function Review() {
   const [review, setReview] = useState([]);
-  const [toReviewList, setToReviewList] = useState([1]);
+  const [toReviewList, setToReviewList] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [reviewOn, setReviewOn] = useState(false);
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/reviewData2.json');
+      const res = await fetch('http://localhost:3000/data/toReviewData.json');
+      const json = await res.json();
+      setToReviewList(json);
+      // console.log(toReviewList, 222);
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/myReviewData.json');
       const json = await res.json();
       setReview(json);
+      // console.log(review, 333);
     })();
   }, []);
   return (
@@ -39,11 +48,13 @@ function Review() {
             {toReviewList.length !== 0 ? (
               <div className={css.review_contents}>
                 {toReviewList.map((toReview, idx) => {
-                  <ToReview
-                    key={idx}
-                    data={toReview}
-                    reviewOn={() => setReviewOn(true)}
-                  />;
+                  return (
+                    <ToReview
+                      key={idx}
+                      data={toReview}
+                      reviewOn={() => setReviewOn(true)}
+                    />
+                  );
                 })}
               </div>
             ) : (
@@ -59,7 +70,14 @@ function Review() {
             {review.length !== 0 ? (
               <div className={css.review_contents}>
                 {review.map((review, idx) => {
-                  return <MyReview key={idx} data={review} />;
+                  return (
+                    <MyReview
+                      key={idx}
+                      data={review}
+                      reviewOn={() => setReviewOn(true)}
+                      r
+                    />
+                  );
                 })}
               </div>
             ) : (
@@ -67,6 +85,11 @@ function Review() {
                 아직 후기를 남기지 않으셨습니다.
               </div>
             )}
+            <div className={css.page_button}>
+              <FaAngleLeft />
+              <span className={css.current}>1</span>
+              <FaAngleRight />
+            </div>
           </div>
         )}
       </div>

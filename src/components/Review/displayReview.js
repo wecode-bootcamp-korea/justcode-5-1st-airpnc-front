@@ -3,7 +3,7 @@ import css from './displayReview.module.scss';
 import { FaStar, FaSearch } from 'react-icons/fa';
 import OneReview from '../../components/Review/oneReview';
 
-function DisplayReview({ data, displayCnt, search, getAvg }) {
+function DisplayReview({ data, displayCnt, search, getAvg, ref }) {
   // console.log(data, 22222);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState(2.5);
@@ -30,7 +30,7 @@ function DisplayReview({ data, displayCnt, search, getAvg }) {
     getAvg(average);
   };
   return (
-    <div className={css.review}>
+    <div ref={ref} className={css.review}>
       <div className={css.score}>
         <FaStar />
         <h2>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
@@ -23,6 +23,7 @@ import {
   FaCarAlt,
   FaTv,
 } from 'react-icons/fa';
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 
 // Mock Data for testing //
 const room = {
@@ -52,6 +53,7 @@ function Detail() {
   const [wish, setWish] = useState([]);
   const navigate = useNavigate();
   const data = useLocation();
+  const el = useRef();
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:3000/data/reviewData.json');
@@ -61,6 +63,12 @@ function Detail() {
     })();
   }, []);
   // console.log(reviews, 111);
+  const reviewOff = e => {
+    console.log(el.current.contains(e.target));
+    if (!el.current.contains(e.target)) {
+      setReviewOn(false);
+    }
+  };
   const getAvgFunc = avgScore => {
     setAvgScore(avgScore);
   };
@@ -254,13 +262,15 @@ function Detail() {
         </div> */}
       </section>
       {reviewOn && (
-        <ModalLayout reviewOff={() => setReviewOn(false)}>
-          <DisplayReview
-            data={reviews}
-            displayCnt={data.length}
-            search={true}
-            getAvg={getAvgFunc}
-          />
+        <ModalLayout reviewOff={reviewOff}>
+          <div ref={el} className={css.containerReview}>
+            <DisplayReview
+              data={reviews}
+              displayCnt={data.length}
+              search={true}
+              getAvg={getAvgFunc}
+            />
+          </div>
         </ModalLayout>
       )}
     </div>
