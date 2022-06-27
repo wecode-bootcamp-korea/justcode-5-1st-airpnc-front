@@ -1,24 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import css from './Review.module.scss';
 import ToReview from '../../components/Review/toReview';
 import MyReview from '../../components/Review/myReview';
 import ModalLayout from '../../components/Modal/modalLayout';
 import MakeReview from './modals/makeReview';
-import { FaAngleRight } from 'react-icons/fa';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 function Review() {
-  const [review, setReview] = useState([1]);
-  const [toReviewList, setToReviewList] = useState([1]);
+  const [review, setReview] = useState([]);
+  const [toReviewList, setToReviewList] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [reviewOn, setReviewOn] = useState(false);
-
-  //   useEffect(() => {
-  //     fetch('/review.json')
-  //       .then(res => res.json())
-  //       .then(res => {
-  //         setReview(res);
-  //       });
-  //   });
+  const el = useRef();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/toReviewData.json');
+      const json = await res.json();
+      setToReviewList(json);
+      // console.log(toReviewList, 222);
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/myReviewData.json');
+      const json = await res.json();
+      setReview(json);
+      // console.log(review, 333);
+    })();
+  }, []);
+  const offModal = e => {
+    console.log(el.current.contains(e.target));
+    if (!el.current.contains(e.target)) {
+      setReviewOn(false);
+    }
+  };
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -39,7 +54,15 @@ function Review() {
             <h2 className={css.review_title}>작성해야 할 후기</h2>
             {toReviewList.length !== 0 ? (
               <div className={css.review_contents}>
-                <ToReview reviewOn={() => setReviewOn(true)} />
+                {toReviewList.map((toReview, idx) => {
+                  return (
+                    <ToReview
+                      key={idx}
+                      data={toReview}
+                      reviewOn={() => setReviewOn(true)}
+                    />
+                  );
+                })}
               </div>
             ) : (
               <div className={css.review_contents}>
@@ -53,19 +76,35 @@ function Review() {
             <h2 className={css.review_title}>내가 작성한 후기</h2>
             {review.length !== 0 ? (
               <div className={css.review_contents}>
-                <MyReview />
+                {review.map((review, idx) => {
+                  return (
+                    <MyReview
+                      key={idx}
+                      data={review}
+                      reviewOn={() => setReviewOn(true)}
+                      r
+                    />
+                  );
+                })}
               </div>
             ) : (
               <div className={css.review_contents}>
                 아직 후기를 남기지 않으셨습니다.
               </div>
             )}
+            <div className={css.page_button}>
+              <FaAngleLeft />
+              <span className={css.current}>1</span>
+              <FaAngleRight />
+            </div>
           </div>
         )}
       </div>
       {reviewOn && (
-        <ModalLayout reviewOff={() => setReviewOn(false)}>
-          <MakeReview />
+        <ModalLayout reviewOff={offModal}>
+          <div ref={el} className={css.modal}>
+            <MakeReview />
+          </div>
         </ModalLayout>
       )}
     </div>

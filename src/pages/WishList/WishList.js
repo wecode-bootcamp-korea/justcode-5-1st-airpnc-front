@@ -33,6 +33,7 @@ function WishList() {
               <RoomList
                 key={data.ind}
                 id={data.id}
+                room={data}
                 image={data.image}
                 sytle={imageSize}
                 btnStyle={btnStyle}
