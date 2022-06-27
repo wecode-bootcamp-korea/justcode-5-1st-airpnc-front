@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import css from './PayOptionSelector.module.scss';
 import { MdClose } from 'react-icons/md';
+import Selections from './Selections';
+
+// MockData //
+const payOptions = ['Visa', 'Master', 'Amex'];
+/////////////
 
 const PayOptionSelector = props => {
   const [show, setShow] = useState(false);
@@ -21,7 +26,7 @@ const PayOptionSelector = props => {
   //}
 
   return (
-    <div>
+    <div id="pay-option-drop-down" onMouseLeave={() => closeHandler()}>
       {show && (
         <div className={css.container}>
           <div className={css.dropDown} id="pay-option-drop-down">
@@ -30,7 +35,7 @@ const PayOptionSelector = props => {
                 <button
                   className={css.dropdownCloseBtn}
                   onClick={() => {
-                    closeHandler(false);
+                    setShow(false);
                   }}
                 >
                   <MdClose />
@@ -41,9 +46,13 @@ const PayOptionSelector = props => {
               </div>
             </div>
             <div className={css.dropDownSelectors}>
-              <div>Credit Card</div>
-              <div>Paypal</div>
-              <div>Google Pay</div>
+              {payOptions.map(option => (
+                <Selections
+                  key={payOptions.indexOf(option)}
+                  setValue={props.setValue}
+                  option={option}
+                />
+              ))}
             </div>
           </div>
         </div>

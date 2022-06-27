@@ -1,5 +1,4 @@
-@import '../../styles/reset.scss';
-@import './ReservationPageCommon.scss';
+@import '../../../styles/common.scss';
 
 .container {
 	@include flex-v-center;
@@ -7,7 +6,6 @@
 	color: $theme-font-color;
 	min-height: 40px;
 	border-bottom: $theme-border-line;
-
 	&:hover {
 		cursor: pointer;
 	}

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
-import ReservationBox from '../Reservation/ReservationBox';
+import ReservationBox from '../Reservation/Modal/ReservationBox';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // // or for Day.js
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
