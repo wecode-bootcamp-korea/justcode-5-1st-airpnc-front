@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import css from './CardInfoCountrySelector.module.scss';
 import { MdClose } from 'react-icons/md';
-import CountryList from './CountryList';
+import Selections from './Selections';
 
 // MockData //
 const countries = ['Canada', 'Korea', 'Unite States'];
-//
+//////////////
+
 const CardInfoCountrySelector = props => {
   const [show, setShow] = useState(false);
 
@@ -18,23 +19,17 @@ const CardInfoCountrySelector = props => {
     setShow(props.show);
   }, [props.show]);
 
-  //const innerComponent = countries.map((country) => <></>);
-
-  //function getInnerComponent(countries) {
-  //  return countries.map((country) => <></>);
-  //}
-
   return (
-    <div>
+    <div id="country-drop-down" onMouseLeave={() => closeHandler()}>
       {show && (
         <div className={css.container}>
-          <div className={css.dropDown} id="country-drop-down">
+          <div className={css.dropDown}>
             <div className={css.dropDownHeader}>
               <div className={css.dropdownCloseBtnBox}>
                 <button
                   className={css.dropdownCloseBtn}
                   onClick={() => {
-                    closeHandler(false);
+                    setShow(false);
                   }}
                 >
                   <MdClose />
@@ -46,10 +41,10 @@ const CardInfoCountrySelector = props => {
             </div>
             <div className={css.dropDownSelectors}>
               {countries.map(country => (
-                <CountryList
+                <Selections
                   key={countries.indexOf(country)}
                   setValue={props.setValue}
-                  country={country}
+                  option={country}
                 />
               ))}
             </div>

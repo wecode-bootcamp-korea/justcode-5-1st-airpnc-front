@@ -1,4 +1,4 @@
-@import '../../styles/reset.scss';
+@import '../../styles/common.scss';
 @import './ReservationPageCommon.scss';
 
 svg {
@@ -58,6 +58,7 @@ img.logoToHome {
 		border: none;
 		margin: 0 10px 0 0;
 		padding: 0;
+
 		&:hover {
 			cursor: pointer;
 		}
@@ -82,7 +83,7 @@ img.logoToHome {
 	.reserveContent {
 		// TO Do 
 		// pusehd when content right position is set to 'fixed'
-		@include flex-h-center  
+		@include flex-h-center
 	}
 
 }
@@ -90,12 +91,13 @@ img.logoToHome {
 // reserve Content left
 .reserveContentLeft {
 
-	
+
 	input {
 		//display: flex;
 		@include flex-v-center;
 	}
 }
+
 //.rclConfirmAndPay {
 //	@include flex-v-center;
 //}
@@ -112,6 +114,7 @@ img.logoToHome {
 
 }
 
+// Price Average Rate
 .rclPriceRateAvgContainer {
 	@include flex-v-center;
 	display: block;
@@ -138,10 +141,9 @@ img.logoToHome {
 		font-weight: bold;
 		padding: 0 0 10px 0;
 	}
-	.priceRateDetail {
-	
-	}
-	
+
+	.priceRateDetail {}
+
 	.iconPriceTag {
 		position: absolute;
 		top: 19%;
@@ -153,12 +155,12 @@ img.logoToHome {
 			color: $theme-color;
 		}
 	}
-
 }
 
+// Your trip
 .rclYourTripContainer {
 	padding: 30px 5px;
-	@include flex-v-center;
+	display: block;
 
 	.rclYourTrip {
 		@include flex-direction-column;
@@ -182,21 +184,63 @@ img.logoToHome {
 
 		.rclDates,
 		.rclGuests {
-			@include flex-direction-column;
-			align-items: flex-start;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
 
-			h3 {
-				@include h3;
+			div:nth-child(1) {
+				@include flex-direction-column;
+				align-items: flex-start;
+
+				h3 {
+					@include h3;
+				}
+
+				p {
+					margin-top: 10px;
+				}
+			}
+			div:nth-child(2) {
+				display: flex;
+			.editBtn {
+				border: none;
+				text-decoration: underline;
+				background-color: white;
+				font-weight: bold;
+				font-size: 14px;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 
-			p {
-				margin-top: 10px;
+			.editInput {
+				display: flex;
+				align-items: flex-end;
+				border: none;
+				text-decoration: underline;
+				background-color: white;
+				font-weight: bold;
+				font-size: 14px;
+				color: white;
+				width: 2em;
+				line-height: 25px;
+
+				&:focus {
+					outline: none;
+				}
 			}
 
+			input[type=number]::-webkit-inner-spin-button, 
+			input[type=number]::-webkit-outer-spin-button {  
+			   opacity: 1;
+				 width: 30px;
+				 height: 30px;
+				 background-color: white;
+			}
+		}
 		}
 	}
-
-
 }
 
 
@@ -205,7 +249,7 @@ img.logoToHome {
 	padding: 30px 0;
 	border-top: $theme-border-line;
 	@include flex-v-center;
-	
+
 	input,
 	button {
 		padding: 10px 20px;
@@ -238,13 +282,13 @@ img.logoToHome {
 					svg {
 						font-size: 22px;
 					}
-				}
+				}				
 			}
 		}
 
 		.payOptionSelector {
 			@include flex-direction-column;
-			
+
 			align-items: stretch;
 			margin: 5px 0;
 
@@ -253,6 +297,9 @@ img.logoToHome {
 				border: $theme-border-line;
 				border-radius: 8px;
 				max-width: 600px;
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 
@@ -261,120 +308,130 @@ img.logoToHome {
 			position: relative;
 
 			.payOptionSelectorIcon {
-			margin-right: 10px;
+				margin-right: 10px;
+			}
+
+			.payOptionSelectorArrowDrop {
+				position: absolute;
+				right: 1px;
+				padding: 0;
+				margin: 0;
+			}
 		}
 
-		.payOptionSelectorArrowDrop {
-			position: absolute;
-			right: 1px;
-			padding: 0;
-			margin: 0;
-		}
-	}
+		.cardInfo {
+			display: flex;
+			justify-content: space-between;
+			margin: 5px 0;
 
-	.cardInfo {
-		display: flex;
-		justify-content: space-between;
-		margin: 5px 0;
-
-		.onCard {
-			@include flex-direction-column;
-			align-items: stretch;
-
-			.cardInfoForm {
+			.onCard {
 				@include flex-direction-column;
 				align-items: stretch;
-				border: $theme-border-line;
-				border-radius: 8px;
-				overflow: hidden;
-				perspective: 1px;
 
-				.cardNumber {
+				.cardInfoForm {
 					@include flex-direction-column;
 					align-items: stretch;
-					border-bottom: $theme-border-line;
+					border: $theme-border-line;
+					border-radius: 8px;
+					overflow: hidden;
+					perspective: 1px;
 
-					.cardNumberInput {
-						
-						border: none;
-					}
-				}
+					.cardNumber {
+						@include flex-direction-column;
+						align-items: stretch;
+						border-bottom: $theme-border-line;
 
-				.cardOtherInfo {
-					@include flex-v-center;
-					.cardExpiration {
-						input {
+						.cardNumberInput {
+
 							border: none;
-							border-right: $theme-border-line;
 						}
 					}
 
-					.cardCVV {
-						.cardCVVInput {
-							border: none;
+					.cardOtherInfo {
+						@include flex-v-center;
 
-							&:focus {
-								overflow: hidden;
-								perspective: 1px;
+						.cardExpiration {
+							input {
+								border: none;
+								border-right: $theme-border-line;
 							}
 						}
 
+						.cardCVV {
+							.cardCVVInput {
+								border: none;
+
+								&:focus {
+									overflow: hidden;
+									perspective: 1px;
+								}
+							}
+
+						}
 					}
 				}
-			}
 
-			.cardInfoPostalCode {
-				margin: 10px 0;
-				@include flex-direction-column;
-				align-items: stretch;
+				.cardInfoPostalCode {
+					margin: 10px 0;
+					@include flex-direction-column;
+					align-items: stretch;
 
-				.cardPostalCodeInput {
-					border: $theme-border-line;
-					border-radius: 8px;
+					.cardPostalCodeInput {
+						border: $theme-border-line;
+						border-radius: 8px;
+					}
 				}
-			}
 
-			.cardInfoCountry {
-				@include flex-direction-column;
-				align-items: stretch;
+				.cardInfoCountry {
+					@include flex-direction-column;
+					align-items: stretch;
 
-				
-				button.cardCountryBtn {
-					border: $theme-border-line;
-					border-radius: 8px;
-					background-color: white;
 
-					&:hover {
-						cursor: pointer;
+					button.cardCountryBtn {
+						border: $theme-border-line;
+						border-radius: 8px;
+						background-color: white;
+
+						&:hover {
+							cursor: pointer;
+						}
 					}
 				}
 			}
 		}
-	}
-	
-	.cardCountryInner{
-		@include flex-v-center;
-		position: relative;
-	.cardCountryArrowDrop {
-		position: absolute;
-		right: 1px;
-		padding: 0;
-		margin: 0;
-	}
-}
 
-	.rclEnterCoupon {
-		margin: 15px 0;
-		padding: 5px;
-		background-color: white;
+		.cardCountryInner {
+			@include flex-v-center;
+			position: relative;
 
-		p {
-			font-weight: bold;
-			font-size: 18px;
-			text-decoration: underline;
+			.cardCountryArrowDrop {
+				position: absolute;
+				right: 1px;
+				padding: 0;
+				margin: 0;
+			}
+		}
+
+		.rclEnterCoupon {
+			margin: 15px 0;
+			padding: 5px;
+			background-color: white;
+
+			p {
+				font-weight: bold;
+				font-size: 18px;
+				text-decoration: underline;
+			}
+		}
+		input:focus, textarea:focus {
+			outline: none;
+			// border: 1px solid $theme-color;
+			// border-color: red;
+			// box-shadow: 0 0 3px red;
+			// -moz-box-shadow: 0 0 3px red;
+			// -webkit-box-shadow: 0 0 3px red;
 		}
 	}
-}
 }
 
 
@@ -426,8 +483,6 @@ img.logoToHome {
 		}
 	}
 }
-
-///////////////////////////////////
 
 // Cancellation Policy
 .rclCancellationPolicy {
@@ -483,104 +538,8 @@ img.logoToHome {
 	}
 }
 
-// reserve Content Right
-@media screen and (max-width: 700px) {
-	.reserveContentRight {
-		display: none;
-	}
-}
-
-.reserveContentRightSection {
-	.reserveContentRight {
-		display: flex;
-		align-items: flex-start;
-		max-width: 430px;
-		min-width: 375px;
-		margin: 0 55px;
-
-		// TO DO : when position set to 'fixed' 
-		// contentLeft is set to be at center instead of centent
-		//position: fixed;
-		//top: 20%;
-
-		.rcrPinnedBox {
-			border-radius: 12px;
-			border: .1px solid $theme-border-color;
-			padding: 20px;
-
-			.rcrAccommodationSummary {
-				.rcrAccommodationSummaryInner {
-					display: flex;
-
-					.accommodationPhotoBox {
-						.accommodationPhoto {
-							width: 130px;
-							height: 100px;
-							border-radius: 8px;
-						}
-					}
-
-					.accommodationDescription {
-						padding: 0 10px;
-
-						.roomType {}
-
-						.roomName {
-							margin-top: 10px;
-							margin-bottom: 10px;
-							font-size: 16px;
-						}
-
-						.roomEtcInfo {
-							svg {
-								font-size: 13px;
-							}
-
-							@include flex-v-center;
-
-							.roomRate {
-								@include flex-v-center;
-							}
-
-							.roomHostType {
-								@include flex-v-center;
-							}
-
-
-						}
-					}
-				}
-
-			}
-
-			.rcrAircover {
-				margin: 30px 0;
-				border-top: $theme-border-line;
-				border-bottom: $theme-border-line;
-
-				.rcrAircoverInner {
-					padding: 25px 0;
-					font-size: 16px;
-				}
-			}
-
-			.rcrPriceDetails {
-				.rcrPriceDetailsInner {
-					h2 {
-						padding: 5px 0;
-						@include h2;
-					}
-
-					.rcrPriceBreakDown {
-						margin-bottom: 10px;
-					}
-				}
-			}
-		}
-	}
-}
+.reserveContentRightSection {}
 
 .reserveContentFooter {
-	position: relative;
-	bottom: 10px;
+	margin-top: 100px;
 }
