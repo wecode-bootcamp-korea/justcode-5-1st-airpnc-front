@@ -1,0 +1,134 @@
+@import '../../styles/common.scss';
+
+.navigation {
+	display: flex;
+	align-items: center;
+	font-family: $theme-font;
+	color: $theme-font-color;
+}
+
+.room {
+	.textHeaderBig {
+		display: flex;
+		justify-content: center;
+		span {
+			font-weight: 500;
+			font-size: 18px;
+			border-bottom: 2px solid black;
+			padding-bottom: 7px;
+		}
+	}
+}
+
+.text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.searchBarContainer {
+	.searchBar {
+		display: flex;
+		margin: 20px;
+		border: $theme-border-line;
+		border-radius: 80px;
+		min-width: 395px;
+
+		.location,
+		.checkIn,
+		.checkOut,
+		.personNum {
+			padding: 15px 0;
+			
+			
+			&:hover {
+				background-color: lightgray;
+				//overflow: hidden;
+				border-radius: 80px;
+			}
+
+			&:focus-within{
+				background-color: white;
+				border-radius: 80px;
+				box-shadow: $darker-shadow;
+			}
+			
+			.innerDivider {
+				padding: 0 30px;
+				&.centerLine {
+				border-left: $theme-border-line;
+				border-right: $theme-border-line;
+				}
+				&.searchButton {
+					padding-right: 10px;
+				}
+			}
+
+			
+			.locationDiv,
+			.checkInDiv,
+			.checkOutDiv, .personDiv {
+				@include flex-direction-column;
+				position: relative;
+
+				.textHeaderSmall {
+					position: absolute;
+					font-weight: bold;
+					font-size: 13px;
+					left: 0;
+					top: 25%;
+				}
+
+				.textInput {
+					display: block;
+					border: 0;
+					background: none;
+					margin: 0;
+					padding: 0;
+					display: block;
+					width: 100%;
+					line-height: 22px;
+					padding-top: 23px;
+
+					&:focus {
+						outline: none !important;
+						border: none;
+						background: none;			
+					}
+				}
+
+				input:not([type]), input[type='text'] {
+					padding-right: 10px;
+				}
+
+				input[type='date'] {
+					padding-right: 70px;					
+				}			
+			}
+		}
+
+		/* 
+		TO DO 
+		guest filed need to set after implementing guest function
+		*/
+		.personNum{
+
+		.searchZoom {
+			@include flex-v-center;
+			background-color: $theme-color;
+			padding: 15px;
+			border-radius: 80px;
+			color: white;
+
+			svg {
+				font-size: 16px;
+			}
+			p{
+				font-size: 16px;
+				font-weight: bold;
+			}
+		}
+	}
+	}
+}

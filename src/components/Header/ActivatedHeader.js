@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import './ActivatedHeader.scss';
+import css from './ActivatedHeader.module.scss';
 
 function SearchNav({ setIsClickedNav, isClickedNav }) {
   const [whichIsClicked, setWhichIsClicked] = useState('');
   const [personCardData, setPersonCardData] = useState([]);
   const [searchLocation, setSerchLocation] = useState('');
-  const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
+  const [checkInDate, setCheckInDate] = useState('날짜입력');
+  const [checkOutDate, setCheckOutDate] = useState('날짜입력');
   const [personNum, setPersonNum] = useState(0);
   const [childNum, setChildNum] = useState(0);
   const [searchBtnDisabled, setSearchBtnDisabled] = useState(true);
@@ -77,105 +77,157 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
     }
   };
 
+  const changeInputType = (id, type) => {
+    document.getElementById(id).type = type;
+  };
+
+  const setInputPlaceholder = (id, str) => {
+    document.getElementById(id).placeholder = str;
+  };
+
   return (
-    <div className="Navigation">
+    <div className={css.navigation}>
       <nav>
-        <div className="Room">
-          <div className="text">숙소</div>
+        <div className={css.room}>
+          <div className={`${css.text} ${css.textHeaderBig}`}>
+            <span>숙소</span>
+          </div>
         </div>
-        <div className="SearchBarContainer">
-          <div className="SearchBar" type="button">
+        <div className={css.searchBarContainer}>
+          <div className={css.searchBar} type="button">
             <div
-              className="Location"
+              className={css.location}
               whichIsClicked={whichIsClicked}
               onClick={() => userSelectThis('location')}
             >
-              <div className="LocationDiv">
-                <span className="LocationText">위치</span>
-                <input
-                  classnem="LocationInput"
-                  placeholder="어디로 여행가세요?"
-                  value={searchLocation}
-                  onChange={changeLocationInput}
-                  name="location"
-                />
+              <div className={css.innerDivider}>
+                <div className={css.locationDiv}>
+                  <span
+                    className={`${css.locationText} ${css.textHeaderSmall}`}
+                  >
+                    위치
+                  </span>
+                  <input
+                    id="location-input-on-header"
+                    className={`${css.locationInput} ${css.textInput}`}
+                    type="text"
+                    placeholder="어디로 여행가세요?"
+                    value={searchLocation}
+                    onChange={changeLocationInput}
+                    name="location"
+                    onFocus={event => {
+                      setInputPlaceholder(event.target.id, '');
+                    }}
+                    onBlur={event => {
+                      if (event.target.value.length < 1) {
+                        setInputPlaceholder(
+                          event.target.id,
+                          '어디로 여행가세요?'
+                        );
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <div
-              className="CheckIn"
+              className={css.checkIn}
               whichIsClicked={whichIsClicked}
               onClick={() => userSelectThis('checkIn')}
             >
-              <div className="CheckInDiv">
-                <span className="CheckInText">체크인</span>
-                <input
-                  className="CheckInInput"
-                  placeholder="날짜입력"
-                  value={checkInDate}
-                  onChange={changeLocationInput}
-                  name="checkIn"
-                />
+              <div className={`${css.innerDivider} ${css.centerLine}`}>
+                <div className={css.checkInDiv}>
+                  <span className={`${css.checkInText} ${css.textHeaderSmall}`}>
+                    체크인
+                  </span>
+                  <input
+                    id="check-in-input-on-header"
+                    className={`${css.checkInInput} ${css.textInput}`}
+                    type="text"
+                    placeholder={checkInDate}
+                    value={checkInDate}
+                    onChange={changeLocationInput}
+                    name="checkIn"
+                    onFocus={event => changeInputType(event.target.id, 'date')}
+                    onBlur={event => changeInputType(event.target.id, 'text')}
+                  />
+                </div>
               </div>
             </div>
             <div
-              className="CheckOut"
+              className={css.checkOut}
               whichIsClicked={whichIsClicked}
               onClick={() => userSelectThis('checkOut')}
             >
-              <div className="CheckOutDiv">
-                <span className="CheckOutText">체크아웃</span>
-                <input
-                  className="CheckOutInput"
-                  placeholder="날짜 입력"
-                  value={checkOutDate}
-                  onChange={changeLocationInput}
-                  name="checkOut"
-                />
+              <div className={`${css.innerDivider}`}>
+                <div className={css.checkOutDiv}>
+                  <span
+                    className={`${css.checkOutText}  ${css.textHeaderSmall}`}
+                  >
+                    체크아웃
+                  </span>
+                  <input
+                    id="check-out-input-on-header"
+                    className={`${css.checkOutInput} ${css.textInput}`}
+                    type="text"
+                    placeholder={checkOutDate}
+                    value={checkOutDate}
+                    onChange={changeLocationInput}
+                    name="checkOut"
+                    onFocus={event => changeInputType(event.target.id, 'date')}
+                    onBlur={event => changeInputType(event.target.id, 'text')}
+                  />
+                </div>
               </div>
             </div>
-
-            <button className="PersonNum" whichIsClicked={whichIsClicked}>
-              <div
-                className="PersonDiv"
-                onClick={() => userSelectThis('personNum')}
-              >
-                {/* <span className="PersonText">인원</span>
-              <span classneme="PersonInput">
-                {personNum + childNum > 0
-                  ? `게스트 ${personNum + childNum}명`
-                  : '게스트 추가'}
-              </span> */}
+            <div className={css.personNum} whichIsClicked={whichIsClicked}>
+              <div className={`${css.innerDivider} ${css.searchButton}`}>
+                <div
+                  className={css.personDiv}
+                  onClick={() => userSelectThis('personNum')}
+                >
+                  {/* <span className={`${css.personText} ${css.textHeaderSmall}`}
+                    >
+                      인원
+                    </span>
+                    <span className={`${css.personInput}`}>
+                      {personNum + childNum > 0
+                        ? `게스트 ${personNum + childNum}명`
+                        : '게스트 추가'}
+                    </span> */}
+                </div>
+                <div className={css.mapContainer}>
+                  {whichIsClicked === 'personNum' &&
+                    personCardData.map(card => {
+                      return (
+                        <span
+                          className={css.person}
+                          key={card.id}
+                          id={card.id}
+                          title={card.title}
+                          subtitle={card.subTitle}
+                          backgroundcolor={card.backgroundcolor}
+                          personNum={personNum}
+                          childNum={childNum}
+                          //   plusPersonNumber={plusPersonNumber}
+                          //   minusPersonNumber={minusPersonNumber}
+                        />
+                      );
+                    })}
+                </div>
+                <div
+                  className={css.searchZoom}
+                  type="button"
+                  onClick={() => {
+                    goToListPage();
+                    setIsClickedNav(!isClickedNav);
+                  }}
+                  disabled={searchBtnDisabled}
+                >
+                  <FaSearch className={css.searchIcon} />
+                </div>
               </div>
-              <div className="MapContainer">
-                {whichIsClicked === 'personNum' &&
-                  personCardData.map(card => {
-                    return (
-                      <span
-                        className="Person"
-                        key={card.id}
-                        id={card.id}
-                        title={card.title}
-                        subtitle={card.subTitle}
-                        backgroundcolor={card.backgroundcolor}
-                        personNum={personNum}
-                        childNum={childNum}
-                        //   plusPersonNumber={plusPersonNumber}
-                        //   minusPersonNumber={minusPersonNumber}
-                      />
-                    );
-                  })}
-              </div>
-              <div
-                className="SearchZoom"
-                type="button"
-                onClick={() => {
-                  return goToListPage(), setIsClickedNav(!isClickedNav);
-                }}
-                disabled={searchBtnDisabled}
-              >
-                <FaSearch className="search" />
-              </div>
-            </button>
+            </div>
           </div>
         </div>
       </nav>
