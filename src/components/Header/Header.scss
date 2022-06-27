@@ -1,10 +1,14 @@
+@import '../../styles/common.scss';
+
 .container {
-  // border: 1px solid red;
-  background-color: white;
+  border: $theme-border-line;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 1px 1px 10px 1px gray;
+  background-color: white;
+  padding: 25px 100px;
+  font-family: $theme-font;
+  color: $theme-font-color;
+  align-items: flex-start;
 }
 
 .logo {
@@ -13,25 +17,39 @@
   width: fit-content;
   justify-content: center;
   background-color: white;
-  color: rgb(255, 56, 92);
-  font-size: 30px;
+  color: $theme-color;
+  font-size: 25px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .search {
-  box-shadow: 1px 1px 10px 1px gray;
-  border-radius: 999px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 5%);
+  border: 1px solid $theme-border-color;
+  border-radius: 40px;
   display: flex;
   justify-content: center;
-  color: rgb(255, 56, 92);
+  align-items: center;
   font-weight: 600;
   width: 300px;
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
+  position: relative;
+
+  .iconSearch {
+    background-color: $theme-color;
+    position: absolute;
+    right: 3%;
+    padding: 10px;
+    border-radius:50%;
+  svg {
+    font-size: 13px;
+    color: white;
+  }
+}
 }
 
 .container_right {
-  color: rgb(255, 56, 92);
   display: flex;
   align-items: center;
   width: 200px;
