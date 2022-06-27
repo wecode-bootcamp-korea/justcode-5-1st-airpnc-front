@@ -7,18 +7,17 @@ import MakeReview from './modals/makeReview';
 import { FaAngleRight } from 'react-icons/fa';
 
 function Review() {
-  const [review, setReview] = useState([1]);
+  const [review, setReview] = useState([]);
   const [toReviewList, setToReviewList] = useState([1]);
   const [toggle, setToggle] = useState(true);
   const [reviewOn, setReviewOn] = useState(false);
-
-  //   useEffect(() => {
-  //     fetch('/review.json')
-  //       .then(res => res.json())
-  //       .then(res => {
-  //         setReview(res);
-  //       });
-  //   });
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/reviewData2.json');
+      const json = await res.json();
+      setReview(json);
+    })();
+  }, []);
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -39,7 +38,13 @@ function Review() {
             <h2 className={css.review_title}>작성해야 할 후기</h2>
             {toReviewList.length !== 0 ? (
               <div className={css.review_contents}>
-                <ToReview reviewOn={() => setReviewOn(true)} />
+                {toReviewList.map((toReview, idx) => {
+                  <ToReview
+                    key={idx}
+                    data={toReview}
+                    reviewOn={() => setReviewOn(true)}
+                  />;
+                })}
               </div>
             ) : (
               <div className={css.review_contents}>
@@ -53,7 +58,9 @@ function Review() {
             <h2 className={css.review_title}>내가 작성한 후기</h2>
             {review.length !== 0 ? (
               <div className={css.review_contents}>
-                <MyReview />
+                {review.map((review, idx) => {
+                  return <MyReview key={idx} data={review} />;
+                })}
               </div>
             ) : (
               <div className={css.review_contents}>
