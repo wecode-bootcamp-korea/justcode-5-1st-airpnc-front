@@ -13,6 +13,8 @@ function MainFilter() {
     e.preventDefaul();
   };
   const onClick = e => {
+    console.log(el.current);
+    console.log(e.target);
     if (!el.current.contains(e.target)) {
       setReviewOn(false);
     }
