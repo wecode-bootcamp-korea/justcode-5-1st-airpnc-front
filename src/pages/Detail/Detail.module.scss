@@ -175,6 +175,14 @@
     top: 0;
   }
 }
+.modal {
+  display: inline-block;
+  width: 80%;
+  // max-width: 55%;
+  // height: 90%;
+  background-color: white;
+  border-radius: 20px;
+}
 .additional_inform {
   // width: 900px;
   @include pa-ma-border-bottom;

@@ -17,6 +17,10 @@ function WishList() {
     height: '280px',
     marginBottom: '100px',
   };
+
+  const btnStyle = {
+    top: '-60%',
+  };
   return (
     <>
       <Header />
@@ -25,13 +29,14 @@ function WishList() {
       <div className={css.container}>
         {wish.state.map((data, ind) => {
           return (
-            <div className={css.wishList}>
+            <div key={ind + 3} className={css.wishList}>
               <RoomList
                 key={data.ind}
                 id={data.id}
                 room={data}
                 image={data.image}
                 sytle={imageSize}
+                btnStyle={btnStyle}
               />
               <div key={ind + 2} className={css.info}>
                 <div className={css.name} key={ind}>

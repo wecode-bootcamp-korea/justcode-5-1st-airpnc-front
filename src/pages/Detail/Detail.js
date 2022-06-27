@@ -63,7 +63,7 @@ function Detail() {
     })();
   }, []);
   // console.log(reviews, 111);
-  const reviewOff = e => {
+  const offModal = e => {
     console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
       setReviewOn(false);
@@ -262,8 +262,8 @@ function Detail() {
         </div> */}
       </section>
       {reviewOn && (
-        <ModalLayout reviewOff={reviewOff}>
-          <div ref={el} className={css.containerReview}>
+        <ModalLayout reviewOff={offModal}>
+          <div ref={el} className={css.modal}>
             <DisplayReview
               data={reviews}
               displayCnt={data.length}

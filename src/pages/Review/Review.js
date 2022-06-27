@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import css from './Review.module.scss';
 import ToReview from '../../components/Review/toReview';
 import MyReview from '../../components/Review/myReview';
@@ -11,6 +11,7 @@ function Review() {
   const [toReviewList, setToReviewList] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [reviewOn, setReviewOn] = useState(false);
+  const el = useRef();
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:3000/data/toReviewData.json');
@@ -27,6 +28,12 @@ function Review() {
       // console.log(review, 333);
     })();
   }, []);
+  const offModal = e => {
+    console.log(el.current.contains(e.target));
+    if (!el.current.contains(e.target)) {
+      setReviewOn(false);
+    }
+  };
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -94,8 +101,10 @@ function Review() {
         )}
       </div>
       {reviewOn && (
-        <ModalLayout reviewOff={() => setReviewOn(false)}>
-          <MakeReview />
+        <ModalLayout reviewOff={offModal}>
+          <div ref={el} className={css.modal}>
+            <MakeReview />
+          </div>
         </ModalLayout>
       )}
     </div>

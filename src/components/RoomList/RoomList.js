@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
-function RoomList({ room, won, sytle }) {
-  console.log(room, 2222222);
+function RoomList({ room, won, sytle, btnStyle }) {
+  // console.log(room, 2222222);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const data = {
@@ -52,7 +52,7 @@ function RoomList({ room, won, sytle }) {
           {room.price}
           {won}
         </p>
-        <div className={css.btn}>
+        <div className={css.btn} style={btnStyle}>
           <button className={css.prevBtnStyle} onClick={onClickPrev}>
             &lt;
           </button>
