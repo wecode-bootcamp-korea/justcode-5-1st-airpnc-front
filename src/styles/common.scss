@@ -1,9 +1,56 @@
-$theme-border-color: rgb(221, 221, 221);
+@import './reset.scss';
+
+$theme-border-color: #dddddd;
 $theme-border-line: 1px solid $theme-border-color;
 $theme-font: 'AirbnbCereal_W_Bk', 'Montserrat', sans-serif, Courier, monospace;
 //Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 $theme-font-color: rgb(34, 34, 34) !important;
-$theme-color: #e21960;
+$theme-color: #ff385c;
 $tooltip-shadow: 0 0 2px 0 lightgrey;
-
 $darker-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+@mixin flex-vh-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-v-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-h-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-direction-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin h1 {
+  font-family: inherit;
+  font-size: 30px;
+  font-weight: bold;
+  color: $theme-font-color;
+}
+
+@mixin h2 {
+  font-family: inherit;
+  font-size: 21px;
+  font-weight: bold;
+  color: $theme-font-color;
+}
+
+@mixin h3 {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  color: $theme-font-color;
+}
+
+* {
+  box-sizing: border-box;
+}

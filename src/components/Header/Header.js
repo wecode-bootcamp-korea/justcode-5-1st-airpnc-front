@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ActivatedHeader from './ActivatedHeader';
 // import LoginPop from './LoginPop';
 
-import { IoAirplaneOutline } from 'react-icons/io5';
+import { FaAirbnb } from 'react-icons/fa';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 
@@ -53,8 +53,8 @@ function Header() {
     <div>
       <div className="container">
         <div className="logo" onClick={() => navigate('/')}>
-          <IoAirplaneOutline size="40" />
-          <div>AirPnc</div>
+          <FaAirbnb size="40" />
+          <div>airpnc</div>
         </div>
         {isClickedNav ? (
           <ActivatedHeader
@@ -63,10 +63,12 @@ function Header() {
           />
         ) : (
           <div onClick={() => setIsClickedNav(!isClickedNav)}>
-            <p className="search">
-              <FaSearch />
-              검색 시작하기
-            </p>
+            <div className="search">
+              <p>검색 시작하기</p>
+              <div className="iconSearch">
+                <FaSearch />
+              </div>
+            </div>
           </div>
         )}
         <div className="container_right">
