@@ -5,13 +5,12 @@ import Header from '../../components/Header/Header';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
-import BedRoom from '../../components/MainFilter/BedRoom';
-import RoomType from '../../components/MainFilter/RoomType';
 
 function Home() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
   const navigate = useNavigate();
+  const button = useRef();
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:3000/data/roomData.json');
@@ -22,6 +21,7 @@ function Home() {
 
   const btnClick = e => {
     const wishs = e.target.value;
+    console.log(button);
     console.log(wishs);
     const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
     console.log(alreadySelectedIndex === -1);
@@ -81,6 +81,8 @@ function Home() {
                 won={'원'}
               />
               <button
+                ref={button}
+                id={data.id}
                 className={css.likeBtn}
                 key={data.id}
                 onClick={btnClick}
