@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
@@ -48,20 +48,43 @@ const reservation = {
 //////////////////////////
 
 function Detail() {
+  const [reviewOn, setReviewOn] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [avgScore, setAvgScore] = useState();
+  const [wish, setWish] = useState([]);
+  const navigate = useNavigate();
   const data = useLocation();
   const room = data.state.data;
   console.log('room: ', room);
-  const [reviewOn, setReviewOn] = useState(false);
+  const el = useRef();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/reviewData.json');
+      const json = await res.json();
+      setReviews(json);
+      // console.log(reviews);
+    })();
+  }, []);
+  // console.log(reviews, 111);
+  const offModal = e => {
+    console.log(el.current.contains(e.target));
+    if (!el.current.contains(e.target)) {
+      setReviewOn(false);
+    }
+  };
+  const getAvgFunc = avgScore => {
+    setAvgScore(avgScore);
+  };
   // const locationName = data.state.name;
   return (
     <div className={css.container}>
       <section className={css.header_container}>
-        <h1>아다란 클럽 Rannalhi</h1>
+        <h1>{room.name}</h1>
         <div className={css.function_container}>
           <div className={css.score}>
             <FaStar />
             <span>
-              4.60 · <strong>후기 15개</strong>
+              {avgScore} · <strong>후기 {reviews.length}개</strong>
             </span>
             <span className={css.location}>스웨덴</span>
           </div>
@@ -70,10 +93,17 @@ function Detail() {
               <FaShare />
               <span className={css.function_text}>공유하기</span>
             </div>
-            <div className={css.function}>
-              <FaRegHeart />
-              <span className={css.function_text}>저장</span>
-            </div>
+            {room.wish === 0 ? (
+              <div className={css.function}>
+                <FaRegHeart />
+                <span className={css.function_text}>저장</span>
+              </div>
+            ) : (
+              <div className={css.function}>
+                <FaRegHeart color="red" />
+                <span className={css.function_text}>저장 목록</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -95,22 +125,25 @@ function Detail() {
         <div className={css.room_detail}>
           <div className={css.header}>
             <div className={css.room_contents}>
-              <h2>Rowena님이 호스팅하는 집 전체</h2>
-              <span>최대 인원 4명 침실 3개 침대 4개 간이 욕실</span>
+              <h2>{data.state.hostname}님이 호스팅하는 집 전체</h2>
+              <span>
+                최대 인원 {data.state.guests}명 침실 {data.state.bedrooms}개
+                침대 {data.state.beds}개 욕실{data.state.baths}개
+              </span>
             </div>
             <img src={room.profileImage} className={css.profile_image}></img>
           </div>
           <div className={css.noti}>
             <div className={css.contents}>
               <FaDoorClosed />
-              <div>
+              <div className={css.contents_text}>
                 <h3>셀프 체크인</h3>
                 <span>열쇠 보관함을 이용해 체크인 하세요</span>
               </div>
             </div>
             <div className={css.contents}>
               <FaParking />
-              <div>
+              <div className={css.contents_text}>
                 <h3>무료 주차 혜택을 누리세요</h3>
                 <span>
                   해당 지역에서 무료 주차가 가능한 몇 안 되는 숙소 중
@@ -120,7 +153,7 @@ function Detail() {
             </div>
             <div className={css.contents}>
               <FaCalendarAlt />
-              <div>
+              <div className={css.contents_text}>
                 <h3>8월 2일 전까지 무료로 취소하실 수 있습니다.</h3>
               </div>
             </div>
@@ -135,11 +168,7 @@ function Detail() {
             <span>더 알아보기</span>
           </div>
           <div className={css.description}>
-            <p>
-              Adaaran Club Rannalhi는 몰디브 최고의 호텔 중 하나이며 몰디브로
-              알려진 이국적인 섬 컬렉션 내에서 남말레 환초 끝에 독점적으로
-              자리잡고 있습니다.{' '}
-            </p>
+            <p>{data.state.description}</p>
             <span>더 보기</span>
           </div>
           <div className={css.facilities}>
@@ -160,7 +189,7 @@ function Detail() {
             </ul>
             <button>편의시설 50개 모두 보기</button>
           </div>
-          <div className={css.calendar}>
+          {/* <div className={css.calendar}>
             <div className={css.calendar_header}>
               <h2>체크인 날짜를 선택해주세요.</h2>
               <span>여행 날짜를 입력하여 정확한 요금을 확인하세요</span>
@@ -170,17 +199,22 @@ function Detail() {
               <img></img>
               <span>날짜 지우기</span>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className={css.reservation}>
-          <div className={css.container}>
-            <ReservationBox room={room} reservation={reservation} />
-          </div>
+          <ReservationBox room={room} reservation={reservation} />
         </div>
       </section>
       <section className={css.additional_inform}>
-        <DisplayReview />
-        <button onClick={() => setReviewOn(true)}>후기 모두 보기</button>
+        <DisplayReview
+          data={reviews}
+          displayCnt={4}
+          search={false}
+          getAvg={getAvgFunc}
+        />
+        <button onClick={() => setReviewOn(true)}>
+          후기 {reviews.length}개 모두 보기
+        </button>
         {/* <div className={css.instruction_container}>
           <h2>알아두어야 할 사항</h2>
           <div className={css.instruction}>
@@ -228,14 +262,19 @@ function Detail() {
         </div> */}
       </section>
       {reviewOn && (
-        <ModalLayout reviewOff={() => setReviewOn(false)}>
-          <DisplayReview />
+        <ModalLayout reviewOff={offModal}>
+          <div ref={el} className={css.modal}>
+            <DisplayReview
+              data={reviews}
+              displayCnt={data.length}
+              search={true}
+              getAvg={getAvgFunc}
+            />
+          </div>
         </ModalLayout>
       )}
     </div>
   );
-  // console.log(data);
-  // return <div className={css.container}>{data.state.name}</div>;
 }
 
 export default Detail;
