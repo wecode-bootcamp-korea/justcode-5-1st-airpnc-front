@@ -63,6 +63,8 @@ function Home() {
     opacity: '1',
   };
 
+  const token = localStorage.getItem('login-token');
+  console.log(token);
   return (
     <>
       <Header />
