@@ -1,5 +1,4 @@
 .ProfileWrapper {
-  //section`
   position: fixed;
   float: left;
   top: 15%;
@@ -10,14 +9,11 @@
 }
 
 .UserProfile {
-  //div`
   position: relative;
 }
 
 .ProfileImg {
-  //div`
   margin: 0 auto 1rem;
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjYmlp9JDeNMaFZzw9S3G1dVztGqF_2vq9nA&usqp=CAU0');
   background-size: cover;
   background-position: center;
   width: 120px;
@@ -26,12 +22,10 @@
 }
 
 .ImageWrapper {
-  //form`
   position: relative;
 }
 
 .UploadBtn {
-  //label`
   display: block;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -40,12 +34,10 @@
 }
 
 .ImgUpload {
-  //input`
   display: none;
 }
 
 .SubmitBtn {
-  //button`
   display: block;
   margin: 0 auto;
   border: 1px solid black;
@@ -57,26 +49,22 @@
 }
 
 .SelfOkay {
-  //div`
   padding: 3rem 0 2rem;
   border-bottom: 1px solid #ddd;
 }
 
 .SelfName {
-  //h5`
   margin: 1rem 0;
   font-size: 1.1rem;
   font-weight: bold;
 }
 
 .SelfInfo {
-  //p`
   line-height: 1.3rem;
   word-break: keep-all;
 }
 
 .SelfBtn {
-  //button`
   margin: 1rem 0 0;
   padding: 10px 20px;
   font-size: 1.1rem;
@@ -90,12 +78,10 @@
 }
 
 .FreeUser {
-  //div
   padding: 2rem 0 0;
 }
 
 .CheckMe {
-  //h4`
   margin-bottom: 1rem;
   font-size: 1.4rem;
   font-weight: bold;
@@ -103,6 +89,5 @@
 }
 
 .CheckUser {
-  //p`
   line-height: 1.3rem;
 }
