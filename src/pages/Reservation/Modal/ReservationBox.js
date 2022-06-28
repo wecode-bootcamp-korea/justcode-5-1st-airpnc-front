@@ -47,7 +47,7 @@ const ReservationBox = props => {
   };
 
   return (
-    <div>
+    <div className={css.wrapper}>
       <div className={css.container}>
         <div className={css.containerInner}>
           <div className={css.roomInfo}>

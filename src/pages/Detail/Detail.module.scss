@@ -1,5 +1,11 @@
 @import '../../styles/reset.scss';
+@import '../../styles/common.scss';
 
+@mixin button-style-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 @mixin flex-column {
   display: flex;
   flex-direction: column;
@@ -36,6 +42,13 @@
   height: 40px;
   border-radius: 50%;
 }
+
+// * {
+//   font-family: $theme-font !important;
+//   // color: $theme-font-color;
+//   border: $theme-border-line;
+//   // box-shadow: $darker-shadow;
+// }
 .container {
   width: 1200px;
   margin: 0 auto;
@@ -44,11 +57,30 @@
 
 .header_container {
   @include flex-column;
+  padding: 20px 0;
+  h1 {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
   .function_container {
     @include flex-space-between;
+    .score {
+      @include flex-align-center;
+      span {
+        margin-left: 10px;
+      }
+    }
   }
   .function_group {
     @include flex-align-center;
+    .function {
+      margin-left: 10px;
+      @include flex-align-center;
+      span {
+        margin-left: 5px;
+        text-decoration: underline;
+      }
+    }
   }
 }
 .image_container {
@@ -66,20 +98,32 @@
     position: absolute;
     bottom: 15px;
     right: 10px;
+    @include flex-align-center;
+    span {
+      margin-left: 10px;
+    }
   }
 }
 
 .room_detail_container {
   @include flex-center;
+  @include pa-ma-border-bottom;
   .room_detail {
+    height: 900px;
     padding-right: 40px;
     .header {
       @include flex-align-center;
+      justify-content: space-between;
       @include pa-ma-border-bottom;
       .profile_image {
         @include profile-img-size;
       }
       .room_contents {
+        // margin-right: 10px;
+        h2 {
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
       }
     }
     .noti {
@@ -87,18 +131,38 @@
       .contents {
         @include flex-align-center;
         margin-bottom: 30px;
+        .contents_text {
+          margin-left: 15px;
+        }
       }
     }
     .insurance {
       @include pa-ma-border-bottom;
+      h2 {
+        font-size: 30px;
+        margin-bottom: 25px;
+      }
     }
     .description {
       @include pa-ma-border-bottom;
     }
     .facilities {
-      @include pa-ma-border-bottom;
+      // @include pa-ma-border-bottom;
       .contents {
+        @include flex-align-center;
         margin-bottom: 30px;
+        span {
+          margin-left: 10px;
+        }
+      }
+      h2 {
+        margin-bottom: 25px;
+      }
+      button {
+        @include button-style-reset;
+        border-radius: 8px;
+        background-color: white;
+        padding: 10px;
       }
     }
     .calendar {
@@ -106,29 +170,27 @@
     }
   }
   .reservation {
-    width: 300px;
-    background-color: pink;
+    height: 550px;
     position: sticky;
+    top: 0;
   }
 }
+.modal {
+  display: inline-block;
+  width: 80%;
+  // max-width: 55%;
+  // height: 90%;
+  background-color: white;
+  border-radius: 20px;
+}
 .additional_inform {
-  width: 900px;
-  //   @include pa-ma-border-bottom;
-  .review {
-    @include pa-ma-border-bottom;
-    .score {
-      @include flex-align-center;
-    }
-    .review_box {
-      .contents {
-        .profile {
-          @include flex-align-center;
-          .profile_image {
-            @include profile-img-size;
-          }
-        }
-      }
-    }
+  // width: 900px;
+  @include pa-ma-border-bottom;
+  button {
+    @include button-style-reset;
+    border-radius: 8px;
+    background-color: white;
+    padding: 10px;
   }
   //   .instruction_container {
   //     .instruction {

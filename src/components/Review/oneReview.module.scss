@@ -12,10 +12,18 @@
 }
 
 .contents {
+  margin-right: 250px;
+  margin-bottom: 30px;
   .profile {
+    margin-bottom: 15px;
     @include flex-align-center;
     .profile_image {
+      margin-right: 10px;
       @include profile-img-size;
+    }
+    .score {
+      margin-left: 20px;
+      @include flex-align-center;
     }
   }
 }

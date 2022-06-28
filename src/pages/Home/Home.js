@@ -21,10 +21,9 @@ function Home() {
 
   const btnClick = e => {
     const wishs = e.target.value;
-    console.log(button);
     console.log(wishs);
     const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
-    console.log(alreadySelectedIndex === -1);
+    // console.log(alreadySelectedIndex === -1);
     if (alreadySelectedIndex === -1) {
       data[Number(wishs) - 1].like = true;
       setWish([...wish, data[Number(wishs) - 1]]);
@@ -73,15 +72,8 @@ function Home() {
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
-            <div key={ind + 1} className={css.roomListContainer}>
-              <RoomList
-                key={ind}
-                image={data.image}
-                name={data.name}
-                price={data.price}
-                sytle={imageSize}
-                won={'원'}
-              />
+            <div>
+              <RoomList key={ind} room={data} sytle={imageSize} won={'원'} />
               <button
                 ref={button}
                 id={data.id}
