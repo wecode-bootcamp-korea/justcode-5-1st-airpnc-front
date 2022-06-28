@@ -3,28 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
 function RoomList({ room, won, sytle, btnStyle }) {
-  // console.log(room, 2222222);
+  //console.log(room.photo[0].url);
+  //const profileImg = room.photo[0].url;
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const data = {
     name: room.name,
-    image: room.image,
+    images: room.photo,
     price: room.price,
-    profileImage: room.profileImage,
-    hostname: room.hostname,
+    profileImage: room.photo[0].url,
+    hostname: room.users.name,
     guests: room.guests,
     bedrooms: room.bedrooms,
     beds: room.beds,
     baths: room.baths,
     description: room.description,
-    wish: room.wish,
+    wish: true,
   };
   const goToDetail = () => {
-    navigate('/detail', { state: { ...data } });
+    //navigate('/detail', { state: { ...data } });
+    navigate('/detail', { state: { data } });
   };
 
   const sliderImage = {
-    backgroundImage: `url(${room.image[currentIndex].url})`,
+    backgroundImage: `url(${room.photo[currentIndex].url})`,
   };
 
   const onClickPrev = () => {

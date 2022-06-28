@@ -13,7 +13,10 @@ function Home() {
   const button = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/roomData.json');
+      //const res = await fetch('http://localhost:3000/data/roomData.json');
+      const res = await fetch(
+        'http://localhost:3000/data/backend/roomData2.json'
+      );
       const json = await res.json();
       setData(json);
     })();
