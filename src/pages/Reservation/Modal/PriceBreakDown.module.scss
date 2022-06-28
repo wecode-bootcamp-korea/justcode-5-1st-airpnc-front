@@ -1,0 +1,41 @@
+@import '../../../styles/common.scss';
+
+.container {
+	@include flex-direction-column;
+	font-family: $theme-font;
+	color: $theme-font-color;
+	font-size: 14px;
+	color: #484848;
+	background-color: #fff;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+.priceDetails {
+	margin: 20px 0;
+
+	.priceBreakDown {
+		@include flex-direction-column;
+
+		.priceByNights,
+		.priceCleaning,
+		.priceServiceFee,
+		.priceTaxes {
+			display: flex;
+			justify-content: space-between;
+			margin: 10px 0;
+
+			div:nth-child(1) {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.total {
+	display: flex;
+	justify-content: space-between;
+	border-top: $theme-border-line;
+	padding: 30px 0 0 0;
+	@include h3;
+}

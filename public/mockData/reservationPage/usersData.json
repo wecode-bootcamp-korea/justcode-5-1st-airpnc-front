@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Mary",
+    "email": "mary@email.com",
+    "password": "mary12345",
+    "profile_image": "http://localhost:3000/images/images/profile/woman.png"
+  },
+  {
+    "id": 2,
+    "name": "James",
+    "email": "james@email.com",
+    "password": "james12345",
+    "profile_image": "http://localhost:3000/images/images/profile/man.png"
+  },
+  {
+    "id": 3,
+    "name": "Linda",
+    "email": "linda@email.com",
+    "password": "linda12345",
+    "profile_image": "http://localhost:3000/images/images/profile/woman.png"
+  },
+  {
+    "id": 4,
+    "name": "John",
+    "email": "john@email.com",
+    "password": "john12345",
+    "profile_image": "http://localhost:3000/images/images/profile/man.png"
+  },
+  {
+    "id": 5,
+    "name": "Jennifer",
+    "email": "jennifer@email.com",
+    "password": "jennifer12345",
+    "profile_image": "http://localhost:3000/images/images/profile/woman.png"
+  }
+]

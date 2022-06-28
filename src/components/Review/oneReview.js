@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react';
 import css from './oneReview.module.scss';
+import { FaStar } from 'react-icons/fa';
 
-function oneReview() {
+function oneReview({ data }) {
   return (
     <div className={css.contents}>
       <div className={css.profile}>
-        <img
-          src="https://ifh.cc/g/bc20qA.jpg"
-          className={css.profile_image}
-        ></img>
+        <img src={data.profile_image} className={css.profile_image}></img>
         <div className={css.profile_info}>
-          <h3>Johannes Rudolf</h3>
-          <span>2021년 8월</span>
+          <h3>{data.user_id}</h3>
+          {data.updated_at ? (
+            <span>{data.updated_at}</span>
+          ) : (
+            <span>{data.created_at}</span>
+          )}
+        </div>
+        <div className={css.score}>
+          <FaStar />
+          <span>{data.score}</span>
         </div>
       </div>
-      <p>섬에서의 환상적인 휴가였습니다.</p>
+      <p>{data.review}</p>
     </div>
   );
 }
