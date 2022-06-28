@@ -57,15 +57,15 @@ export default function MyProfile({ userImg, userName, getMyProfile }) {
           <div className="FreeUser">
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              이름:{data[0].name}
+              <p className="Check_user">이름:{data[0].name}</p>
             </p>
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              Email:{data[0].email}
+              <p className="Check_user">Email:{data[0].email}</p>
             </p>
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              전화번호:{data[0].phone}
+              <p className="Check_user">전화번호:{data[0].phone}</p>
             </p>
           </div>
         </div>
