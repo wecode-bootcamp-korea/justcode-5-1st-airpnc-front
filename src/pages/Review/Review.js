@@ -22,7 +22,7 @@ function Review() {
   }, []);
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/myReviewData.json');
+      const res = await fetch('http://localhost:10010/review/my/1');
       const json = await res.json();
       setReview(json);
       // console.log(review, 333);
