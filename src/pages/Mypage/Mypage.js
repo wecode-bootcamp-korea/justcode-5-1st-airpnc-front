@@ -6,6 +6,8 @@ import './Mypage.scss';
 
 function MyPage() {
   const [data, setData] = useState([]);
+  const token = localStorage.getItem('login-token');
+  console.log(token);
 
   useEffect(() => {
     (async () => {
@@ -19,9 +21,10 @@ function MyPage() {
     return <div>데이터없음</div>;
   }
   console.log(data[0]);
+
   return (
     <>
-      <Header />
+      {token ? <Header login /> : <Header />}
       <div>
         {
           <article className="MyPageWrapper">

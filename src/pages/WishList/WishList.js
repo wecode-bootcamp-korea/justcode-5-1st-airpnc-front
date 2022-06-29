@@ -21,9 +21,12 @@ function WishList() {
   const btnStyle = {
     top: '-60%',
   };
+
+  const token = localStorage.getItem('login-token');
+  console.log(token);
   return (
     <>
-      <Header />
+      {token ? <Header login /> : <Header />}
       <div onClick={goHome}>back</div>
       <div className={css.title}>위시리스트</div>
       <div className={css.container}>

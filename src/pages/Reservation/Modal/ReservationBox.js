@@ -12,17 +12,28 @@ const airbnbConst = {
 
 const reservationPage = '/reservation';
 const ReservationBox = props => {
-  const { room, reservation } = props;
+  const { room, reservation, reviewScore, reviewCnt } = props;
   const [checkin, setCheckIn] = useState(reservation.checkin);
   const [checkout, setCheckOut] = useState(reservation.checkout);
+  const [nights, setNights] = useState(0);
   const [guests, setGuests] = useState(reservation.guests);
 
-  useMemo(() => {
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays;
+  };
+
+  useEffect(() => {
     reservation.checkin = checkin;
+    setNights(getTotalNights(checkin, checkout));
   }, [checkin]);
 
   useEffect(() => {
     reservation.checkout = checkout;
+    setNights(getTotalNights(checkin, checkout));
   }, [checkout]);
 
   useMemo(() => {
@@ -37,7 +48,12 @@ const ReservationBox = props => {
   const handleReservationBtn = () => {
     if (isBtnActive) {
       navigate(reservationPage, {
-        state: { room: room, reservation: reservation },
+        state: {
+          room: room,
+          reservation: reservation,
+          reviewScore: reviewScore,
+          reviewCnt: reviewCnt,
+        },
       });
     }
   };
@@ -63,11 +79,11 @@ const ReservationBox = props => {
                 <TiStarFullOutline />
               </div>
               <div className={css.roomRate} id="room-score">
-                {room.score}
+                {reviewScore}
               </div>
               <span>&nbsp;·&nbsp;&nbsp;</span>
               <div className={css.roomReviewCnt} id="review-count">
-                {room.reviewCnt} reviews
+                {reviewCnt} reviews
               </div>
             </div>
           </div>
@@ -132,7 +148,11 @@ const ReservationBox = props => {
             </div>
           </div>
           <div className={css.priceBreakDown}>
-            <PriceBreakDown room={room} reservation={reservation} />
+            <PriceBreakDown
+              room={room}
+              reservation={reservation}
+              nights={nights}
+            />
           </div>
         </div>
       </div>

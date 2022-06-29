@@ -4,8 +4,10 @@ import css from './Signup.module.scss';
 //import "./App.css";
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,7 +21,31 @@ function Signup() {
   password.current = watch('password');
 
   const onSubmit = data => {
-    console.log('data', data);
+    const req = {
+      email: data.email,
+      name: data.name,
+      password: data.password,
+      password_confirm: data.password_confirm,
+      phone_number: data.mobile_number,
+    };
+    fetch('http://localhost:10010/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          navigate('/login');
+        } else {
+          alert(res.msg);
+        }
+      })
+      .catch(() => {
+        console.error('회원가입 중 에러 발생');
+      });
   };
 
   return (
@@ -91,23 +117,21 @@ function Signup() {
           <input
             className={css.input}
             type="tel"
-            {...register('mobile_number', {
+            {...register('phone_number', {
               required: true,
               maxLength: 11,
               minLength: 8,
             })}
           />
-          {errors.mobile_number && errors.mobile_number.type === 'required' && (
+          {errors.phone_number && errors.phone_number.type === 'required' && (
             <p className={css.p}>휴대전화 번호는 필수 항목입니다.</p>
           )}
-          {errors.mobile_number &&
-            errors.mobile_number.type === 'maxLength' && (
-              <p className={css.p}>11자 이하로 입력해주세요.</p>
-            )}
-          {errors.mobile_number &&
-            errors.mobile_number.type === 'minLength' && (
-              <p className={css.p}>8자 이상으로 입력해주세요.</p>
-            )}
+          {errors.phone_number && errors.phone_number.type === 'maxLength' && (
+            <p className={css.p}>11자 이하로 입력해주세요.</p>
+          )}
+          {errors.phone_number && errors.phone_number.type === 'minLength' && (
+            <p className={css.p}>8자 이상으로 입력해주세요.</p>
+          )}
 
           <input className={css.signup_button} type="submit" />
         </form>
