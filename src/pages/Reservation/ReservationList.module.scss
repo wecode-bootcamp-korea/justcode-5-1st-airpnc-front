@@ -1,0 +1,46 @@
+@import '../../styles/reset.scss';
+
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+  .header {
+    margin: 30px 0 50px 0;
+    .route {
+      @include flex-align-center;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 30px;
+    }
+  }
+  .tab {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+    span {
+      margin-right: 15px;
+    }
+  }
+  .reservation_container {
+    border: 1px solid lightgray;
+    .reservation_box {
+      .reservation_title {
+        background-color: lightgray;
+        height: 40px;
+        padding: 10px;
+      }
+      .reservation_contents {
+        padding: 20px;
+      }
+      .page_button {
+        display: flex;
+        align-self: center;
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { ImStarFull } from 'react-icons/im';
 import { MdReviews } from 'react-icons/md';
 import MyProfile from './components/MyProfile';
 import MyReservation from './components/MyReservation';
-
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './Mypage.scss';
 
@@ -11,7 +11,7 @@ function MyPage() {
   const [profile, setProfile] = useState('');
   const [roomLists, setRoomLists] = useState([]);
   const [reviews, setReviews] = useState('');
-
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -23,7 +23,7 @@ function MyPage() {
                 <h2 classnem="MyName">
                   안녕하세요. <span className="Name">{profile.name}</span>님.
                 </h2>
-                <div className="b">
+                <div onClick={() => navigate('/reservationList')} className="b">
                   <h4 className="Title">
                     <ImStarFull size="20" color="#999" />
                     &nbsp;예약 내역

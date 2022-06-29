@@ -38,10 +38,8 @@ const room = {
 };
 
 const reservation = {
-  id: 1,
-  guests: 4,
-  checkin: '2022-06-10',
-  checkout: '2022-06-14',
+  user_id: 2,
+  room_id: 1,
 };
 
 //////////////////////////
@@ -202,7 +200,7 @@ function Detail() {
           </div> */}
         </div>
         <div className={css.reservation}>
-          <ReservationBox room={room} reservation={reservation} />
+          <ReservationBox room={room} idObject={reservation} />
         </div>
       </section>
       <section className={css.additional_inform}>

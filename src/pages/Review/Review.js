@@ -14,7 +14,7 @@ function Review() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/toReviewData.json');
+      const res = await fetch('http://localhost:10010/reservation/toReview/2');
       const json = await res.json();
       setToReviewList(json);
       // console.log(toReviewList, 222);

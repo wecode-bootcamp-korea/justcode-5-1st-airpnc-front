@@ -6,6 +6,7 @@ import Home from './Home/Home';
 import Login from './Login/Login';
 import Mypage from './Mypage/Mypage';
 import Reservation from './Reservation/Reservation';
+import ReservationList from './Reservation/ReservationList';
 import Review from './Review/Review';
 import Signup from './Signup/Signup';
 import WishList from './WishList/WishList';
@@ -21,6 +22,7 @@ function Router() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/filter" element={<Filter />} />
         <Route path="/reservation" element={<Reservation />} />
+        <Route path="/reservationList" element={<ReservationList />} />
         <Route path="/review" element={<Review />} />
         <Route path="/wishlist" element={<WishList />} />
       </Routes>

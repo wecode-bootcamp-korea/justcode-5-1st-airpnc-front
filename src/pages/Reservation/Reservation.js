@@ -82,13 +82,16 @@ const Reservation = props => {
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
   const [guests, setGuests] = useState(reservation.guests);
+  const [reservationNumber, setReservationNumber] = useState(0);
 
   useEffect(() => {
     reservation.checkin = checkin;
+    console.log(reservation.checkin);
   }, [checkin]);
 
   useEffect(() => {
     reservation.checkout = checkout;
+    console.log(reservation.checkout);
   }, [checkout]);
 
   useEffect(() => {
@@ -335,9 +338,7 @@ const Reservation = props => {
                 >
                   <MdNavigateBefore />
                 </button>
-                <h1 className={css.reserveContentTitleText}>
-                  Confirm and pay • Airbnb
-                </h1>
+                <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
               </div>
             </div>
           </section>
@@ -682,10 +683,13 @@ const Reservation = props => {
                     </button>
                     {isPayable ? (
                       <ReservationConfirmed
+                        getNum={reservationNum =>
+                          setReservationNumber(reservationNum)
+                        }
                         show={isConfirmedVisible}
                         onClose={confirmationCloseHandler}
                         yourTripDate={yourTripDate()}
-                        guests={guests}
+                        reservation={reservation}
                       />
                     ) : (
                       <ReservationNotValid

@@ -12,10 +12,18 @@ const airbnbConst = {
 
 const reservationPage = '/reservation';
 const ReservationBox = props => {
-  const { room, reservation } = props;
-  const [checkin, setCheckIn] = useState(reservation.checkin);
-  const [checkout, setCheckOut] = useState(reservation.checkout);
-  const [guests, setGuests] = useState(reservation.guests);
+  const { room, idObject } = props;
+  const [checkin, setCheckIn] = useState('2022-06-22');
+  const [checkout, setCheckOut] = useState('2022-06-25');
+  const [guests, setGuests] = useState(0);
+
+  const reservation = {
+    checkin,
+    checkout,
+    guests,
+    user_id: idObject.user_id,
+    room_id: idObject.room_id,
+  };
 
   useMemo(() => {
     reservation.checkin = checkin;

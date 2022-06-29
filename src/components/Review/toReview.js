@@ -6,7 +6,7 @@ function ToReview({ data, reviewOn }) {
   return (
     <div className={css.container}>
       <div className={css.room_info}>
-        <img src={data.image[0].url}></img>
+        <img src={data.file_url}></img>
         <div className={css.info_text}>
           <span>
             {data.city},{data.country}

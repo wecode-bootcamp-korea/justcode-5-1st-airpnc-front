@@ -23,7 +23,7 @@ const getTotalNights = (date1, date2) => {
   let checkout = new Date(date2);
   let diff = Math.abs(checkout.getTime() - checkin.getTime());
   let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
-  return noofdays - 1;
+  return noofdays;
 };
 
 const PriceBreakDown = props => {

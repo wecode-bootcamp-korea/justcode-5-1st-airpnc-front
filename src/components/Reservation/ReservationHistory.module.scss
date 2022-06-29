@@ -1,0 +1,38 @@
+@import '../../styles/reset.scss';
+
+@mixin button-style-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .reservation_info {
+    display: flex;
+    align-items: center;
+    img {
+      width: 200px;
+      height: auto;
+    }
+    .info_text {
+      display: flex;
+      flex-direction: column;
+      .date {
+        display: inline-block;
+        margin-top: 10px;
+      }
+    }
+  }
+  button {
+    @include button-style-reset;
+    width: 100px;
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    background-color: white;
+    padding: 10px;
+  }
+}
