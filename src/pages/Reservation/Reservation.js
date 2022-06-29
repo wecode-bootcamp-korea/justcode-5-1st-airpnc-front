@@ -20,7 +20,7 @@ import { IoDiamondOutline } from 'react-icons/io5';
 const profileImgCat = '/images/profile/cat.png';
 
 const priceRateSummary = 'This is a rare find.';
-const priceRateDetail = `Sarah's place is usually booked.`;
+const priceRateDetail = `'s place is usually booked.`;
 
 const requirements = {
   title: 'Message the host',
@@ -305,6 +305,8 @@ const Reservation = props => {
     setDateEditClicked(!isDateEditClicked);
   };
 
+  const hostJoinedIn = room.hostJoinedIn.split('-')[0];
+
   return (
     <div className={css.container}>
       <header className={css.reserveBanner}>
@@ -350,7 +352,10 @@ const Reservation = props => {
                       className={`${css.rclPriceRateAvg} ${css.reserveContentLeftInner}`}
                     >
                       <p className={css.priceRateSummary}>{priceRateSummary}</p>
-                      <p className={css.priceRateDetail}>{priceRateDetail}</p>
+                      <p className={css.priceRateDetail}>
+                        {room.hostname}
+                        {priceRateDetail}
+                      </p>
                       <div className={css.iconPriceTag} id="price-tag">
                         <IoDiamondOutline />
                       </div>
@@ -631,13 +636,13 @@ const Reservation = props => {
                             className={css.hostProfilePhoto}
                             id="host-img"
                             alt="host"
-                            src={host.profileImg}
+                            src={room.profileImage}
                           />
                         </div>
                         <div className={css.hostProfileDescription}>
-                          <div className={css.hostName}>{host.name}</div>
+                          <div className={css.hostName}>{room.hostname}</div>
                           <div className={css.hostJoinedIn}>
-                            Joined In {host.joinedIn}
+                            Joined In {hostJoinedIn}
                           </div>
                         </div>
                       </div>

@@ -12,7 +12,7 @@ const airbnbConst = {
 
 const reservationPage = '/reservation';
 const ReservationBox = props => {
-  const { room, reservation } = props;
+  const { room, reservation, reviewScore, reviewCnt } = props;
   const [checkin, setCheckIn] = useState(reservation.checkin);
   const [checkout, setCheckOut] = useState(reservation.checkout);
   const [guests, setGuests] = useState(reservation.guests);
@@ -37,7 +37,12 @@ const ReservationBox = props => {
   const handleReservationBtn = () => {
     if (isBtnActive) {
       navigate(reservationPage, {
-        state: { room: room, reservation: reservation },
+        state: {
+          room: room,
+          reservation: reservation,
+          reviewScore: reviewScore,
+          reviewCnt: reviewCnt,
+        },
       });
     }
   };
@@ -63,11 +68,11 @@ const ReservationBox = props => {
                 <TiStarFullOutline />
               </div>
               <div className={css.roomRate} id="room-score">
-                {room.score}
+                {reviewScore}
               </div>
               <span>&nbsp;·&nbsp;&nbsp;</span>
               <div className={css.roomReviewCnt} id="review-count">
-                {room.reviewCnt} reviews
+                {reviewCnt} reviews
               </div>
             </div>
           </div>

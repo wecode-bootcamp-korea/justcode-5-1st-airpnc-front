@@ -19,7 +19,7 @@ const PinnedBox = props => {
                 />
               </div>
               <div className={css.accommodationDescription}>
-                <div className={css.roomType}>{room.type}</div>
+                <div className={css.roomType}>{room.roomType.name}</div>
                 <div className={css.roomName}>{room.name}</div>
                 <div className={css.roomEtcInfo}>
                   <div className={css.roomRate}>

@@ -23,20 +23,10 @@ import {
   FaCarAlt,
   FaTv,
 } from 'react-icons/fa';
+
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 
 // Mock Data for testing //
-const room = {
-  id: 1,
-  name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
-  type: 'Entire Villa',
-  price: 603000,
-  score: 4.9,
-  reviewCnt: 11,
-  hostType: 'superhost',
-  repImg: '/images/room_rep/cabin.png',
-};
-
 const reservation = {
   id: 1,
   guests: 4,
@@ -52,11 +42,37 @@ function Detail() {
   const [avgScore, setAvgScore] = useState();
   const [wish, setWish] = useState([]);
   const navigate = useNavigate();
-  const data = useLocation();
+
+  // rawData should gets raw room api from home, my pages, wishlist //
+  const rawData = useLocation().state.data;
+
+  // room : trimmed data is passed to detail, reservation pages
+  const room = {
+    name: rawData.name,
+    images: rawData.photo,
+    price: rawData.price,
+    hostId: rawData.users.id,
+    hostname: rawData.users.name,
+    profileImage: rawData.users.profile_image,
+    hostJoinedIn: rawData.users.created_at,
+    guests: rawData.guests,
+    bedrooms: rawData.bedrooms,
+    beds: rawData.beds,
+    baths: rawData.baths,
+    description: rawData.description,
+    roomType: rawData.roomType,
+    locationType: rawData.locationType,
+    wish: rawData.wish !== null ? rawData.wish : false,
+  };
+  room.repImg = room.images[0].file_url;
+  room.hostType = 'superhost'; // constant for current version
+
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/reviewData.json');
+      const res = await fetch(
+        'http://localhost:3000/data/backend/reviewDataJK.json'
+      );
       const json = await res.json();
       setReviews(json);
       // console.log(reviews);
@@ -64,7 +80,7 @@ function Detail() {
   }, []);
   // console.log(reviews, 111);
   const offModal = e => {
-    console.log(el.current.contains(e.target));
+    //console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
       setReviewOn(false);
     }
@@ -72,10 +88,11 @@ function Detail() {
   const getAvgFunc = avgScore => {
     setAvgScore(avgScore);
   };
+  // const locationName = data.state.name;
   return (
     <div className={css.container}>
       <section className={css.header_container}>
-        <h1>{data.state.name}</h1>
+        <h1>{room.name}</h1>
         <div className={css.function_container}>
           <div className={css.score}>
             <FaStar />
@@ -89,7 +106,7 @@ function Detail() {
               <FaShare />
               <span className={css.function_text}>공유하기</span>
             </div>
-            {data.state.wish === 0 ? (
+            {room.wish === 0 ? (
               <div className={css.function}>
                 <FaRegHeart />
                 <span className={css.function_text}>저장</span>
@@ -105,13 +122,14 @@ function Detail() {
       </section>
       <section className={css.image_container}>
         <div className={css.image_box}>
-          <img className={css.main} src={data.state.image[0].url}></img>
+          <img className={css.main} src={room.repImg} />
         </div>
         <div className={css.image_box}>
-          <img className={css.sub} src={data.state.image[1].url}></img>
-          <img className={css.sub} src={data.state.image[2].url}></img>
-          <img className={css.sub} src={data.state.image[3].url}></img>
-          <img className={css.sub} src={data.state.image[4].url}></img>
+          {room.images
+            .filter((image, idx) => idx !== 0)
+            .map((image, idx) => {
+              return <img className={css.sub} key={idx} src={image.file_url} />;
+            })}
         </div>
         <button className={css.display_button}>
           <FaTh />
@@ -122,16 +140,13 @@ function Detail() {
         <div className={css.room_detail}>
           <div className={css.header}>
             <div className={css.room_contents}>
-              <h2>{data.state.hostname}님이 호스팅하는 집 전체</h2>
+              <h2>{room.hostname}님이 호스팅하는 집 전체</h2>
               <span>
-                최대 인원 {data.state.guests}명 침실 {data.state.bedrooms}개
-                침대 {data.state.beds}개 욕실{data.state.baths}개
+                최대 인원 {room.guests}명 침실 {room.bedrooms}개 침대
+                {room.beds}개 욕실{room.baths}개
               </span>
             </div>
-            <img
-              src={data.state.profileImage}
-              className={css.profile_image}
-            ></img>
+            <img src={room.profileImage} className={css.profile_image}></img>
           </div>
           <div className={css.noti}>
             <div className={css.contents}>
@@ -168,7 +183,7 @@ function Detail() {
             <span>더 알아보기</span>
           </div>
           <div className={css.description}>
-            <p>{data.state.description}</p>
+            <p>{room.description}</p>
             <span>더 보기</span>
           </div>
           <div className={css.facilities}>
@@ -202,7 +217,12 @@ function Detail() {
           </div> */}
         </div>
         <div className={css.reservation}>
-          <ReservationBox room={room} reservation={reservation} />
+          <ReservationBox
+            room={room}
+            reservation={reservation}
+            reviewScore={avgScore}
+            reviewCnt={reviews.length}
+          />
         </div>
       </section>
       <section className={css.additional_inform}>
@@ -266,7 +286,7 @@ function Detail() {
           <div ref={el} className={css.modal}>
             <DisplayReview
               data={reviews}
-              displayCnt={data.length}
+              displayCnt={reviews.length}
               search={true}
               getAvg={getAvgFunc}
             />
