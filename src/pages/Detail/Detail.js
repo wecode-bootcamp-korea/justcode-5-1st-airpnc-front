@@ -27,15 +27,6 @@ import {
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 
 // Mock Data for testing //
-const room = {
-  id: 1,
-  name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
-  type: 'Entire Villa',
-  price: 603000,
-  hostType: 'superhost',
-  repImg: '/images/room_rep/cabin.png',
-};
-
 const reservation = {
   id: 1,
   guests: 4,
@@ -53,8 +44,8 @@ function Detail() {
   const navigate = useNavigate();
   const dataFromHome = useLocation();
   const room = dataFromHome.state.data;
-  console.log('room: ', room);
-  console.log('room.images', room.images);
+  room.repImg = room.images[0].file_url;
+  room.hostType = 'superhost';
   console.log(
     'filter ::: ',
     room.images.filter((image, idx) => idx !== 0)
@@ -62,7 +53,9 @@ function Detail() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/reviewData.json');
+      const res = await fetch(
+        'http://localhost:3000/data/backend/reviewDataJK.json'
+      );
       const json = await res.json();
       setReviews(json);
       // console.log(reviews);
@@ -112,13 +105,13 @@ function Detail() {
       </section>
       <section className={css.image_container}>
         <div className={css.image_box}>
-          <img className={css.main} src={room.images[0].url} />
+          <img className={css.main} src={room.repImg} />
         </div>
         <div className={css.image_box}>
           {room.images
             .filter((image, idx) => idx !== 0)
             .map((image, idx) => {
-              return <img className={css.sub} key={idx} src={image.url} />;
+              return <img className={css.sub} key={idx} src={image.file_url} />;
             })}
         </div>
         <button className={css.display_button}>
@@ -207,7 +200,12 @@ function Detail() {
           </div> */}
         </div>
         <div className={css.reservation}>
-          <ReservationBox room={room} reservation={reservation} />
+          <ReservationBox
+            room={room}
+            reservation={reservation}
+            reviewScore={avgScore}
+            reviewCnt={reviews.length}
+          />
         </div>
       </section>
       <section className={css.additional_inform}>

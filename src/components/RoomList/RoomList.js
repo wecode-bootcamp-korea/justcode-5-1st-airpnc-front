@@ -3,22 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
 function RoomList({ room, won, sytle, btnStyle }) {
-  console.log(room.photo[0].url);
-  const profileImg = room.photo[0].url;
+  //console.log('room.file_url : ', room.photo[0].file_url);
+  const repImg = room.photo[0].file_url;
+  console.log('rep IMG ', repImg);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const data = {
     name: room.name,
     images: room.photo,
     price: room.price,
+    hostId: room.users.id,
     hostname: room.users.name,
     profileImage: room.users.profile_image,
-    //profileImage: '/data/backend/images/cabin.png',
     guests: room.guests,
     bedrooms: room.bedrooms,
     beds: room.beds,
     baths: room.baths,
     description: room.description,
+    roomType: room.roomType,
+    locationType: room.locationType,
     wish: room.wish !== null ? room.wish : false,
   };
 
@@ -28,7 +31,7 @@ function RoomList({ room, won, sytle, btnStyle }) {
   };
 
   const sliderImage = {
-    backgroundImage: `url(${room.photo[currentIndex].url})`,
+    backgroundImage: `url(${room.photo[currentIndex].file_url})`,
   };
 
   const onClickPrev = () => {
