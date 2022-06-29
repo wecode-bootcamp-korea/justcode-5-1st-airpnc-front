@@ -5,7 +5,6 @@ import css from './RoomList.module.scss';
 function RoomList({ room, won, sytle, btnStyle }) {
   //console.log('room.file_url : ', room.photo[0].file_url);
   const repImg = room.photo[0].file_url;
-  console.log('rep IMG ', repImg);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const data = {
