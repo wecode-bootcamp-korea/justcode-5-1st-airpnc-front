@@ -4,7 +4,7 @@ import { FaStar, FaSearch } from 'react-icons/fa';
 import OneReview from '../../components/Review/oneReview';
 
 function DisplayReview({ data, displayCnt, search, getAvg }) {
-  // console.log(data, 22222);
+  console.log(data, 22222);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState(2.5);
   useEffect(() => {
