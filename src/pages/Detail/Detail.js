@@ -42,14 +42,31 @@ function Detail() {
   const [avgScore, setAvgScore] = useState();
   const [wish, setWish] = useState([]);
   const navigate = useNavigate();
-  const dataFromHome = useLocation();
-  const room = dataFromHome.state.data;
+
+  // rawData should gets raw room api from home, my pages, wishlist //
+  const rawData = useLocation().state.data;
+
+  // room : trimmed data is passed to detail, reservation pages
+  const room = {
+    name: rawData.name,
+    images: rawData.photo,
+    price: rawData.price,
+    hostId: rawData.users.id,
+    hostname: rawData.users.name,
+    profileImage: rawData.users.profile_image,
+    hostJoinedIn: rawData.users.created_at,
+    guests: rawData.guests,
+    bedrooms: rawData.bedrooms,
+    beds: rawData.beds,
+    baths: rawData.baths,
+    description: rawData.description,
+    roomType: rawData.roomType,
+    locationType: rawData.locationType,
+    wish: rawData.wish !== null ? rawData.wish : false,
+  };
   room.repImg = room.images[0].file_url;
-  room.hostType = 'superhost';
-  console.log(
-    'filter ::: ',
-    room.images.filter((image, idx) => idx !== 0)
-  );
+  room.hostType = 'superhost'; // constant for current version
+
   const el = useRef();
   useEffect(() => {
     (async () => {
@@ -63,7 +80,7 @@ function Detail() {
   }, []);
   // console.log(reviews, 111);
   const offModal = e => {
-    console.log(el.current.contains(e.target));
+    //console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
       setReviewOn(false);
     }
