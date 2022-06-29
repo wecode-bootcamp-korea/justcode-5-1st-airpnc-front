@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
+
+const deleteReview = async () => {
+  const res = await fetch('http://localhost:10010/review/4', {
+    method: 'DELETE',
+  });
+  const json = await res.json();
+
+  console.log(json);
+};
+
 function MyReview({ data, reviewOn }) {
   return (
     <div className={css.container}>
@@ -18,7 +28,7 @@ function MyReview({ data, reviewOn }) {
 
       <div className={css.button_group}>
         <button onClick={reviewOn}>수정</button>
-        <button>삭제</button>
+        <button onClick={deleteReview}>삭제</button>
       </div>
     </div>
   );
