@@ -37,7 +37,12 @@ const ReservationBox = props => {
   const handleReservationBtn = () => {
     if (isBtnActive) {
       navigate(reservationPage, {
-        state: { room: room, reservation: reservation },
+        state: {
+          room: room,
+          reservation: reservation,
+          reviewScore: reviewScore,
+          reviewCnt: reviewCnt,
+        },
       });
     }
   };

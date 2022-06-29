@@ -15,6 +15,7 @@ function RoomList({ room, won, sytle, btnStyle }) {
     hostId: room.users.id,
     hostname: room.users.name,
     profileImage: room.users.profile_image,
+    hostJoinedIn: room.users.created_at,
     guests: room.guests,
     bedrooms: room.bedrooms,
     beds: room.beds,
