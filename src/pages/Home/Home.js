@@ -9,11 +9,15 @@ import MainFilter from '../../components/MainFilter/MainFilter';
 function Home() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
+  const [filters, setfilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/roomData.json');
+      //const res = await fetch('http://localhost:3000/data/roomData.json');
+      const res = await fetch(
+        'http://localhost:3000/data/backend/roomDataWithWishes.json'
+      );
       const json = await res.json();
       setData(json);
     })();
