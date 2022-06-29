@@ -1,51 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import { ImStarFull } from 'react-icons/im';
-import { MdReviews } from 'react-icons/md';
 import MyProfile from './components/MyProfile';
-import MyReservation from './components/MyReservation';
-
 import Header from '../../components/Header/Header';
 import './Mypage.scss';
 
 function MyPage() {
-  const [profile, setProfile] = useState('');
-  const [roomLists, setRoomLists] = useState([]);
-  const [reviews, setReviews] = useState('');
+  const [data, setData] = useState([]);
   const token = localStorage.getItem('login-token');
   console.log(token);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/profile.json');
+      const json = await res.json();
+      setData(json);
+    })();
+  }, []);
+
+  if (data.length === 0) {
+    return <div>데이터없음</div>;
+  }
+  console.log(data[0]);
+
   return (
     <>
       {token ? <Header login /> : <Header />}
       <div>
         {
-          <article classame="b">
-            <section className="MyLog-jh">
+          <article className="MyPageWrapper">
+            <MyProfile
+              userImg={data[0].profile_image_url}
+              userName={data[0].name}
+            />
+
+            <section className="MyLog-box">
               <div className="HelloUser">
-                <h2 classnem="MyName">
-                  안녕하세요. <span className="Name">{profile.name}</span>님.
+                <h2 className="MyName">
+                  <span className="Name">{data[0].name}</span>
+                  님&nbsp;환영합니다.
                 </h2>
-                <div className="b">
-                  <h4 className="Title">
-                    <ImStarFull size="20" color="#999" />
-                    &nbsp;예약 내역
-                  </h4>
-                </div>
               </div>
 
-              <MyReservation roomList={roomLists} />
+              <h4 className="Title-history">
+                <ImStarFull size="20" color="rgb(255, 56, 92)" />
+                &nbsp;예약 내역
+              </h4>
 
-              <h4 className="NextTitle">
-                <MdReviews size="20" color="#999" />
+              <div className="List-box">리스트 뿌려주는곳!</div>
+
+              <h4 className="Title-history">
+                <ImStarFull size="20" color="rgb(255, 56, 92)" />
                 &nbsp;리뷰 내역
               </h4>
+
+              <div className="List-box">리스트 뿌려주는곳!</div>
             </section>
-            <div className="a">
-              <MyProfile
-                userImg={profile.profile_image_url}
-                userName={profile.name}
-                // getMyProfile={getMyProfile}
-              />
-            </div>
+
+            <MyProfile
+              userImg={data[0].profile_image_url}
+              userName={data[0].name}
+            />
           </article>
         }
       </div>
