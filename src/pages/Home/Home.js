@@ -15,7 +15,7 @@ function Home() {
     (async () => {
       //const res = await fetch('http://localhost:3000/data/roomData.json');
       const res = await fetch(
-        'http://localhost:3000/data/backend/roomData2.json'
+        'http://localhost:3000/data/backend/roomDataWithWishes.json'
       );
       const json = await res.json();
       setData(json);

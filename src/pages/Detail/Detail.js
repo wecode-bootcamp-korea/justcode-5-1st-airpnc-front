@@ -32,8 +32,6 @@ const room = {
   name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
   type: 'Entire Villa',
   price: 603000,
-  score: 4.9,
-  reviewCnt: 11,
   hostType: 'superhost',
   repImg: '/images/room_rep/cabin.png',
 };
@@ -53,9 +51,14 @@ function Detail() {
   const [avgScore, setAvgScore] = useState();
   const [wish, setWish] = useState([]);
   const navigate = useNavigate();
-  const data = useLocation();
-  const room = data.state.data;
+  const dataFromHome = useLocation();
+  const room = dataFromHome.state.data;
   console.log('room: ', room);
+  console.log('room.images', room.images);
+  console.log(
+    'filter ::: ',
+    room.images.filter((image, idx) => idx !== 0)
+  );
   const el = useRef();
   useEffect(() => {
     (async () => {
@@ -109,12 +112,14 @@ function Detail() {
       </section>
       <section className={css.image_container}>
         <div className={css.image_box}>
-          <img className={css.main} src={room.profileImage} />
+          <img className={css.main} src={room.images[0].url} />
         </div>
         <div className={css.image_box}>
-          {room.images.map((image, idx) => {
-            return <img className={css.sub} key={idx} src={image.url} />;
-          })}
+          {room.images
+            .filter((image, idx) => idx !== 0)
+            .map((image, idx) => {
+              return <img className={css.sub} key={idx} src={image.url} />;
+            })}
         </div>
         <button className={css.display_button}>
           <FaTh />
@@ -125,10 +130,10 @@ function Detail() {
         <div className={css.room_detail}>
           <div className={css.header}>
             <div className={css.room_contents}>
-              <h2>{data.state.hostname}님이 호스팅하는 집 전체</h2>
+              <h2>{room.hostname}님이 호스팅하는 집 전체</h2>
               <span>
-                최대 인원 {data.state.guests}명 침실 {data.state.bedrooms}개
-                침대 {data.state.beds}개 욕실{data.state.baths}개
+                최대 인원 {room.guests}명 침실 {room.bedrooms}개 침대
+                {room.beds}개 욕실{room.baths}개
               </span>
             </div>
             <img src={room.profileImage} className={css.profile_image}></img>
@@ -168,7 +173,7 @@ function Detail() {
             <span>더 알아보기</span>
           </div>
           <div className={css.description}>
-            <p>{data.state.description}</p>
+            <p>{room.description}</p>
             <span>더 보기</span>
           </div>
           <div className={css.facilities}>
@@ -266,7 +271,7 @@ function Detail() {
           <div ref={el} className={css.modal}>
             <DisplayReview
               data={reviews}
-              displayCnt={data.length}
+              displayCnt={reviews.length}
               search={true}
               getAvg={getAvgFunc}
             />
