@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import css from './BedRoom.module.scss';
 
-const Btn = ({ style, selected }) => {
-  const [value, setValue] = useState('0');
-  const onClick = e => {
-    const clicked = e.currentTarget.value;
-    setValue(clicked);
-  };
-
+const Btn = ({ value, onClick, style, selected }) => {
   return (
     <div>
       <button
@@ -100,11 +94,34 @@ const selectedBtn = {
   transition: 'all, 0.3s',
 };
 
-function BedRoom() {
+function BedRoom({ onClickBed, onClickRoom, room, bed }) {
+  //   const [bed, setBed] = useState('0');
+  //   const [room, setRoom] = useState('0');
+  //   const onClickBed = e => {
+  //     const clicked = e.currentTarget.value;
+  //     setBed(clicked);
+  //   };
+  //   const onClickRoom = e => {
+  //     const clicked = e.currentTarget.value;
+  //     setRoom(clicked);
+  //   };
+
   return (
     <div className={css.bedRoom}>
-      <Btn style={btnStyle} selected={selectedBtn} />
-      <Btn style={btnStyle} selected={selectedBtn} />
+      <span className={css.fontSize}>침실 수</span>
+      <Btn
+        value={bed}
+        onClick={onClickBed}
+        style={btnStyle}
+        selected={selectedBtn}
+      />
+      <span className={css.fontSize}>침대 수</span>
+      <Btn
+        value={room}
+        onClick={onClickRoom}
+        style={btnStyle}
+        selected={selectedBtn}
+      />
     </div>
   );
 }
