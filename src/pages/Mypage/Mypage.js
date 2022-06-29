@@ -11,10 +11,11 @@ function MyPage() {
   const [profile, setProfile] = useState('');
   const [roomLists, setRoomLists] = useState([]);
   const [reviews, setReviews] = useState('');
-
+  const token = localStorage.getItem('login-token');
+  console.log(token);
   return (
     <>
-      <Header />
+      {token ? <Header login /> : <Header />}
       <div>
         {
           <article classame="b">

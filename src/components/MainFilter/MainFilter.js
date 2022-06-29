@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ModalLayout from '../Modal/modalLayout';
 import BedRoom from './BedRoom';
 import css from './MainFilter.module.scss';
@@ -8,17 +9,60 @@ import Title from './Title';
 
 function MainFilter() {
   const [reviewOn, setReviewOn] = useState(false);
+  const [low, setLow] = useState('');
+  const [high, setHigh] = useState('');
+  const [type, setType] = useState('');
+  const [bed, setBed] = useState('0');
+  const [room, setRoom] = useState('0');
+  const navigate = useNavigate();
   const el = useRef();
+  const back = useRef();
   const onSubmit = e => {
     e.preventDefaul();
   };
   const onClick = e => {
-    console.log(el.current);
-    console.log(e.target);
     if (!el.current.contains(e.target)) {
       setReviewOn(false);
     }
-    console.log(e.target);
+  };
+
+  const lowOnChange = e => {
+    setLow(e.target.value);
+  };
+  const highOnChange = e => {
+    setHigh(e.target.value);
+  };
+
+  const isTypeClick = e => {
+    if (e.target.checked) {
+      setType(e.target.value);
+    }
+  };
+
+  const onClickBed = e => {
+    const clicked = e.currentTarget.value;
+    setBed(clicked);
+  };
+  const onClickRoom = e => {
+    const clicked = e.currentTarget.value;
+    setRoom(clicked);
+  };
+
+  const confirm = e => {
+    if (back.current.contains(e.target)) {
+      setReviewOn(false);
+    }
+    navigate('/', {
+      state: {
+        price: {
+          min: Number(low),
+          max: Number(high),
+        },
+        room_type: Number(type),
+        bed: Number(bed),
+        bedrooms: Number(room),
+      },
+    });
   };
   return (
     <>
@@ -26,9 +70,17 @@ function MainFilter() {
         <ModalLayout reviewOff={onClick}>
           <div ref={el} onSubmit={onSubmit} className={css.filter}>
             <Title />
-            <Price />
-            <RoomType />
-            <BedRoom />
+            <Price lowOnChange={lowOnChange} highOnChange={highOnChange} />
+            <RoomType isTypeClick={isTypeClick} />
+            <BedRoom
+              bed={bed}
+              room={room}
+              onClickBed={onClickBed}
+              onClickRoom={onClickRoom}
+            />
+            <button ref={back} onClick={confirm}>
+              확인
+            </button>
           </div>
         </ModalLayout>
       )}

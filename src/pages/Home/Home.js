@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
 
@@ -12,6 +12,8 @@ function Home() {
   const [filters, setfilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
+  const filters = useLocation();
+  console.log(filters.state);
   useEffect(() => {
     (async () => {
       //const res = await fetch('http://localhost:3000/data/roomData.json');
@@ -25,7 +27,6 @@ function Home() {
 
   const btnClick = e => {
     const wishs = e.target.value;
-    console.log(wishs);
     const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
     // console.log(alreadySelectedIndex === -1);
     if (alreadySelectedIndex === -1) {
@@ -39,8 +40,6 @@ function Home() {
     }
   };
 
-  console.log(wish.map(e => (e.liked = true)));
-  console.log(wish);
   const imageSize = {
     width: '350px',
     height: '320px',
@@ -66,9 +65,36 @@ function Home() {
     opacity: '1',
   };
 
+  const token = localStorage.getItem('login-token');
+
+  //   const res = {
+  //     email: identify,
+  //     password: password,
+  //   };
+  //   console.log(JSON.stringify(res));
+  //   fetch({API}, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(res),
+  //   })
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       if (res.success) {
+  //         goHome();
+  //         console.log(res.token, 123123);
+
+  //         localStorage.setItem('login-token', res.token);
+  //       } else {
+  //         alert(res.message);
+  //       }
+  //     });
+  // };
+
   return (
     <>
-      <Header />
+      {token ? <Header login /> : <Header />}
       <MainFilter />
       <div onClick={goWishList}>wish</div>
       <div className={css.container}>

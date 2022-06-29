@@ -17,22 +17,33 @@ function Login() {
 
     return true;
   };
-
+  const goHome = () => {
+    navigate('/');
+  };
   const handleLogin = () => {
-    console.log(1);
-
-    fetch('http://52.79.143.176:8000/users/login', {
+    const res = {
+      email: identify,
+      password: password,
+    };
+    console.log(JSON.stringify(res));
+    fetch('http://localhost:10010/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        email: identify,
-        password: password,
-      }),
+      body: JSON.stringify(res),
     })
-      .then(response => response.json())
-      .then(result => console.log('결과: ', result));
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          goHome();
+          console.log(res.token, 123123);
+
+          localStorage.setItem('login-token', res.token);
+        } else {
+          alert(res.message);
+        }
+      });
   };
 
   const valid = validation(identify, password);
@@ -80,7 +91,7 @@ function Login() {
             로그인
           </button>
 
-          <Link className={css.forgotPassword} to="/login-Jy">
+          <Link className={css.forgotPassword} to="/login">
             비밀번호를 잊으셨나요?
           </Link>
         </div>
