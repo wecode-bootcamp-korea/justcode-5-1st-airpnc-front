@@ -23,9 +23,7 @@ import {
   FaCarAlt,
   FaTv,
 } from 'react-icons/fa';
-
-import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
-
+//import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 // Mock Data for testing //
 const reservation = {
   user_id: 2,
@@ -68,12 +66,10 @@ function Detail() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch(
-        'http://localhost:3000/data/backend/reviewDataJK.json'
-      );
+      const res = await fetch('http://localhost:10010/review/1');
       const json = await res.json();
       setReviews(json);
-      // console.log(reviews);
+      console.log(reviews, 86868);
     })();
   }, []);
   // console.log(reviews, 111);
@@ -226,7 +222,7 @@ function Detail() {
       <section className={css.additional_inform}>
         <DisplayReview
           data={reviews}
-          displayCnt={4}
+          displayCnt={2}
           search={false}
           getAvg={getAvgFunc}
         />

@@ -8,7 +8,7 @@ function oneReview({ data }) {
       <div className={css.profile}>
         <img src={data.profile_image} className={css.profile_image}></img>
         <div className={css.profile_info}>
-          <h3>{data.user_id}</h3>
+          <h3>{data.name}</h3>
           {data.updated_at ? (
             <span>{data.updated_at}</span>
           ) : (
