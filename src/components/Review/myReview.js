@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
+
 function MyReview({ data, reviewOnClick }) {
   const onDelete = async () => {
     // alert('정말 리뷰를 삭제하시겠습니까?');
@@ -12,14 +13,15 @@ function MyReview({ data, reviewOnClick }) {
       console.log(json);
     }
   };
+
   return (
     <div className={css.container}>
       <div className={css.myReview}>
-        <img src={data.image}></img>
+        <img src={data.photo_url[0].url}></img>
         <div className={css.room_info}>
           <div className={css.room_score}>
             <FaStar />
-            <span>{data.score}</span>
+            <span>{data.reviewScore}</span>
           </div>
           <h1 className={css.room_title}> {data.name}</h1>
           <p className={css.review}>{data.review}</p>
