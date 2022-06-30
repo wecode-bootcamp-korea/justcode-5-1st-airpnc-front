@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import css from './makeReview.module.scss';
 
 function MakeReview({ data, mode }) {
-  console.log(data, 121312);
+  console.log(data, mode, 121312);
   const [score, setScore] = useState(data.score);
   const [review, setReview] = useState(data.review);
   const [title, setTitle] = useState('작성');
@@ -66,14 +66,14 @@ function MakeReview({ data, mode }) {
     setScore(value);
   };
   const onSubmit = async () => {
-    console.log(review, score);
+    console.log(review, score, data.review_id, 124535);
     let url = '';
     if (mode === 'create') {
       url = 'http://localhost:10010/review';
     } else if (mode === 'put') {
       url = `http://localhost:10010/review/${data.review_id}`;
     }
-
+    console.log(url, 563636);
     if (score == 0) {
       alert('별점 입력을 확인하세요');
       return;
@@ -85,6 +85,10 @@ function MakeReview({ data, mode }) {
     const res = await fetch(url, fetchOptions);
     const json = await res.json();
     console.log(json);
+    // console.log('a', toggleBtn());
+    // console.log('b', toggleBtns(toglemessage));
+    // console.log('c', toglemessage);
+    // toggleBtn();
   };
 
   return (

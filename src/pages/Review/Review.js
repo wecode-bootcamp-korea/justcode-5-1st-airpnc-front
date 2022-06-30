@@ -12,27 +12,34 @@ function Review() {
   const [reviewIndex, setReviewIndex] = useState(0);
   const [toReviewList, setToReviewList] = useState([]);
   const [toggle, setToggle] = useState(true);
+  const [fetchToggle, setFetchToggle] = useState(true);
   const [reviewMode, setReviewMode] = useState('create');
   const [reviewOn, setReviewOn] = useState(false);
   const navigate = useNavigate();
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/reservation/toReview/1');
+      const res = await fetch('http://localhost:10010/reservation/toReview/2');
       const json = await res.json();
       console.log(json, 3423);
       setToReviewList(json);
       console.log(toReviewList, 222);
     })();
-  }, []);
-  useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:10010/review/my/1');
       const json = await res.json();
       setReview(json);
       console.log(review, 333);
     })();
-  }, []);
+  }, [toggle]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await fetch('http://localhost:10010/review/my/1');
+  //     const json = await res.json();
+  //     setReview(json);
+  //     console.log(review, 333);
+  //   })();
+  // }, [toggle]);
   const offModal = e => {
     // console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
@@ -50,6 +57,16 @@ function Review() {
     }
     setReviewOn(true);
   };
+
+  // const toggleFetch = () => {
+  //   if (fetchToggle) {
+  //     console.log('false');
+  //     setFetchToggle(false);
+  //   } else {
+  //     console.log('true');
+  //     setFetchToggle(true);
+  //   }
+  // };
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -72,8 +89,6 @@ function Review() {
               <div className={css.review_contents}>
                 {toReviewList.map((toReview, idx) => {
                   toReview.idx = idx;
-                  toReview.score = 1;
-                  toReview.review = 'dfsdf';
                   return (
                     <ToReview
                       key={idx}
@@ -111,11 +126,6 @@ function Review() {
                 아직 후기를 남기지 않으셨습니다.
               </div>
             )}
-            <div className={css.page_button}>
-              <FaAngleLeft />
-              <span className={css.current}>1</span>
-              <FaAngleRight />
-            </div>
           </div>
         )}
       </div>
@@ -123,9 +133,19 @@ function Review() {
         <ModalLayout reviewOff={offModal}>
           <div ref={el} className={css.modal}>
             {toggle ? (
-              <MakeReview data={toReviewList[reviewIndex]} mode={reviewMode} />
+              <MakeReview
+                data={toReviewList[reviewIndex]}
+                mode={reviewMode}
+                // toggleBtn={toggleFetch}
+              />
             ) : (
-              <MakeReview data={review[reviewIndex]} mode={reviewMode} />
+              <MakeReview
+                data={review[reviewIndex]}
+                mode={reviewMode}
+                // toggleBtn={toggleFetch}
+                // toggleBtns={setFetchToggle}
+                // toglemessage={fetchToggle}
+              />
             )}
           </div>
         </ModalLayout>
