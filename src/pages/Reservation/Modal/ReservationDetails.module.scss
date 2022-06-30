@@ -1,5 +1,58 @@
 @import '../../../styles/reset.scss';
-@mixin flex-align-center {
+// @mixin flex-align-center {
+//   display: flex;
+//   align-items: center;
+// }
+
+@mixin button-style-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+@mixin flex-column-center {
   display: flex;
+  flex-direction: column;
+  // justify-content: center;
   align-items: center;
+}
+.ReservationDetails {
+  background-color: white;
+  @include flex-column-center;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.container {
+  h1 {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .room_info_box {
+    margin-bottom: 30px;
+    .room_name {
+      margin-top: 5px;
+      text-align: left;
+    }
+  }
+  .score {
+    margin-bottom: 30px;
+    h2 {
+      margin-bottom: 10px;
+    }
+  }
+  .comment {
+    margin-bottom: 30px;
+    h2 {
+      margin-bottom: 10px;
+    }
+  }
+  .button_group {
+    text-align: center;
+    button {
+      @include button-style-reset;
+      border: 0;
+      background-color: white;
+    }
+  }
 }
