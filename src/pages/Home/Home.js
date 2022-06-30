@@ -33,8 +33,6 @@ function Home() {
   //     max: 2000000,
   //   },
   // };
-  useEffect(() => {
-
 
   useMemo(() => {
     setFilters(filtersIn);
@@ -45,6 +43,7 @@ function Home() {
       const res = await fetch('http://localhost:10010/home'); //list api
       const json = await res.json();
       setData(json);
+      console.log(data, 525234);
     })();
   }, []);
 
@@ -66,22 +65,20 @@ function Home() {
     })();
   }, [filtersIn]);
 
-
   //start wishList 갱신 함수
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-      const json = await res.json();
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+  //     const json = await res.json();
 
-      setSelected(json);
-    })();
-  }, [wish]);
+  //     setSelected(json);
+  //   })();
+  // }, [wish]);
   console.log(wish);
   console.log(selected);
 
   //filters  <= useState
   //filtersIn <= useLocation
-
 
   const btnClick = e => {
     const wishs = e.target.value;
@@ -138,7 +135,6 @@ function Home() {
   const goWishList = () => {
     navigate('/wishlist', { state: [...wish] });
   };
-
   const cantGoWishList = () => {
     alert('로그인 먼저 해주세요');
   };

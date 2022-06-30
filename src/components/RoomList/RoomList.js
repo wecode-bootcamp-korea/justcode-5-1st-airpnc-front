@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
-function RoomList({ room, won, sytle, btnStyle }) {
+function RoomList({ room, won, sytle, btnStyle, userId }) {
+  console.log(userId, 888);
   //console.log('room in home', room);
   //console.log('room.file_url : ', room.photo[0].file_url);
+  console.log(room.id, 23423423);
   const repImg = room.photo[0].file_url;
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
   const goToDetail = () => {
     //navigate('/detail', { state: { ...data } });
-    navigate('/detail', { state: { data: room } });
+    navigate('/detail', { state: { data: room, userId } });
   };
 
   const sliderImage = {

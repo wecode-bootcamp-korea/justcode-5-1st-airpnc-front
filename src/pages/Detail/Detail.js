@@ -25,25 +25,24 @@ import {
 } from 'react-icons/fa';
 //import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 // Mock Data for testing //
-const reservation = {
-  user_id: 2,
-  room_id: 1,
-};
 
 //////////////////////////
 
 function Detail() {
+  console.log(localStorage.getItem('user-info'), 23456);
   const [reviewOn, setReviewOn] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState();
   const [wish, setWish] = useState([]);
+  const [userId, setUserId] = useState('');
   const navigate = useNavigate();
-
+  // let userId = '';
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
 
   // room : trimmed data is passed to detail, reservation pages
   const room = {
+    id: rawData.id,
     name: rawData.name,
     images: rawData.photo,
     price: rawData.price,
@@ -62,16 +61,23 @@ function Detail() {
   };
   room.repImg = room.images[0].file_url;
   room.hostType = 'superhost'; // constant for current version
-
   const el = useRef();
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:10010/review/1');
       const json = await res.json();
       setReviews(json);
+      if (localStorage.getItem('user-id')) {
+        setUserId(localStorage.getItem('user-id'));
+      }
       console.log(reviews, 86868);
     })();
   }, []);
+  const reservation = {
+    user_id: userId,
+    room_id: room.id,
+  };
+  // console.log(reservation.user_id, 2222222);
   // console.log(reviews, 111);
   const offModal = e => {
     //console.log(el.current.contains(e.target));
@@ -82,6 +88,7 @@ function Detail() {
   const getAvgFunc = avgScore => {
     setAvgScore(avgScore);
   };
+
   // const locationName = data.state.name;
   return (
     <div className={css.container}>
@@ -212,6 +219,7 @@ function Detail() {
         </div>
         <div className={css.reservation}>
           <ReservationBox
+            userId={userId}
             room={room}
             reservation={reservation}
             reviewScore={avgScore}
