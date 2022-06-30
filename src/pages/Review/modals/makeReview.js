@@ -8,6 +8,30 @@ function MakeReview({ data, mode }) {
   const [title, setTitle] = useState('작성');
   const [fetchOptions, setFetchOptions] = useState({});
   const star = useRef();
+  // useEffect(() => {
+  //   const createOption = {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       score,
+  //       review,
+  //       reservation_id: data.id,
+  //       user_id: 1,
+  //       room_id: data.room_id,
+  //     }),
+  //   };
+  // }, [score]);
+  // useEffect(() => {
+  //   const putOption = {
+  //     method: 'PUT',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       score: data.score,
+  //       review: data.review,
+  //       id: data.review_id,
+  //     }),
+  //   };
+  // }, [score]);
 
   useEffect(() => {
     if (mode === 'create') {
@@ -17,8 +41,8 @@ function MakeReview({ data, mode }) {
         body: JSON.stringify({
           score,
           review,
-          reservation_id: data.reservation_id,
-          user_id: data.user_id,
+          reservation_id: data.id,
+          user_id: 1,
           room_id: data.room_id,
         }),
       });
@@ -30,27 +54,29 @@ function MakeReview({ data, mode }) {
         body: JSON.stringify({
           score: data.score,
           review: data.review,
-          reservation_id: data.reservation_id,
-          user_id: data.user_id,
-          room_id: data.room_id,
+          id: data.review_id,
         }),
       });
     }
-  }, []);
+  }, [score, review]);
   useEffect(() => {
     console.log(score);
   }, [score]);
+  useEffect(() => {
+    console.log(review);
+  }, [review]);
   const drawStar = e => {
     // console.log(star.current);
     star.current.style.width = `${e.target.value * 20}%`;
     setScore(e.target.value);
   };
   const onSubmit = async () => {
+    console.log(review, score);
     let url = '';
     if (mode === 'create') {
-      url = 'create API로 보낼 주소';
+      url = 'http://localhost:10010/review';
     } else if (mode === 'put') {
-      url = 'put API로 보낼 주소';
+      url = `http://localhost:10010/review/${data.review_id}`;
     }
 
     if (score == 0) {

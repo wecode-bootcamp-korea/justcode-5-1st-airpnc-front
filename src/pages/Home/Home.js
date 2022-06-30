@@ -12,6 +12,7 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState();
   const [wish, setWish] = useState([]);
+  //const [filters, setfilters] = useState({});
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
