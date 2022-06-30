@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import css from './ReservationDetails.module.scss';
 
 function ReservationDetails({ data }) {
-  console.log(data, 111111111);
+  // console.log(data, 111111111);
   return (
     <div className={css.container}>
       <h1>예약 상세 보기</h1>

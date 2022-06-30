@@ -33,7 +33,7 @@ function MyPage() {
 
               <MyReservation roomList={roomLists} />
 
-              <h4 className="NextTitle">
+              <h4 onClick={() => navigate('/review')} className="NextTitle">
                 <MdReviews size="20" color="#999" />
                 &nbsp;리뷰 내역
               </h4>

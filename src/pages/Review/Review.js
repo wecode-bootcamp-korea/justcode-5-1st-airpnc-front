@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import css from './Review.module.scss';
 import ToReview from '../../components/Review/toReview';
 import MyReview from '../../components/Review/myReview';
@@ -8,16 +9,19 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 function Review() {
   const [review, setReview] = useState([]);
+  const [reviewIndex, setReviewIndex] = useState(0);
   const [toReviewList, setToReviewList] = useState([]);
   const [toggle, setToggle] = useState(true);
+  const [reviewMode, setReviewMode] = useState('create');
   const [reviewOn, setReviewOn] = useState(false);
+  const navigate = useNavigate();
   const el = useRef();
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:10010/reservation/toReview/2');
       const json = await res.json();
       setToReviewList(json);
-      // console.log(toReviewList, 222);
+      console.log(toReviewList, 222);
     })();
   }, []);
   useEffect(() => {
@@ -29,16 +33,25 @@ function Review() {
     })();
   }, []);
   const offModal = e => {
-    console.log(el.current.contains(e.target));
+    // console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
       setReviewOn(false);
     }
+  };
+  const onReview = idx => {
+    setReviewIndex(idx);
+    if (!toggle) {
+      setReviewMode('put');
+    } else {
+      setReviewMode('create');
+    }
+    setReviewOn(true);
   };
   return (
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.route}>
-          <span>프로필</span>
+          <span onClick={() => navigate('/Mypage')}>프로필</span>
           <FaAngleRight />
           <span> 후기</span>
         </div>
@@ -55,11 +68,12 @@ function Review() {
             {toReviewList.length !== 0 ? (
               <div className={css.review_contents}>
                 {toReviewList.map((toReview, idx) => {
+                  toReview.idx = idx;
                   return (
                     <ToReview
                       key={idx}
                       data={toReview}
-                      reviewOn={() => setReviewOn(true)}
+                      reviewOnClick={onReview}
                     />
                   );
                 })}
@@ -77,12 +91,12 @@ function Review() {
             {review.length !== 0 ? (
               <div className={css.review_contents}>
                 {review.map((review, idx) => {
+                  review.idx = idx;
                   return (
                     <MyReview
                       key={idx}
                       data={review}
-                      reviewOn={() => setReviewOn(true)}
-                      r
+                      reviewOnClick={onReview}
                     />
                   );
                 })}
@@ -103,7 +117,7 @@ function Review() {
       {reviewOn && (
         <ModalLayout reviewOff={offModal}>
           <div ref={el} className={css.modal}>
-            <MakeReview />
+            <MakeReview data={toReviewList[reviewIndex]} mode={reviewMode} />
           </div>
         </ModalLayout>
       )}

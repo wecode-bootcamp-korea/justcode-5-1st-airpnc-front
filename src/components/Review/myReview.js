@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
-function MyReview({ data, reviewOn }) {
+function MyReview({ data, reviewOnClick }) {
+  const onDelete = async () => {
+    // alert('정말 리뷰를 삭제하시겠습니까?');
+    if (window.confirm('정말 리뷰를 삭제하시겠습니까?')) {
+      const res = await fetch('http://localhost:10010/reservation/toReview/2', {
+        method: 'DELETE',
+      });
+      const json = await res.json();
+      console.log(json);
+    }
+  };
   return (
     <div className={css.container}>
       <div className={css.myReview}>
@@ -17,8 +27,8 @@ function MyReview({ data, reviewOn }) {
       </div>
 
       <div className={css.button_group}>
-        <button onClick={reviewOn}>수정</button>
-        <button>삭제</button>
+        <button onClick={() => reviewOnClick(data.idx)}>수정</button>
+        <button onClick={onDelete}>삭제</button>
       </div>
     </div>
   );

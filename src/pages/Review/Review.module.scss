@@ -44,11 +44,12 @@
     }
   }
 }
-// .modal {
-//   display: inline-block;
-//   width: 80%;
-//   // max-width: 55%;
-//   // height: 90%;
-//   background-color: white;
-//   border-radius: 20px;
-// }
+
+.modal {
+  display: inline-block;
+  width: 50%;
+  // max-width: 55%;
+  height: auto;
+  background-color: white;
+  border-radius: 20px;
+}

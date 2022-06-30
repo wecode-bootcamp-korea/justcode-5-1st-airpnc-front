@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import css from './ReservationList.module.scss';
 import ModalLayout from '../../components/Modal/modalLayout';
 import ReservationHistory from '../../components/Reservation/ReservationHistory';
@@ -10,6 +11,7 @@ function ReservationList() {
   const [detailsOn, setDetailsOn] = useState(false);
   const [reservationIdx, setReservationIdx] = useState(0);
   const el = useRef();
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:10010/reservation/1');
@@ -27,13 +29,14 @@ function ReservationList() {
   };
   const onDetail = idx => {
     setReservationIdx(idx);
+    console.log(reservationIdx, 64235);
     setDetailsOn(true);
   };
   return (
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.route}>
-          <span>프로필</span>
+          <span onClick={() => navigate('/Mypage')}>프로필</span>
           <FaAngleRight />
           <span> 예약내역</span>
         </div>
@@ -45,6 +48,7 @@ function ReservationList() {
           {reservationList.length !== 0 ? (
             <div className={css.reservation_contents}>
               {reservationList.map((reservation, idx) => {
+                reservation.idx = idx;
                 return (
                   <ReservationHistory
                     key={idx}
