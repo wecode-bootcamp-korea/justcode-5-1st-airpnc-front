@@ -26,15 +26,15 @@
       margin-right: 15px;
     }
   }
-  .review_container {
+  .reservation_container {
     border: 1px solid lightgray;
-    .review_box {
-      .review_title {
+    .reservation_box {
+      .reservation_title {
         background-color: lightgray;
         height: 40px;
         padding: 10px;
       }
-      .review_contents {
+      .reservation_contents {
         padding: 20px;
       }
       .page_button {
@@ -43,13 +43,4 @@
       }
     }
   }
-}
-
-.modal {
-  display: inline-block;
-  width: 50%;
-  // max-width: 55%;
-  height: auto;
-  background-color: white;
-  border-radius: 20px;
 }

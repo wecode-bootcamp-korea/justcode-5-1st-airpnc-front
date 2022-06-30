@@ -10,7 +10,10 @@ import { set } from 'react-hook-form';
 function Home() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
+<<<<<<< HEAD
   const [filters, setFilters] = useState({});
+=======
+>>>>>>> main
   const navigate = useNavigate();
   const button = useRef();
   const filtersIn = useLocation().state;

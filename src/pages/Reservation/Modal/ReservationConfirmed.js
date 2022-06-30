@@ -4,19 +4,45 @@ import { MdClose } from 'react-icons/md';
 
 const ReservationConfirmed = props => {
   let yourTripDate = props.yourTripDate;
-  let guests = props.guests;
+  let reservation = props.reservation;
   const [show, setShow] = useState(false);
+  const reservationNumber = Math.floor(Math.random() * 1000000 + 1);
 
   const closeHandler = e => {
     setShow(false);
     props.onClose(false);
   };
 
+  const postOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      check_in: reservation.checkin,
+      check_out: reservation.checkout,
+      guests: reservation.guests,
+      reservation_no: reservationNumber,
+      user_id: reservation.user_id,
+      room_id: reservation.room_id,
+    }),
+  };
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(
+        'http://localhost:10010/reservation',
+        postOptions
+      );
+      const json = await res.json();
+      console.log(json);
+    })();
+  }, []);
+  useEffect(() => {
+    console.log(yourTripDate);
+  }, []);
   useEffect(() => {
     setShow(props.show);
   }, [props.show]);
 
-  const reservationNumber = Math.floor(Math.random() * 1000000 + 1);
   //const innerComponent = state.map((item) => <></>);
 
   //function getInnerComponent(state) {
@@ -46,7 +72,7 @@ const ReservationConfirmed = props => {
             <div className={css.dropDownSelectors}>
               <div>Reservation number : {reservationNumber}</div>
               <div>Dates : {yourTripDate}</div>
-              <div>Guests : {guests}</div>
+              <div>Guests : {reservation.guests}</div>
               <div></div>
             </div>
           </div>
