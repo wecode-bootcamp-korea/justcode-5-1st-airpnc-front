@@ -21,7 +21,7 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //list api
+      const res = await fetch('http://localhost:10010/home'); //room api GET request
       const json = await res.json();
       setData(json);
     })();
@@ -38,7 +38,7 @@ function Home() {
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //list api
+      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
       const json = await res.json();
       setData(json);
       setFilters({});
