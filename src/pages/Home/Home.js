@@ -9,7 +9,7 @@ import MainFilter from '../../components/MainFilter/MainFilter';
 function Home() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
-  const [filters, setfilters] = useState({});
+  //const [filters, setfilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
   const filters = useLocation();

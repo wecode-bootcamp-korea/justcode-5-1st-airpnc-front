@@ -22,10 +22,10 @@ function Review() {
   }, []);
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/review/my/2');
+      const res = await fetch('http://localhost:10010/review/my/1');
       const json = await res.json();
       setReview(json);
-      // console.log(review, 333);
+      console.log(review, 333);
     })();
   }, []);
   const offModal = e => {
@@ -34,6 +34,7 @@ function Review() {
       setReviewOn(false);
     }
   };
+  const isReview = () => setReviewOn(true);
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -56,11 +57,7 @@ function Review() {
               <div className={css.review_contents}>
                 {toReviewList.map((toReview, idx) => {
                   return (
-                    <ToReview
-                      key={idx}
-                      data={toReview}
-                      reviewOn={() => setReviewOn(true)}
-                    />
+                    <ToReview key={idx} data={toReview} reviewOn={isReview} />
                   );
                 })}
               </div>
@@ -78,12 +75,7 @@ function Review() {
               <div className={css.review_contents}>
                 {review.map((review, idx) => {
                   return (
-                    <MyReview
-                      key={idx}
-                      data={review}
-                      reviewOn={() => setReviewOn(true)}
-                      r
-                    />
+                    <MyReview key={idx} data={review} reviewOn={isReview} />
                   );
                 })}
               </div>
