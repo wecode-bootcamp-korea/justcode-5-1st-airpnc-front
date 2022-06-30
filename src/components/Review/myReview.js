@@ -14,7 +14,6 @@ function MyReview({ data, reviewOnClick }) {
     }
   };
 
-
   return (
     <div className={css.container}>
       <div className={css.myReview}>
@@ -30,10 +29,8 @@ function MyReview({ data, reviewOnClick }) {
       </div>
 
       <div className={css.button_group}>
-
         <button onClick={() => reviewOnClick(data.idx)}>수정</button>
         <button onClick={onDelete}>삭제</button>
-
       </div>
     </div>
   );
