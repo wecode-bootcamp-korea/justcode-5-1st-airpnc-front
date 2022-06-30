@@ -26,10 +26,8 @@ import {
 //import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 // Mock Data for testing //
 const reservation = {
-  id: 1,
-  guests: 4,
-  checkin: '2022-06-10',
-  checkout: '2022-06-14',
+  user_id: 2,
+  room_id: 1,
 };
 
 //////////////////////////

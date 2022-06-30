@@ -17,10 +17,9 @@ function Home() {
   useEffect(() => {
     (async () => {
       //const res = await fetch('http://localhost:3000/data/roomData.json');
-      const res = await fetch(
-        'http://localhost:3000/data/backend/roomDataWithWishes.json'
-      );
+      const res = await fetch('http://localhost:10010/rooms');
       const json = await res.json();
+      console.log(json, 123123);
       setData(json);
     })();
   }, []);

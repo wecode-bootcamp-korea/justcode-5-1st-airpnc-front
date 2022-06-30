@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
+
 function MyReview({ data, reviewOnClick }) {
   const onDelete = async () => {
     // alert('정말 리뷰를 삭제하시겠습니까?');
@@ -12,6 +13,7 @@ function MyReview({ data, reviewOnClick }) {
       console.log(json);
     }
   };
+
   return (
     <div className={css.container}>
       <div className={css.myReview}>
