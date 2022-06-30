@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "room_id": 1,
+    "name": "Rea Atoll, 몰디브",
+    "city": "skalen",
+    "country": "스웨덴",
+    "image": "https://ifh.cc/g/AG8OSx.jpg",
+    "reservation_no": "1233535",
+    "created_at": "2022-06-23",
+    "updated_at": "2022-06-24",
+    "guests": 3,
+    "check_in": "2022-08-27",
+    "check_out": "2022-08-30"
+  },
+  {
+    "id": 2,
+    "room_id": 2,
+    "name": "Rea Atoll@@@",
+    "city": "skalen",
+    "country": "핀란드",
+    "image": "https://ifh.cc/g/AG8OSx.jpg",
+    "reservation_no": "1233535",
+    "created_at": "2022-06-23",
+    "updated_at": "2022-06-24",
+    "guests": 3,
+    "check_in": "2022-08-27",
+    "check_out": "2022-08-30"
+  },
+  {
+    "id": 3,
+    "room_id": 3,
+    "name": "Rea Atoll***",
+    "city": "skalen",
+    "country": "한국",
+    "image": "https://ifh.cc/g/AG8OSx.jpg",
+    "reservation_no": "1233535",
+    "created_at": "2022-06-23",
+    "updated_at": "2022-06-24",
+    "guests": 3,
+    "check_in": "2022-08-27",
+    "check_out": "2022-08-30"
+  }
+]

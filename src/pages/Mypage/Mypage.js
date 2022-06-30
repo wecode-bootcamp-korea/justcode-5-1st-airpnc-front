@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ImStarFull } from 'react-icons/im';
 import MyProfile from './components/MyProfile';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './Mypage.scss';
 
 function MyPage() {
+  const [profile, setProfile] = useState('');
+  const [roomLists, setRoomLists] = useState([]);
+  const [reviews, setReviews] = useState('');
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const token = localStorage.getItem('login-token');
   console.log(token);
