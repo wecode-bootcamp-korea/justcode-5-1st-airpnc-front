@@ -18,8 +18,9 @@ function Review() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/reservation/toReview/2');
+      const res = await fetch('http://localhost:10010/reservation/toReview/1');
       const json = await res.json();
+      console.log(json, 364655);
       setToReviewList(json);
       console.log(toReviewList, 222);
     })();
@@ -69,6 +70,8 @@ function Review() {
               <div className={css.review_contents}>
                 {toReviewList.map((toReview, idx) => {
                   toReview.idx = idx;
+                  toReview.score = 1;
+                  toReview.review = 'dfsdf';
                   return (
                     <ToReview
                       key={idx}
@@ -117,7 +120,11 @@ function Review() {
       {reviewOn && (
         <ModalLayout reviewOff={offModal}>
           <div ref={el} className={css.modal}>
-            <MakeReview data={toReviewList[reviewIndex]} mode={reviewMode} />
+            {toggle ? (
+              <MakeReview data={toReviewList[reviewIndex]} mode={reviewMode} />
+            ) : (
+              <MakeReview data={review[reviewIndex]} mode={reviewMode} />
+            )}
           </div>
         </ModalLayout>
       )}
