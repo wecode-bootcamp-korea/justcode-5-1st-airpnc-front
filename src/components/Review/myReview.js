@@ -3,12 +3,16 @@ import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
 
 function MyReview({ data, reviewOnClick }) {
+  console.log('data : ', data);
   const onDelete = async () => {
     // alert('정말 리뷰를 삭제하시겠습니까?');
     if (window.confirm('정말 리뷰를 삭제하시겠습니까?')) {
-      const res = await fetch('http://localhost:10010/reservation/toReview/2', {
-        method: 'DELETE',
-      });
+      const res = await fetch(
+        `http://localhost:10010/review/${data.review_id}`,
+        {
+          method: 'DELETE',
+        }
+      );
       const json = await res.json();
       console.log(json);
     }
@@ -17,11 +21,11 @@ function MyReview({ data, reviewOnClick }) {
   return (
     <div className={css.container}>
       <div className={css.myReview}>
-        <img src={data.photo_url[0].url}></img>
+        <img src=""></img>
         <div className={css.room_info}>
           <div className={css.room_score}>
             <FaStar />
-            <span>{data.reviewScore}</span>
+            <span>{data.score}</span>
           </div>
           <h1 className={css.room_title}> {data.name}</h1>
           <p className={css.review}>{data.review}</p>

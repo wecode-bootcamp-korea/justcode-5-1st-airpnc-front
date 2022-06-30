@@ -222,7 +222,7 @@ function Detail() {
       <section className={css.additional_inform}>
         <DisplayReview
           data={reviews}
-          displayCnt={2}
+          displayCnt={4}
           search={false}
           getAvg={getAvgFunc}
         />
