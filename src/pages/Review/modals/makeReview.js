@@ -1,28 +1,113 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import css from './makeReview.module.scss';
 
-function makeReview() {
+function MakeReview({ data, mode }) {
+  console.log(data, 121312);
+  const [score, setScore] = useState(0);
+  const [review, setReview] = useState('');
+  const [title, setTitle] = useState('작성');
+  const [fetchOptions, setFetchOptions] = useState({});
+  const star = useRef();
+
+  useEffect(() => {
+    if (mode === 'create') {
+      setFetchOptions({
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          score,
+          review,
+          reservation_id: data.reservation_id,
+          user_id: data.user_id,
+          room_id: data.room_id,
+        }),
+      });
+    } else if (mode === 'put') {
+      setTitle('수정');
+      setFetchOptions({
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          score: data.score,
+          review: data.review,
+          reservation_id: data.reservation_id,
+          user_id: data.user_id,
+          room_id: data.room_id,
+        }),
+      });
+    }
+  }, []);
+  useEffect(() => {
+    console.log(score);
+  }, [score]);
+  const drawStar = e => {
+    // console.log(star.current);
+    star.current.style.width = `${e.target.value * 20}%`;
+    setScore(e.target.value);
+  };
+  const onSubmit = async () => {
+    let url = '';
+    if (mode === 'create') {
+      url = 'create API로 보낼 주소';
+    } else if (mode === 'put') {
+      url = 'put API로 보낼 주소';
+    }
+
+    if (score == 0) {
+      alert('별점 입력을 확인하세요');
+      return;
+    }
+    if (review == '') {
+      alert('리뷰 입력을 확인하세요');
+      return;
+    }
+    const res = await fetch(url, fetchOptions);
+    const json = await res.json();
+    console.log(json);
+  };
+
   return (
-    <div className={css.container}>
-      <h1>리뷰 쓰기</h1>
-      <div className={css.room_info_box}>
-        <img src="https://ifh.cc/g/x1WbXD.jpg"></img>
-        <div className={css.room_info}>
-          <span>skalen</span>
-          <h1>The island</h1>
+    <div className={css.MakeReview}>
+      <div className={css.container}>
+        <h1>리뷰 {title}</h1>
+        <div className={css.review_info_box}>
+          {/* <img src={data.photo_url[0].url}></img> */}
+          <div className={css.room_info}>
+            <span>
+              {data.city}, {data.country}
+            </span>
+            <h1 className={css.room_name}>{data.name}</h1>
+          </div>
         </div>
+        <div className={css.score}>
+          <h2>종합 점수</h2>
+          <span className={css.background_star}>
+            ★★★★★
+            <span ref={star} className={css.star}>
+              ★★★★★
+            </span>
+            <input
+              onChange={drawStar}
+              type="range"
+              min="0"
+              max="5"
+              step="0.5"
+              value={score}
+            />
+          </span>
+        </div>
+        <div className={css.comment}>
+          <h2>리뷰</h2>
+          <textarea
+            onChange={e => setReview(e.target.value)}
+            value={review}
+            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
+          ></textarea>
+        </div>
+        <button onClick={onSubmit}>완료</button>
       </div>
-      <div className={css.score}>
-        <h2>종합 점수</h2>
-        <input type="range" />
-      </div>
-      <div className={css.comment}>
-        <h2>리뷰 작성</h2>
-        <textarea placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."></textarea>
-      </div>
-      <button>완료</button>
     </div>
   );
 }
 
-export default makeReview;
+export default MakeReview;
