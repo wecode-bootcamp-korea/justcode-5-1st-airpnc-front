@@ -7,7 +7,6 @@ import Header from '../../components/Header/Header';
 function WishList() {
   const navigate = useNavigate();
   const wish = useLocation();
-  console.log(wish.state);
   const goHome = () => {
     navigate('/', { state: [...wish.state] });
   };

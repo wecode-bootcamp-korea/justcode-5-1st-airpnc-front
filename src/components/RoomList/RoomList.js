@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
 function RoomList({ room, won, sytle, btnStyle }) {
-  console.log('in RoomList :', room);
   //console.log('room in home', room);
   //console.log('room.file_url : ', room.photo[0].file_url);
   const repImg = room.photo[0].file_url;
