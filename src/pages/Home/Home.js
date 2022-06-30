@@ -5,22 +5,77 @@ import Header from '../../components/Header/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
+import { set } from 'react-hook-form';
 
 function Home() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
-  const [filters, setfilters] = useState({});
+  const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
-  const filters = useLocation();
-  console.log(filters.state);
+  const filtersIn = useLocation().state;
+  useEffect(() => {
+    setFilters(filtersIn);
+  }, [filtersIn]);
+
+  console.log('json:: ', JSON.stringify(filters));
+
+  const requestOption = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(filters),
+  };
+  // const loadRooms = fetch('http://localhost:10010/home', requestOption)
+  //   .then(res => {
+  //     if (res.status === 200) {
+  //       console.log('here :', data);
+  //       console.log('res.json : ', res);
+  //       console.log('promise.result : ');
+  //       const dataReceived = res.json();
+  //       setData(dataReceived);
+  //       console.log('in loadRoom res.json', res.json());
+  //       return res.json();
+  //     } else {
+  //       console.log('res.status', res.status);
+  //       return res.status;
+  //     }
+  //   })
+  //   .catch(() => {
+  //     console.error('ROOM NOT LOADED');
+  //   });
+
+  // console.log('loadRooms ::::: ', loadRooms);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const rooms = await loadRooms;
+  //     console.log('at loading rooms', rooms);
+  //     setData(rooms);
+  //   })();
+  // }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const rooms = await loadRooms;
+  //     console.log('at filter changes rooms', rooms);
+  //     setData(rooms);
+  //   })();
+  // }, [filters]);
+
   useEffect(() => {
     (async () => {
       //const res = await fetch('http://localhost:3000/data/roomData.json');
-      const res = await fetch(
-        'http://localhost:3000/data/backend/roomDataWithWishes.json'
-      );
+      // const res = await fetch(
+      //   'http://localhost:10010/data/backend/roomDataWithWishes.json'
+      // );
+      const res = await fetch('http://localhost:10010/home');
+      //const res = await fetch('http://localhost:10010/rooms', requestOption);
       const json = await res.json();
+      console.log('res : ', res);
+      console.log('json : ', json);
+      //console.log('json.data : ', json.data);
       setData(json);
     })();
   }, []);
