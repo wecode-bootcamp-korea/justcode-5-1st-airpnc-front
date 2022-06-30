@@ -8,6 +8,30 @@ function MakeReview({ data, mode }) {
   const [title, setTitle] = useState('작성');
   const [fetchOptions, setFetchOptions] = useState({});
   const star = useRef();
+  // useEffect(() => {
+  //   const createOption = {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       score,
+  //       review,
+  //       reservation_id: data.id,
+  //       user_id: 1,
+  //       room_id: data.room_id,
+  //     }),
+  //   };
+  // }, [score]);
+  // useEffect(() => {
+  //   const putOption = {
+  //     method: 'PUT',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       score: data.score,
+  //       review: data.review,
+  //       id: data.review_id,
+  //     }),
+  //   };
+  // }, [score]);
 
   useEffect(() => {
     if (mode === 'create') {
@@ -17,8 +41,8 @@ function MakeReview({ data, mode }) {
         body: JSON.stringify({
           score,
           review,
-          reservation_id: data.reservation_id,
-          user_id: data.user_id,
+          reservation_id: data.id,
+          user_id: 1,
           room_id: data.room_id,
         }),
       });
@@ -34,16 +58,20 @@ function MakeReview({ data, mode }) {
         }),
       });
     }
-  }, []);
+  }, [score, review]);
   useEffect(() => {
     console.log(score);
   }, [score]);
+  useEffect(() => {
+    console.log(review);
+  }, [review]);
   const drawStar = e => {
     // console.log(star.current);
     star.current.style.width = `${e.target.value * 20}%`;
     setScore(e.target.value);
   };
   const onSubmit = async () => {
+    console.log(review, score);
     let url = '';
     if (mode === 'create') {
       url = 'http://localhost:10010/review';
