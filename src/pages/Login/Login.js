@@ -17,8 +17,8 @@ function Login() {
 
     return true;
   };
-  const goHome = () => {
-    navigate('/');
+  const goHome = res => {
+    navigate('/', { state: res });
   };
   const handleLogin = () => {
     const res = {
@@ -36,10 +36,10 @@ function Login() {
       .then(res => res.json())
       .then(res => {
         if (res.success) {
-          goHome();
+          goHome(res.token.users);
           console.log(res.token, 123123);
 
-          localStorage.setItem('login-token', res.token);
+          localStorage.setItem('login-token', res.token.token);
         } else {
           alert(res.message);
         }

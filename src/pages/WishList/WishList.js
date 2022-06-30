@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './WishList.module.scss';
@@ -7,6 +7,20 @@ import Header from '../../components/Header/Header';
 function WishList() {
   const navigate = useNavigate();
   const wish = useLocation();
+
+  const user = useLocation().state;
+  console.log(wish.state);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+      const json = await res.json();
+      console.log(json, '확인콘솔');
+    })();
+  }, [wish]);
+
+
+
   const goHome = () => {
     navigate('/', { state: [...wish.state] });
   };
