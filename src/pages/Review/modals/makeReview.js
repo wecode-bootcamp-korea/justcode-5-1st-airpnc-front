@@ -30,9 +30,7 @@ function MakeReview({ data, mode }) {
         body: JSON.stringify({
           score: data.score,
           review: data.review,
-          reservation_id: data.reservation_id,
-          user_id: data.user_id,
-          room_id: data.room_id,
+          id: data.review_id,
         }),
       });
     }
@@ -48,9 +46,9 @@ function MakeReview({ data, mode }) {
   const onSubmit = async () => {
     let url = '';
     if (mode === 'create') {
-      url = 'create API로 보낼 주소';
+      url = 'http://localhost:10010/review';
     } else if (mode === 'put') {
-      url = 'put API로 보낼 주소';
+      url = `http://localhost:10010/review/${data.review_id}`;
     }
 
     if (score == 0) {

@@ -40,6 +40,7 @@ function Review() {
   };
   //const isReview = () => setReviewOn(true);
   const onReview = idx => {
+    console.log(idx);
     setReviewIndex(idx);
     if (!toggle) {
       setReviewMode('put');
@@ -118,7 +119,7 @@ function Review() {
       {reviewOn && (
         <ModalLayout reviewOff={offModal}>
           <div ref={el} className={css.modal}>
-            <MakeReview data={toReviewList[reviewIndex]} mode={reviewMode} />
+            <MakeReview data={review[reviewIndex]} mode={reviewMode} />
           </div>
         </ModalLayout>
       )}
