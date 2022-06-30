@@ -1,12 +1,12 @@
-.b {
+.MyPageWrapper {
   padding: 5rem 0;
   margin: 0 auto;
   width: 1200px;
 }
 
-.MyLog-jh {
+.MyLog-box {
   float: right;
-  width: 820px;
+  width: 750px;
 }
 
 .HelloUser {
@@ -15,7 +15,13 @@
   margin-bottom: 3rem;
 }
 
-.Title {
+.List-box {
+  border: 1px solid rgb(255, 56, 92);
+  width: 600px;
+  height: 200px;
+}
+
+.Title-history {
   padding-top: 10px;
   font-size: 1.2rem;
 }
@@ -26,6 +32,7 @@
 
 .Name {
   font-weight: bold;
+  color: rgb(255, 56, 92);
 }
 
 .NextTitle {

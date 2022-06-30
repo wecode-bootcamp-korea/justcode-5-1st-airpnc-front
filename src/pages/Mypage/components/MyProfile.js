@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiFillSafetyCertificate, AiOutlineCheck } from 'react-icons/ai';
 import './MyProfile.scss';
 
 export default function MyProfile({ userImg, userName, getMyProfile }) {
   const [imgFile, setImgFile] = useState(null);
+  const [data, setData] = useState([]);
 
   const handleChangeFile = e => {
     setImgFile(e.target.files[0]);
@@ -29,33 +30,42 @@ export default function MyProfile({ userImg, userName, getMyProfile }) {
         }
       });
   };
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:3000/data/profile.json');
+      const json = await res.json();
+      setData(json);
+    })();
+  }, []);
 
+  if (data.length === 0) {
+    return <div>데이터없음</div>;
+  }
+  console.log(data[0]);
   return (
     <div>
       <section className="ProfileWrapper">
-        <div classnem="UserProfile">
+        <div className="UserProfile">
           <form className="ImageWrapper">
-            <label className="UploadBtn" htmlFor="inputFile">
-              프로필을 고르세요.
-            </label>
-
+            <input className="UploadBtn" type="File" />
+            프로필을 고르세요.
             <button className="SubmitBtn" type="submit" onClick={handlePostImg}>
               확인
             </button>
           </form>
 
           <div className="FreeUser">
-            <p claanem="CheckUser">
+            <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              이름
+              <p className="Check_user">이름:{data[0].name}</p>
             </p>
-            <p claanem="CheckUser">
+            <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              Email
+              <p className="Check_user">Email:{data[0].email}</p>
             </p>
-            <p claanem="CheckUser">
+            <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              전화번호
+              <p className="Check_user">전화번호:{data[0].phone}</p>
             </p>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Detail from './Detail/Detail';
-import Filter from './Filter/Filter';
 import Home from './Home/Home';
 import Login from './Login/Login';
 import Mypage from './Mypage/Mypage';
@@ -20,7 +19,6 @@ function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/filter" element={<Filter />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/reservationList" element={<ReservationList />} />
         <Route path="/review" element={<Review />} />
