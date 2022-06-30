@@ -12,7 +12,6 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState();
   const [wish, setWish] = useState([]);
-  //const [filters, setfilters] = useState({});
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -20,21 +19,6 @@ function Home() {
 
   const user = useLocation().state;
   console.log(user, '19');
-  // const filtersIn = {
-  //   guests: 1,
-  //   bedrooms: 1,
-  //   beds: 1,
-  //   baths: 1,
-  //   room_type: 1,
-  //   location_type: 6,
-  //   residential_type: 2,
-  //   price: {
-  //     min: 100000,
-  //     max: 2000000,
-  //   },
-  // };
-  useEffect(() => {
-
 
   useMemo(() => {
     setFilters(filtersIn);
@@ -66,7 +50,6 @@ function Home() {
     })();
   }, [filtersIn]);
 
-
   //start wishList 갱신 함수
   useEffect(() => {
     (async () => {
@@ -78,10 +61,6 @@ function Home() {
   }, [wish]);
   console.log(wish);
   console.log(selected);
-
-  //filters  <= useState
-  //filtersIn <= useLocation
-
 
   const btnClick = e => {
     const wishs = e.target.value;
@@ -214,4 +193,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;
