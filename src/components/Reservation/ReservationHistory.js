@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import css from './ReservationHistory.module.scss';
 
 function ReservationHistory({ data, detailsOn }) {
-  // console.log(data, 11111);
+  console.log(data, 11111);
   return (
     <div className={css.container}>
       <div className={css.reservation_info}>
-        <img src={data.image}></img>
+        <img src={data.photo_url[0].url}></img>
         <div className={css.info_text}>
           <span>
             {data.city},{data.country}
@@ -19,7 +19,7 @@ function ReservationHistory({ data, detailsOn }) {
       </div>
       <button
         onClick={() => {
-          detailsOn(data.id);
+          detailsOn(data.idx);
         }}
         className={css.review}
       >
