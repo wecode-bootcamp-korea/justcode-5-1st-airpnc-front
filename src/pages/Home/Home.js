@@ -185,7 +185,9 @@ function Home() {
     <>
       {token ? <Header login /> : <Header />}
       <MainFilter />
-      <div onClick={token ? goWishList : cantGoWishList}>wish</div>
+      <div className={css.wish} onClick={token ? goWishList : cantGoWishList}>
+        wish
+      </div>
       <div className={css.container}>
         {data.map((data, ind) => {
           return (

@@ -14,6 +14,7 @@ import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { TiTag } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
+import Header from '../../components/Header/Header';
 
 /////////////////////////////////////////////////////////////////////
 /////                    img and icons                       ////////
@@ -107,7 +108,7 @@ const Reservation = props => {
   const [payOption, setPayOption] = useState('Credit or debit card');
   const [payOptionIcon, setPayOptionIcon] = useState(<MdCreditCard />);
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
-
+  const token = localStorage.getItem('login-token');
   const countryOptCloseHandler = e => {
     setCountryOptVisible(false);
   };
@@ -311,417 +312,428 @@ const Reservation = props => {
   const hostJoinedIn = room.hostJoinedIn.split('-')[0];
 
   return (
-    <div className={css.container}>
-      <header className={css.reserveBanner}>
-        <div className={css.reserveBannerInner}>
-          <div className={css.logoBox}>
-            <img
-              className={css.logoToHome}
-              id={css.logoButton}
-              alt="airbnb"
-              src={airbnbLogo}
-              onClick={event => {
-                handleNavigateBtn(homepage);
-              }}
-            />
-          </div>
-        </div>
-      </header>
-      <div className={css.reserveContentBody}>
-        <main className={css.reserveContentMain} id="reserve-content">
-          <section>
-            <div className={css.reserveContentTitle}>
-              <div className={css.reserveContentTitleInner}>
-                <button
-                  className={css.iconNavigateBefore}
-                  onClick={event => {
-                    handleNavigateBtn(detailpage);
-                  }}
-                >
-                  <MdNavigateBefore />
-                </button>
-                <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
-              </div>
+    <>
+      {token ? <Header login /> : <Header />}
+      <div className={css.container}>
+        <header className={css.reserveBanner}>
+          <div className={css.reserveBannerInner}>
+            <div className={css.logoBox}>
+              <img
+                className={css.logoToHome}
+                id={css.logoButton}
+                alt="airbnb"
+                src={airbnbLogo}
+                onClick={event => {
+                  handleNavigateBtn(homepage);
+                }}
+              />
             </div>
-          </section>
-          <section className={css.reserveContentSection}>
-            <div className={css.reserveContent}>
-              <section>
-                <div className={css.reserveContentLeft}>
-                  <div className={css.rclPriceRateAvgContainer}>
-                    <div
-                      className={`${css.rclPriceRateAvg} ${css.reserveContentLeftInner}`}
-                    >
-                      <p className={css.priceRateSummary}>{priceRateSummary}</p>
-                      <p className={css.priceRateDetail}>
-                        {room.hostname}
-                        {priceRateDetail}
-                      </p>
-                      <div className={css.iconPriceTag} id="price-tag">
-                        <IoDiamondOutline />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={css.rclYourTripContainer}>
-                    <div className={`${css.rclYourTrip}`}>
-                      <div className={css.rclYouTripTitle}>
-                        <h2>Your trip</h2>
-                      </div>
-                      <div className={`${css.rclDates}`}>
-                        <div>
-                          <h3>Dates</h3>
-                          <p className={css.yourTripDate}>{yourTripDate()}</p>
-                        </div>
-                        <div>
-                          <button
-                            className={`${css.editBtn} ${css.visible}`}
-                            onClick={handleDateEditBtn}
-                          >
-                            Edit
-                          </button>
-                          {isDateEditClicked && (
-                            <div>
-                              <input
-                                className={css.checkInInput}
-                                id="checkin-input-edit"
-                                type="date"
-                                value={checkin}
-                                onChange={event => {
-                                  setCheckin(event.target.value);
-                                }}
-                              />
-                              <input
-                                className={css.checkInInput}
-                                id="checkin-input-edit"
-                                type="date"
-                                value={checkout}
-                                onChange={event => {
-                                  setCheckout(event.target.value);
-                                }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className={`${css.rclGuests}`}>
-                        <div>
-                          <h3>Guests</h3>
-                          <p>
-                            {guests}
-                            {guests > 1 ? ' guests' : ' guest'}
-                          </p>
-                        </div>
-                        <div>
-                          <button className={css.editBtn}>Edit</button>
-                          <input
-                            className={css.editInput}
-                            id="guest-edit"
-                            type="number"
-                            value={guests}
-                            onChange={event => {
-                              setGuests(event.target.value);
-                            }}
-                            max="20"
-                          />
+          </div>
+        </header>
+        <div className={css.reserveContentBody}>
+          <main className={css.reserveContentMain} id="reserve-content">
+            <section>
+              <div className={css.reserveContentTitle}>
+                <div className={css.reserveContentTitleInner}>
+                  <button
+                    className={css.iconNavigateBefore}
+                    onClick={event => {
+                      handleNavigateBtn(detailpage);
+                    }}
+                  >
+                    <MdNavigateBefore />
+                  </button>
+                  <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
+                </div>
+              </div>
+            </section>
+            <section className={css.reserveContentSection}>
+              <div className={css.reserveContent}>
+                <section>
+                  <div className={css.reserveContentLeft}>
+                    <div className={css.rclPriceRateAvgContainer}>
+                      <div
+                        className={`${css.rclPriceRateAvg} ${css.reserveContentLeftInner}`}
+                      >
+                        <p className={css.priceRateSummary}>
+                          {priceRateSummary}
+                        </p>
+                        <p className={css.priceRateDetail}>
+                          {room.hostname}
+                          {priceRateDetail}
+                        </p>
+                        <div className={css.iconPriceTag} id="price-tag">
+                          <IoDiamondOutline />
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={css.rclPayWithContainer}>
-                    <div
-                      className={`${css.rclPayWith} ${css.reserveContentLeftInner}`}
-                    >
-                      <div className={css.rclPayWithHeader}>
-                        <div className={css.rclPayWithTitle}>
-                          <h2>Pay with</h2>
+                    <div className={css.rclYourTripContainer}>
+                      <div className={`${css.rclYourTrip}`}>
+                        <div className={css.rclYouTripTitle}>
+                          <h2>Your trip</h2>
                         </div>
-                        <div className={css.payOptionIcons}>
-                          <div className={css.cardIconVisa}>
-                            <SiVisa />
+                        <div className={`${css.rclDates}`}>
+                          <div>
+                            <h3>Dates</h3>
+                            <p className={css.yourTripDate}>{yourTripDate()}</p>
                           </div>
-                          <div className={css.cardIconAmex}>
-                            <GrAmex />
-                          </div>
-                          <div className={css.cardIconMaster}>
-                            <SiMastercard />
+                          <div>
+                            <button
+                              className={`${css.editBtn} ${css.visible}`}
+                              onClick={handleDateEditBtn}
+                            >
+                              Edit
+                            </button>
+                            {isDateEditClicked && (
+                              <div>
+                                <input
+                                  className={css.checkInInput}
+                                  id="checkin-input-edit"
+                                  type="date"
+                                  value={checkin}
+                                  onChange={event => {
+                                    setCheckin(event.target.value);
+                                  }}
+                                />
+                                <input
+                                  className={css.checkInInput}
+                                  id="checkin-input-edit"
+                                  type="date"
+                                  value={checkout}
+                                  onChange={event => {
+                                    setCheckout(event.target.value);
+                                  }}
+                                />
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </div>
-                      <div className={css.payOptionSelector}>
-                        <button
-                          className={css.payOptionSelectorBtn}
-                          id="dropdown-selector-pay-option-btn"
-                          onClick={() => {
-                            setPayOptVisible(!isPayOptVisible);
-                          }}
-                        >
-                          <div className={css.payOptionSelectorInner}>
-                            <div className={css.payOptionSelectorIcon}>
-                              {payOptionIcon}
-                            </div>
-                            <div className={css.payOptionSelectorDescription}>
-                              <span>{payOption}</span>
-                            </div>
-                            <div className={css.payOptionSelectorArrowDrop}>
-                              <RiArrowDropDownLine />
-                            </div>
-                            <PayOptionSelector
-                              id="pay-option-drop-down"
-                              show={isPayOptVisible}
-                              onClose={payOptCloseHandler}
-                              setValue={setPayOption}
+                        <div className={`${css.rclGuests}`}>
+                          <div>
+                            <h3>Guests</h3>
+                            <p>
+                              {guests}
+                              {guests > 1 ? ' guests' : ' guest'}
+                            </p>
+                          </div>
+                          <div>
+                            <button className={css.editBtn}>Edit</button>
+                            <input
+                              className={css.editInput}
+                              id="guest-edit"
+                              type="number"
+                              value={guests}
+                              onChange={event => {
+                                setGuests(event.target.value);
+                              }}
+                              max="20"
                             />
                           </div>
-                        </button>
+                        </div>
                       </div>
-                      <div className={css.cardInfo}>
-                        <div className={css.onCard}>
-                          <div className={css.cardInfoForm}>
-                            <div className={css.cardNumber}>
+                    </div>
+                    <div className={css.rclPayWithContainer}>
+                      <div
+                        className={`${css.rclPayWith} ${css.reserveContentLeftInner}`}
+                      >
+                        <div className={css.rclPayWithHeader}>
+                          <div className={css.rclPayWithTitle}>
+                            <h2>Pay with</h2>
+                          </div>
+                          <div className={css.payOptionIcons}>
+                            <div className={css.cardIconVisa}>
+                              <SiVisa />
+                            </div>
+                            <div className={css.cardIconAmex}>
+                              <GrAmex />
+                            </div>
+                            <div className={css.cardIconMaster}>
+                              <SiMastercard />
+                            </div>
+                          </div>
+                        </div>
+                        <div className={css.payOptionSelector}>
+                          <button
+                            className={css.payOptionSelectorBtn}
+                            id="dropdown-selector-pay-option-btn"
+                            onClick={() => {
+                              setPayOptVisible(!isPayOptVisible);
+                            }}
+                          >
+                            <div className={css.payOptionSelectorInner}>
+                              <div className={css.payOptionSelectorIcon}>
+                                {payOptionIcon}
+                              </div>
+                              <div className={css.payOptionSelectorDescription}>
+                                <span>{payOption}</span>
+                              </div>
+                              <div className={css.payOptionSelectorArrowDrop}>
+                                <RiArrowDropDownLine />
+                              </div>
+                              <PayOptionSelector
+                                id="pay-option-drop-down"
+                                show={isPayOptVisible}
+                                onClose={payOptCloseHandler}
+                                setValue={setPayOption}
+                              />
+                            </div>
+                          </button>
+                        </div>
+                        <div className={css.cardInfo}>
+                          <div className={css.onCard}>
+                            <div className={css.cardInfoForm}>
+                              <div className={css.cardNumber}>
+                                <input
+                                  className={css.cardNumberInput}
+                                  id="cardNumberInput"
+                                  type="text"
+                                  pattern="[0-9\s]{13,19}"
+                                  placeholder="Card Number"
+                                  maxLength="19"
+                                  value={cardNumber}
+                                  autoComplete="cc-number"
+                                  onFocus={event => {
+                                    setInputPlaceholder(
+                                      event.target.id,
+                                      '0000 0000 0000 0000'
+                                    );
+                                    setCardNumber(event.target.value);
+                                  }}
+                                  onBlur={event => {
+                                    setInputPlaceholder(
+                                      event.target.id,
+                                      'Card Number'
+                                    );
+                                  }}
+                                  onChange={event => {
+                                    setCardNumber(event.target.value);
+                                  }}
+                                  required
+                                />
+                              </div>
+                              <div className={css.cardOtherInfo}>
+                                <div className={css.cardExpiration}>
+                                  <input
+                                    className={css.cardExpirationInput}
+                                    id="cardExpirationInput"
+                                    type="text"
+                                    placeholder="Expiration Date"
+                                    pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+                                    maxLength="5"
+                                    value={cardExpiration}
+                                    autoComplete="off"
+                                    onFocus={event => {
+                                      setInputPlaceholder(
+                                        event.target.id,
+                                        'MM / YY'
+                                      );
+                                      setCardExpiration(event.target.value);
+                                    }}
+                                    onBlur={event => {
+                                      setInputPlaceholder(
+                                        event.target.id,
+                                        'Expiration Date'
+                                      );
+                                    }}
+                                    onChange={event => {
+                                      setCardExpiration(event.target.value);
+                                    }}
+                                    required
+                                  />
+                                </div>
+                                <div className={css.cardCVV}>
+                                  <input
+                                    className={css.cardCVVInput}
+                                    id="cardCVVInput"
+                                    type="text"
+                                    pattern="[0-9]{3}"
+                                    maxLength="3"
+                                    placeholder="CVV"
+                                    value={cardCVV}
+                                    autoComplete="off"
+                                    onFocus={event => {
+                                      setInputPlaceholder(
+                                        event.target.id,
+                                        '123'
+                                      );
+                                      setCardCVV(event.target.value);
+                                    }}
+                                    onBlur={event => {
+                                      setInputPlaceholder(
+                                        event.target.id,
+                                        'CVV'
+                                      );
+                                    }}
+                                    onChange={event => {
+                                      setCardCVV(event.target.value);
+                                    }}
+                                    required
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div className={css.cardInfoPostalCode}>
                               <input
-                                className={css.cardNumberInput}
-                                id="cardNumberInput"
+                                className={css.cardPostalCodeInput}
+                                id="card-cvv-input"
                                 type="text"
-                                pattern="[0-9\s]{13,19}"
-                                placeholder="Card Number"
-                                maxLength="19"
-                                value={cardNumber}
-                                autoComplete="cc-number"
+                                placeholder="Postal code"
+                                pattern="[0-9]{6}"
+                                maxLength="6"
+                                value={cardPostalCode}
+                                autoComplete="off"
                                 onFocus={event => {
                                   setInputPlaceholder(
                                     event.target.id,
-                                    '0000 0000 0000 0000'
+                                    'Postal Code'
                                   );
-                                  setCardNumber(event.target.value);
+                                  setCardPostalCode(event.target.value);
                                 }}
                                 onBlur={event => {
                                   setInputPlaceholder(
                                     event.target.id,
-                                    'Card Number'
+                                    'Postal Code'
                                   );
                                 }}
                                 onChange={event => {
-                                  setCardNumber(event.target.value);
+                                  setCardPostalCode(event.target.value);
                                 }}
                                 required
                               />
                             </div>
-                            <div className={css.cardOtherInfo}>
-                              <div className={css.cardExpiration}>
-                                <input
-                                  className={css.cardExpirationInput}
-                                  id="cardExpirationInput"
-                                  type="text"
-                                  placeholder="Expiration Date"
-                                  pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
-                                  maxLength="5"
-                                  value={cardExpiration}
-                                  autoComplete="off"
-                                  onFocus={event => {
-                                    setInputPlaceholder(
-                                      event.target.id,
-                                      'MM / YY'
-                                    );
-                                    setCardExpiration(event.target.value);
-                                  }}
-                                  onBlur={event => {
-                                    setInputPlaceholder(
-                                      event.target.id,
-                                      'Expiration Date'
-                                    );
-                                  }}
-                                  onChange={event => {
-                                    setCardExpiration(event.target.value);
-                                  }}
-                                  required
-                                />
-                              </div>
-                              <div className={css.cardCVV}>
-                                <input
-                                  className={css.cardCVVInput}
-                                  id="cardCVVInput"
-                                  type="text"
-                                  pattern="[0-9]{3}"
-                                  maxLength="3"
-                                  placeholder="CVV"
-                                  value={cardCVV}
-                                  autoComplete="off"
-                                  onFocus={event => {
-                                    setInputPlaceholder(event.target.id, '123');
-                                    setCardCVV(event.target.value);
-                                  }}
-                                  onBlur={event => {
-                                    setInputPlaceholder(event.target.id, 'CVV');
-                                  }}
-                                  onChange={event => {
-                                    setCardCVV(event.target.value);
-                                  }}
-                                  required
-                                />
-                              </div>
+                            <div className={css.cardInfoCountry}>
+                              <button
+                                className={css.cardCountryBtn}
+                                id="dropdown-selector-pay-option-btn"
+                                value={cardInfoCountry}
+                                onClick={() => {
+                                  setCountryOptVisible(!isCountryOptVisible);
+                                }}
+                              >
+                                <div className={css.cardCountryInner}>
+                                  <div className={css.cardCountryDescription}>
+                                    <span>{cardInfoCountry}</span>
+                                  </div>
+                                  <div className={css.cardCountryArrowDrop}>
+                                    <RiArrowDropDownLine />
+                                  </div>
+                                  <CardInfoCountrySelector
+                                    id="country-drop-down"
+                                    show={isCountryOptVisible}
+                                    onClose={countryOptCloseHandler}
+                                    setValue={setCardCountry}
+                                  />
+                                </div>
+                              </button>
                             </div>
                           </div>
-                          <div className={css.cardInfoPostalCode}>
-                            <input
-                              className={css.cardPostalCodeInput}
-                              id="card-cvv-input"
-                              type="text"
-                              placeholder="Postal code"
-                              pattern="[0-9]{6}"
-                              maxLength="6"
-                              value={cardPostalCode}
-                              autoComplete="off"
-                              onFocus={event => {
-                                setInputPlaceholder(
-                                  event.target.id,
-                                  'Postal Code'
-                                );
-                                setCardPostalCode(event.target.value);
-                              }}
-                              onBlur={event => {
-                                setInputPlaceholder(
-                                  event.target.id,
-                                  'Postal Code'
-                                );
-                              }}
-                              onChange={event => {
-                                setCardPostalCode(event.target.value);
-                              }}
-                              required
+                        </div>
+                        <div
+                          className={`${css.rclEnterCoupon} ${css.reserveContentLeftInner}`}
+                        >
+                          <p>Enter a coupon</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={`${css.rclRequirements} ${css.reserveContentLeftInner}`}
+                    >
+                      <div className={css.rclRequirementsInner}>
+                        <h2>Required for your trip</h2>
+                        <h3>{requirements.title}</h3>
+                        <p>{requirements.message}</p>
+                        <div className={css.hostProfile}>
+                          <div className={css.hostProfilePhotoContainer}>
+                            <img
+                              className={css.hostProfilePhoto}
+                              id="host-img"
+                              alt="host"
+                              src={room.profileImage}
                             />
                           </div>
-                          <div className={css.cardInfoCountry}>
-                            <button
-                              className={css.cardCountryBtn}
-                              id="dropdown-selector-pay-option-btn"
-                              value={cardInfoCountry}
-                              onClick={() => {
-                                setCountryOptVisible(!isCountryOptVisible);
-                              }}
-                            >
-                              <div className={css.cardCountryInner}>
-                                <div className={css.cardCountryDescription}>
-                                  <span>{cardInfoCountry}</span>
-                                </div>
-                                <div className={css.cardCountryArrowDrop}>
-                                  <RiArrowDropDownLine />
-                                </div>
-                                <CardInfoCountrySelector
-                                  id="country-drop-down"
-                                  show={isCountryOptVisible}
-                                  onClose={countryOptCloseHandler}
-                                  setValue={setCardCountry}
-                                />
-                              </div>
-                            </button>
+                          <div className={css.hostProfileDescription}>
+                            <div className={css.hostName}>{room.hostname}</div>
+                            <div className={css.hostJoinedIn}>
+                              Joined In {hostJoinedIn}
+                            </div>
                           </div>
                         </div>
+                        <div
+                          className={css.messageToHost}
+                          id="message-to-host"
+                        ></div>
                       </div>
-                      <div
-                        className={`${css.rclEnterCoupon} ${css.reserveContentLeftInner}`}
-                      >
-                        <p>Enter a coupon</p>
-                      </div>
                     </div>
-                  </div>
-                  <div
-                    className={`${css.rclRequirements} ${css.reserveContentLeftInner}`}
-                  >
-                    <div className={css.rclRequirementsInner}>
-                      <h2>Required for your trip</h2>
-                      <h3>{requirements.title}</h3>
-                      <p>{requirements.message}</p>
-                      <div className={css.hostProfile}>
-                        <div className={css.hostProfilePhotoContainer}>
-                          <img
-                            className={css.hostProfilePhoto}
-                            id="host-img"
-                            alt="host"
-                            src={room.profileImage}
-                          />
-                        </div>
-                        <div className={css.hostProfileDescription}>
-                          <div className={css.hostName}>{room.hostname}</div>
-                          <div className={css.hostJoinedIn}>
-                            Joined In {hostJoinedIn}
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={css.messageToHost}
-                        id="message-to-host"
-                      ></div>
-                    </div>
-                  </div>
-                  <div
-                    className={`${css.rclCancellationPolicy} ${css.reserveContentLeftInner}`}
-                  >
-                    <div className={css.rclCancellationPolicyInner}>
-                      <h2>Cancellation Policy</h2>
-                      <p>
-                        {airbnbConst.nonRefundable}&nbsp;
-                        <span>Learn more</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className={`${css.rclCovid19Policy} ${css.reserveContentLeftInner}`}
-                  ></div>
-                  <div
-                    className={`${css.rclAgreementUpon} ${css.reserveContentLeftInner}`}
-                  >
-                    <div className={css.rclAgreementUponInner}>
-                      <p>{airbnbConst.customerAgreement}</p>
-                    </div>
-                  </div>
-                  <div
-                    className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
-                  >
-                    <button
-                      className={css.rclConfirmAndPayBtn}
-                      id="confirm-pay-btn"
-                      onClick={event => {
-                        isPayable ? handleConfirmBtn(event) : notPayable();
-                      }}
+                    <div
+                      className={`${css.rclCancellationPolicy} ${css.reserveContentLeftInner}`}
                     >
-                      Confirm and pay • Airbnb
-                    </button>
-                    {isPayable ? (
-                      <ReservationConfirmed
-                        getNum={reservationNum =>
-                          setReservationNumber(reservationNum)
-                        }
-                        show={isConfirmedVisible}
-                        onClose={confirmationCloseHandler}
-                        yourTripDate={yourTripDate()}
-                        reservation={reservation}
-                      />
-                    ) : (
-                      <ReservationNotValid
-                        show={isNotConfirmedVisible}
-                        onClose={confirmationFailedCloseHandler}
-                      />
-                    )}
+                      <div className={css.rclCancellationPolicyInner}>
+                        <h2>Cancellation Policy</h2>
+                        <p>
+                          {airbnbConst.nonRefundable}&nbsp;
+                          <span>Learn more</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      className={`${css.rclCovid19Policy} ${css.reserveContentLeftInner}`}
+                    ></div>
+                    <div
+                      className={`${css.rclAgreementUpon} ${css.reserveContentLeftInner}`}
+                    >
+                      <div className={css.rclAgreementUponInner}>
+                        <p>{airbnbConst.customerAgreement}</p>
+                      </div>
+                    </div>
+                    <div
+                      className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
+                    >
+                      <button
+                        className={css.rclConfirmAndPayBtn}
+                        id="confirm-pay-btn"
+                        onClick={event => {
+                          isPayable ? handleConfirmBtn(event) : notPayable();
+                        }}
+                      >
+                        Confirm and pay • Airbnb
+                      </button>
+                      {isPayable ? (
+                        <ReservationConfirmed
+                          getNum={reservationNum =>
+                            setReservationNumber(reservationNum)
+                          }
+                          show={isConfirmedVisible}
+                          onClose={confirmationCloseHandler}
+                          yourTripDate={yourTripDate()}
+                          reservation={reservation}
+                        />
+                      ) : (
+                        <ReservationNotValid
+                          show={isNotConfirmedVisible}
+                          onClose={confirmationFailedCloseHandler}
+                        />
+                      )}
+                    </div>
                   </div>
-                </div>
-              </section>
-              <section className={css.reserveContentRightSection}>
-                <PinnedBox
-                  room={room}
-                  reservation={reservation}
-                  airbnbConst={airbnbConst}
-                />
-              </section>
-            </div>
-          </section>
-        </main>
+                </section>
+                <section className={css.reserveContentRightSection}>
+                  <PinnedBox
+                    room={room}
+                    reservation={reservation}
+                    airbnbConst={airbnbConst}
+                  />
+                </section>
+              </div>
+            </section>
+          </main>
+        </div>
+        <div className={css.reserveFooterContainer}>
+          <footer className={css.reserveContentFooter}>
+            <Footer />
+          </footer>
+        </div>
       </div>
-      <div className={css.reserveFooterContainer}>
-        <footer className={css.reserveContentFooter}>
-          <Footer />
-        </footer>
-      </div>
-    </div>
+    </>
   );
 };
 
