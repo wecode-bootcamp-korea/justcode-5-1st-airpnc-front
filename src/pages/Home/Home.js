@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
@@ -16,6 +16,7 @@ function Home() {
   const navigate = useNavigate();
   const button = useRef();
   const filtersIn = useLocation().state;
+
   const user = useLocation().state;
   console.log(user, '19');
   // const filtersIn = {
@@ -32,102 +33,38 @@ function Home() {
   //   },
   // };
   useEffect(() => {
+
+
+  useMemo(() => {
     setFilters(filtersIn);
   }, [filtersIn]);
 
-  const filterTemplate = {
-    guests: 1,
-    bedrooms: 1,
-    beds: 1,
-    baths: 1,
-    room_type: 1,
-    location_type: 6,
-    residential_type: 2,
-    price: { min: 100000, max: 2000000 },
-  };
-
-  const filterFromModal = {
-    price: { min: 0, max: 0 },
-    room_type: 0,
-    bed: 4,
-    bedrooms: 0,
-  };
-
-  console.log('filters : ', filters);
-  console.log('filtersIn : ', filtersIn);
-  console.log('json:: filtersIn ', JSON.stringify(filtersIn));
-  console.log('json:: filters ', JSON.stringify(filters));
-
-  const requestOption = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(filters),
-    //body: JSON.stringify(filtersIn),
-  };
-  // const loadRooms = fetch('http://localhost:10010/home', requestOption)
-  //   .then(res => {
-  //     if (res.status === 200) {
-  //       console.log('here :', data);
-  //       console.log('res.json : ', res);
-  //       console.log('promise.result : ');
-  //       const dataReceived = res.json();
-  //       setData(dataReceived);
-  //       console.log('in loadRoom res.json', res.json());
-  //       return res.json();
-  //     } else {
-  //       console.log('res.status', res.status);
-  //       return res.status;
-  //     }
-  //   })
-  //   .catch(() => {
-  //     console.error('ROOM NOT LOADED');
-  //   });
-
-  // console.log('loadRooms ::::: ', loadRooms);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const rooms = await loadRooms;
-  //     console.log('at loading rooms', rooms);
-  //     setData(rooms);
-  //   })();
-  // }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const rooms = await loadRooms;
-  //     console.log('at filter changes rooms', rooms);
-  //     setData(rooms);
-  //   })();
-  // }, [filters]);
-
-  // NO FILTER OPTION APPLIED
-  // useEffect(() => {
-  //   (async () => {
-  //     //const res = await fetch('http://localhost:10010/home');
-  //     const json = await res.json();
-  //     //console.log('res : ', res);
-  //     console.log('json : ', json);
-  //     //console.log('json.data : ', json.data);
-  //     setData(json);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('http://localhost:10010/home'); //list api
+      const json = await res.json();
+      setData(json);
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
-      //setFilters(filtersIn);
-      console.log('filters : ', filters);
-      console.log('requestOption', requestOption);
-      const res = await fetch('http://localhost:10010/home', requestOption);
-      console.log('at filter changes res : ', res);
+      const requestOption = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        //body: JSON.stringify(filtersIn),
+        body: JSON.stringify(filters),
+      };
+      if (requestOption.body === 'null') requestOption.body = [];
+      const res = await fetch('http://localhost:10010/home', requestOption); //list api
       const json = await res.json();
-      console.log('at filter changes json : ', json);
       setData(json);
-      console.log('data : ', data);
+      setFilters({});
     })();
   }, [filtersIn]);
+
 
   //start wishList 갱신 함수
   useEffect(() => {
@@ -140,6 +77,10 @@ function Home() {
   }, [wish]);
   console.log(wish);
   console.log(selected);
+
+  //filters  <= useState
+  //filtersIn <= useLocation
+
 
   const btnClick = e => {
     const wishs = e.target.value;

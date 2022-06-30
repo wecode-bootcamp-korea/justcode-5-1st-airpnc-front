@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header';
 function WishList() {
   const navigate = useNavigate();
   const wish = useLocation();
+
   const user = useLocation().state;
   console.log(wish.state);
 
@@ -17,6 +18,8 @@ function WishList() {
       console.log(json, '확인콘솔');
     })();
   }, [wish]);
+
+
 
   const goHome = () => {
     navigate('/', { state: [...wish.state] });

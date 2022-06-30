@@ -108,14 +108,14 @@ function BedRoom({ onClickBed, onClickRoom, room, bed }) {
 
   return (
     <div className={css.bedRoom}>
-      <span className={css.fontSize}>침실 수</span>
+      <span className={css.fontSize}>침대 수</span>
       <Btn
         value={bed}
         onClick={onClickBed}
         style={btnStyle}
         selected={selectedBtn}
       />
-      <span className={css.fontSize}>침대 수</span>
+      <span className={css.fontSize}>침실 수</span>
       <Btn
         value={room}
         onClick={onClickRoom}
