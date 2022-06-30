@@ -9,11 +9,11 @@ import Title from './Title';
 
 function MainFilter() {
   const [reviewOn, setReviewOn] = useState(false);
-  const [low, setLow] = useState('');
-  const [high, setHigh] = useState('');
-  const [type, setType] = useState('');
-  const [bed, setBed] = useState('0');
-  const [room, setRoom] = useState('0');
+  const [low, setLow] = useState();
+  const [high, setHigh] = useState();
+  const [type, setType] = useState();
+  const [bed, setBed] = useState();
+  const [room, setRoom] = useState();
   const navigate = useNavigate();
   const el = useRef();
   const back = useRef();
@@ -59,7 +59,7 @@ function MainFilter() {
           max: Number(high),
         },
         room_type: Number(type),
-        bed: Number(bed),
+        beds: Number(bed),
         bedrooms: Number(room),
       },
     });
