@@ -14,11 +14,45 @@ function Home() {
   const navigate = useNavigate();
   const button = useRef();
   const filtersIn = useLocation().state;
+  // const filtersIn = {
+  //   guests: 1,
+  //   bedrooms: 1,
+  //   beds: 1,
+  //   baths: 1,
+  //   room_type: 1,
+  //   location_type: 6,
+  //   residential_type: 2,
+  //   price: {
+  //     min: 100000,
+  //     max: 2000000,
+  //   },
+  // };
   useEffect(() => {
     setFilters(filtersIn);
   }, [filtersIn]);
 
-  console.log('json:: ', JSON.stringify(filters));
+  const filterTemplate = {
+    guests: 1,
+    bedrooms: 1,
+    beds: 1,
+    baths: 1,
+    room_type: 1,
+    location_type: 6,
+    residential_type: 2,
+    price: { min: 100000, max: 2000000 },
+  };
+
+  const filterFromModal = {
+    price: { min: 0, max: 0 },
+    room_type: 0,
+    bed: 4,
+    bedrooms: 0,
+  };
+
+  console.log('filters : ', filters);
+  console.log('filtersIn : ', filtersIn);
+  console.log('json:: filtersIn ', JSON.stringify(filtersIn));
+  console.log('json:: filters ', JSON.stringify(filters));
 
   const requestOption = {
     method: 'POST',
@@ -26,6 +60,7 @@ function Home() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(filters),
+    //body: JSON.stringify(filtersIn),
   };
   // const loadRooms = fetch('http://localhost:10010/home', requestOption)
   //   .then(res => {
@@ -64,21 +99,31 @@ function Home() {
   //   })();
   // }, [filters]);
 
+  // NO FILTER OPTION APPLIED
+  // useEffect(() => {
+  //   (async () => {
+  //     //const res = await fetch('http://localhost:10010/home');
+  //     const json = await res.json();
+  //     //console.log('res : ', res);
+  //     console.log('json : ', json);
+  //     //console.log('json.data : ', json.data);
+  //     setData(json);
+  //   })();
+  // }, []);
+
   useEffect(() => {
     (async () => {
-      //const res = await fetch('http://localhost:3000/data/roomData.json');
-      // const res = await fetch(
-      //   'http://localhost:10010/data/backend/roomDataWithWishes.json'
-      // );
-      const res = await fetch('http://localhost:10010/home');
-      //const res = await fetch('http://localhost:10010/rooms', requestOption);
+      //setFilters(filtersIn);
+      console.log('filters : ', filters);
+      console.log('requestOption', requestOption);
+      const res = await fetch('http://localhost:10010/home', requestOption);
+      console.log('at filter changes res : ', res);
       const json = await res.json();
-      console.log('res : ', res);
-      console.log('json : ', json);
-      //console.log('json.data : ', json.data);
+      console.log('at filter changes json : ', json);
       setData(json);
+      console.log('data : ', data);
     })();
-  }, []);
+  }, [filtersIn]);
 
   const btnClick = e => {
     const wishs = e.target.value;
