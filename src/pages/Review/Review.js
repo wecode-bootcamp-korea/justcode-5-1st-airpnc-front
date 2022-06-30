@@ -18,8 +18,9 @@ function Review() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/reservation/toReview/2');
+      const res = await fetch('http://localhost:10010/reservation/toReview/1');
       const json = await res.json();
+      console.log(json, 3423);
       setToReviewList(json);
       console.log(toReviewList, 222);
     })();
@@ -40,6 +41,7 @@ function Review() {
   };
   //const isReview = () => setReviewOn(true);
   const onReview = idx => {
+    console.log(idx);
     setReviewIndex(idx);
     if (!toggle) {
       setReviewMode('put');
