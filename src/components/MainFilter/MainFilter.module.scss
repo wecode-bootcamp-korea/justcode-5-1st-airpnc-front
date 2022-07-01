@@ -1,7 +1,24 @@
+@mixin button-style-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 .filter {
   width: 780px;
   max-width: 55%;
   height: 90%;
   background-color: white;
   border-radius: 20px;
+}
+button {
+  @include button-style-reset;
+  // position: absolute;
+  // right: 0;
+  // top: 10px;
+  width: 80px;
+  border: 1px solid #dddddd;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
 }

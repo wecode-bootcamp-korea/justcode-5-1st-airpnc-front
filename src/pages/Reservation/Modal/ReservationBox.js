@@ -12,19 +12,19 @@ const airbnbConst = {
 
 const reservationPage = '/reservation';
 const ReservationBox = props => {
-  const { room, reservation, reviewScore, reviewCnt, idObject } = props;
+  const { room, reservation, reviewScore, reviewCnt } = props;
   const [checkin, setCheckIn] = useState(reservation.checkin);
   const [checkout, setCheckOut] = useState(reservation.checkout);
   const [nights, setNights] = useState(0);
   const [guests, setGuests] = useState(reservation.guests);
-
-  const reservationDTO = {
-    checkin,
-    checkout,
-    guests,
-    user_id: idObject.user_id,
-    room_id: idObject.room_id,
-  };
+  console.log(reservation.user_id, 111111);
+  // const reservationDTO = {
+  //   checkin,
+  //   checkout,
+  //   guests,
+  //   user_id: idObject.user_id,
+  //   room_id: room.id
+  // };
 
   const getTotalNights = (date1, date2) => {
     let checkin = new Date(date1);
@@ -54,15 +54,17 @@ const ReservationBox = props => {
 
   const navigate = useNavigate();
   const handleReservationBtn = () => {
-    if (isBtnActive) {
+    if (isBtnActive && reservation.user_id !== '') {
       navigate(reservationPage, {
         state: {
           room: room,
-          reservation: reservationDTO,
+          reservation: reservation,
           reviewScore: reviewScore,
           reviewCnt: reviewCnt,
         },
       });
+    } else {
+      alert('로그인 먼저 해주세요');
     }
   };
 
