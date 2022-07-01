@@ -12,6 +12,8 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState();
   const [wish, setWish] = useState([]);
+  const [headerfilters, setheaderfilters] = useState({});
+  const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -19,17 +21,35 @@ function Home() {
 
   const user = useLocation().state;
   console.log(user, '19');
-
+  console.log('filters : ', filters);
   useMemo(() => {
-    setFilters(filtersIn);
-  }, [filtersIn]);
+    setFilters(Object.assign(filters, filtersIn, headerfilters));
+    console.log('in useMemo filters ', filters);
+    console.log('in useMemo filtersIn ', filtersIn);
+    console.log('in useMemo headerfilters ', headerfilters);
+    console.log('in useMemo filters second ', filters);
+  }, [filtersIn, headerfilters]);
+  console.log('filters ', filters);
+  console.log('headerfilters ', headerfilters);
+  // Enable when login api passes user.id
+  // const isLogin = false;
+  // const homeFetchUrl = () => {
+  //   if (isLogin) {
+  //     return 'http://localhost:10010/home/${user.id}';
+  //   } else {
+  //     return 'http://localhost:10010/home';
+  //   }
+  // };
+
+  const setHeders = location => {
+    setheaderfilters({ location_type: Number(location) });
+  };
 
   useEffect(() => {
     (async () => {
       const res = await fetch('http://localhost:10010/home'); //room api GET request
       const json = await res.json();
       setData(json);
-      console.log(data, 525234);
     })();
   }, []);
 
@@ -49,7 +69,7 @@ function Home() {
       setData(json);
       setFilters({});
     })();
-  }, [filtersIn]);
+  }, [filtersIn, headerfilters]);
 
   //start wishList 갱신 함수
   // useEffect(() => {
@@ -163,10 +183,14 @@ function Home() {
   //     }
   //   });
   // }
-
+  console.log(setHeders);
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {token ? (
+        <Header setHeders={setHeders} login />
+      ) : (
+        <Header setHeders={setHeders} />
+      )}
       <MainFilter />
       <div className={css.wish} onClick={token ? goWishList : cantGoWishList}>
         wish
