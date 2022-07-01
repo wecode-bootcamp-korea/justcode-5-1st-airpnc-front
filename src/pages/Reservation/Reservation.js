@@ -15,6 +15,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import { TiTag } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
 import Header from '../../components/Header/Header';
+import SubHeader from '../../components/Header/SubHeader';
 
 /////////////////////////////////////////////////////////////////////
 /////                    img and icons                       ////////
@@ -313,7 +314,8 @@ const Reservation = props => {
 
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {/* {token ? <Header login /> : <Header />} */}
+      <SubHeader />
       <div className={css.container}>
         <header className={css.reserveBanner}>
           <div className={css.reserveBannerInner}>
