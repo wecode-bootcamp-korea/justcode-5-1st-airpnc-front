@@ -58,15 +58,6 @@ function Review() {
     setReviewOn(true);
   };
 
-  // const toggleFetch = () => {
-  //   if (fetchToggle) {
-  //     console.log('false');
-  //     setFetchToggle(false);
-  //   } else {
-  //     console.log('true');
-  //     setFetchToggle(true);
-  //   }
-  // };
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -136,15 +127,13 @@ function Review() {
               <MakeReview
                 data={toReviewList[reviewIndex]}
                 mode={reviewMode}
-                // toggleBtn={toggleFetch}
+                setReviewOn={setReviewOn}
               />
             ) : (
-              <MakeReview
+              <MakeReview // edit review
                 data={review[reviewIndex]}
                 mode={reviewMode}
-                // toggleBtn={toggleFetch}
-                // toggleBtns={setFetchToggle}
-                // toglemessage={fetchToggle}
+                setReviewOn={setReviewOn}
               />
             )}
           </div>
