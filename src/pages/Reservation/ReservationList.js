@@ -14,7 +14,8 @@ function ReservationList() {
   const el = useRef();
   const navigate = useNavigate();
   const token = localStorage.getItem('login-token');
-  const userId = localStorage.getItem('user-info');
+  const userId = localStorage.getItem('user-id');
+  console.log(userId, 252352);
   useEffect(() => {
     (async () => {
       const res = await fetch(`http://localhost:10010/reservation/${userId}`);

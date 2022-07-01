@@ -20,7 +20,7 @@ function Review() {
   const navigate = useNavigate();
   const el = useRef();
   const token = localStorage.getItem('login-token');
-  const userId = localStorage.getItem('user-info');
+  const userId = localStorage.getItem('user-id');
   useEffect(() => {
     (async () => {
       const res = await fetch(
@@ -125,11 +125,6 @@ function Review() {
                   아직 후기를 남기지 않으셨습니다.
                 </div>
               )}
-              <div className={css.page_button}>
-                <FaAngleLeft />
-                <span className={css.current}>1</span>
-                <FaAngleRight />
-              </div>
             </div>
           )}
         </div>
