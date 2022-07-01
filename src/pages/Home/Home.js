@@ -12,7 +12,6 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState();
   const [wish, setWish] = useState([]);
-  //const [filters, setfilters] = useState({});
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -20,19 +19,6 @@ function Home() {
 
   const user = useLocation().state;
   console.log(user, '19');
-  // const filtersIn = {
-  //   guests: 1,
-  //   bedrooms: 1,
-  //   beds: 1,
-  //   baths: 1,
-  //   room_type: 1,
-  //   location_type: 6,
-  //   residential_type: 2,
-  //   price: {
-  //     min: 100000,
-  //     max: 2000000,
-  //   },
-  // };
 
   useMemo(() => {
     setFilters(filtersIn);
@@ -40,7 +26,7 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //list api
+      const res = await fetch('http://localhost:10010/home'); //room api GET request
       const json = await res.json();
       setData(json);
       console.log(data, 525234);
@@ -58,7 +44,7 @@ function Home() {
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //list api
+      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
       const json = await res.json();
       setData(json);
       setFilters({});
@@ -76,9 +62,6 @@ function Home() {
   // }, [wish]);
   console.log(wish);
   console.log(selected);
-
-  //filters  <= useState
-  //filtersIn <= useLocation
 
   const btnClick = e => {
     const wishs = e.target.value;
@@ -212,4 +195,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;
