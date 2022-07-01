@@ -6,6 +6,7 @@ import ReservationHistory from '../../components/Reservation/ReservationHistory'
 import ReservationDetails from './Modal/ReservationDetails';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import Header from '../../components/Header/Header';
+import SubHeader from '../../components/Header/SubHeader';
 
 function ReservationList() {
   const [reservationList, setReservationList] = useState([]);
@@ -38,7 +39,8 @@ function ReservationList() {
   };
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {/* {token ? <Header login /> : <Header />} */}
+      <SubHeader />
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>

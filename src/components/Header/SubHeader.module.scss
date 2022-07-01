@@ -1,0 +1,29 @@
+@import '../../styles/common.scss';
+
+svg {
+  font-size: 22px;
+  @include flex-vh-center;
+}
+
+.banner {
+  border-bottom: $theme-border-line;
+  
+}
+
+.bannerInner {
+  @include flex-v-center;
+  padding: 20px;
+}
+
+.logoBox {
+  @include flex-v-center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+img.logoToHome {
+  width: 102px;
+}
+

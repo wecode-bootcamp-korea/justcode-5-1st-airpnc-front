@@ -3,7 +3,7 @@ import { ImStarFull } from 'react-icons/im';
 import MyProfile from './components/MyProfile';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import { useLocation } from 'react-router-dom';
+import SubHeader from '../../components/Header/SubHeader';
 import './Mypage.scss';
 
 function MyPage() {
@@ -14,8 +14,8 @@ function MyPage() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem('login-token');
   console.log(token);
-  const user = useLocation().state;
-  console.log(user, 23424);
+  // const user = useLocation().state;
+  // console.log(user, 23424);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +34,7 @@ function MyPage() {
 
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      <SubHeader />
       <div>
         {
           <article className="MyPageWrapper">

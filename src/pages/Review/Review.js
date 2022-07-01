@@ -8,6 +8,7 @@ import MakeReview from './modals/makeReview';
 import Header from '../../components/Header/Header';
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import SubHeader from '../../components/Header/SubHeader';
 
 function Review() {
   const [review, setReview] = useState([]);
@@ -66,7 +67,8 @@ function Review() {
 
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {/* {token ? <Header login /> : <Header />} */}
+      <SubHeader />
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>

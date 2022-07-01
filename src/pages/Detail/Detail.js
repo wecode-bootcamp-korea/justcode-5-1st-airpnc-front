@@ -4,7 +4,7 @@ import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
 import ReservationBox from '../Reservation/Modal/ReservationBox';
-import Header from '../../components/Header/Header';
+import SubHeader from '../../components/Header/SubHeader';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // // or for Day.js
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -25,11 +25,10 @@ import {
   FaTv,
 } from 'react-icons/fa';
 //import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
-// Mock Data for testing //
-
-//////////////////////////
+const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
 function Detail() {
+  const homepage = '/';
   console.log(localStorage.getItem('user-info'), 23456);
   const [reviewOn, setReviewOn] = useState(false);
   const [reviews, setReviews] = useState([]);
@@ -40,7 +39,12 @@ function Detail() {
   // let userId = '';
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
+
   const token = localStorage.getItem('login-token');
+
+  const handleNavigateBtn = address => {
+    navigate(address);
+  };
   // room : trimmed data is passed to detail, reservation pages
   const room = {
     id: rawData.id,
@@ -93,7 +97,7 @@ function Detail() {
   // const locationName = data.state.name;
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      <SubHeader />
       <div className={css.container}>
         <section className={css.header_container}>
           <h1>{room.name}</h1>

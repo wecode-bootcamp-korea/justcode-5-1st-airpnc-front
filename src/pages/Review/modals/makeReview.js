@@ -83,7 +83,8 @@ function MakeReview({ data, mode, setReviewOn }) {
     }
     const res = await fetch(url, fetchOptions);
     const json = await res.json();
-    // setReviewOn(!toggle);
+    console.log(json, 77777);
+    setReviewOn(!toggle);
   };
 
   return (
@@ -124,7 +125,13 @@ function MakeReview({ data, mode, setReviewOn }) {
             placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
           ></textarea>
         </div>
-        <button onClick={onSubmit}>완료</button>
+        <button
+          onClick={e => {
+            onSubmit();
+          }}
+        >
+          완료
+        </button>
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ const airbnbConst = {
   chargeAtText: `You won't be charged yet`,
 };
 //////////////////////
-
 const reservationPage = '/reservation';
 const ReservationBox = props => {
   const { room, reservation, reviewScore, reviewCnt } = props;
@@ -17,22 +16,8 @@ const ReservationBox = props => {
   const [checkout, setCheckOut] = useState(reservation.checkout);
   const [nights, setNights] = useState(0);
   const [guests, setGuests] = useState(reservation.guests);
-  console.log(reservation.user_id, 111111);
-  // const reservationDTO = {
-  //   checkin,
-  //   checkout,
-  //   guests,
-  //   user_id: idObject.user_id,
-  //   room_id: room.id
-  // };
-
-  const getTotalNights = (date1, date2) => {
-    let checkin = new Date(date1);
-    let checkout = new Date(date2);
-    let diff = Math.abs(checkout.getTime() - checkin.getTime());
-    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
-    return noofdays;
-  };
+  const [isBtnActive, setBtnActive] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     reservation.checkin = checkin;
@@ -48,13 +33,52 @@ const ReservationBox = props => {
     reservation.guests = guests;
   }, [guests]);
 
-  const isBtnActive = () => {
-    return true;
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays;
+  };
+
+  const isDateValid = (inout, date) => {
+    const today = new Date();
+    const dateToCheck = new Date();
+    console.log('checkin ', checkin);
+    console.log('checkout ', checkout);
+    console.log('today ', today);
+    console.log('dateToCheck ', dateToCheck);
+
+    if (new Date(date) < today) {
+      setAlertMsg(
+        `날짜를 확인해주세요. ${today.getFullYear()}-${
+          today.getMonth() + 1
+        }-${today.getDate()} 이후 날짜를 선택해주세요`
+      );
+      return false;
+    }
+    if (inout === 'in') {
+      if (dateToCheck > new Date(checkout)) {
+        setAlertMsg('체크인 날짜를 확인해주세요');
+        setBtnActive(false);
+      } else {
+        setBtnActive(true);
+      }
+    } else {
+      if (dateToCheck < new Date(checkin)) {
+        setAlertMsg('체크아웃 날짜를 확인해주세요');
+        setBtnActive(false);
+      } else {
+        setBtnActive(true);
+      }
+    }
+    console.log('alertMsg', alertMsg);
+    setBtnActive(true);
   };
 
   const navigate = useNavigate();
   const handleReservationBtn = () => {
-    if (isBtnActive && reservation.user_id !== '') {
+    if (reservation.user_id !== '') {
       navigate(reservationPage, {
         state: {
           room: room,
@@ -64,7 +88,9 @@ const ReservationBox = props => {
         },
       });
     } else {
-      alert('로그인 먼저 해주세요');
+      if (!reservation.user_id) {
+        alert('로그인 먼저 해주세요');
+      }
     }
   };
 
