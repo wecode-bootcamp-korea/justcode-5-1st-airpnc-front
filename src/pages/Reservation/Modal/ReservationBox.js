@@ -9,27 +9,15 @@ const airbnbConst = {
   chargeAtText: `You won't be charged yet`,
 };
 //////////////////////
-
 const reservationPage = '/reservation';
 const ReservationBox = props => {
-  const { room, user, reviewScore, reviewCnt } = props;
-  let today = new Date();
-  let tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const [checkin, setCheckIn] = useState(today);
-  const [checkout, setCheckOut] = useState(today);
+  const { room, reservation, reviewScore, reviewCnt } = props;
+  const [checkin, setCheckIn] = useState(reservation.checkin);
+  const [checkout, setCheckOut] = useState(reservation.checkout);
   const [nights, setNights] = useState(0);
-  const [guests, setGuests] = useState(0);
+  const [guests, setGuests] = useState(reservation.guests);
+  const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
-  console.log('room: ', room);
-
-  const reservation = {
-    checkin,
-    checkout,
-    guests,
-    user_id: user.id,
-    room_id: room.id,
-  };
 
   useEffect(() => {
     reservation.checkin = checkin;
@@ -60,7 +48,7 @@ const ReservationBox = props => {
     console.log('checkout ', checkout);
     console.log('today ', today);
     console.log('dateToCheck ', dateToCheck);
-    let msg = '';
+
     if (new Date(date) < today) {
       setAlertMsg(
         `날짜를 확인해주세요. ${today.getFullYear()}-${
@@ -72,25 +60,25 @@ const ReservationBox = props => {
     if (inout === 'in') {
       if (dateToCheck > new Date(checkout)) {
         setAlertMsg('체크인 날짜를 확인해주세요');
-        return false;
+        setBtnActive(false);
+      } else {
+        setBtnActive(true);
       }
     } else {
       if (dateToCheck < new Date(checkin)) {
         setAlertMsg('체크아웃 날짜를 확인해주세요');
-        return false;
+        setBtnActive(false);
+      } else {
+        setBtnActive(true);
       }
     }
     console.log('alertMsg', alertMsg);
-    return true;
-  };
-
-  const isBtnActive = () => {
-    return true;
+    setBtnActive(true);
   };
 
   const navigate = useNavigate();
   const handleReservationBtn = () => {
-    if (isBtnActive) {
+    if (isBtnActive && reservation.user_id !== '') {
       navigate(reservationPage, {
         state: {
           room: room,
@@ -99,6 +87,12 @@ const ReservationBox = props => {
           reviewCnt: reviewCnt,
         },
       });
+    } else {
+      if (!reservation.user_id) {
+        alert('로그인 먼저 해주세요');
+      } else {
+        alert(`날짜를 확인해주세요  ${alertMsg}`);
+      }
     }
   };
 

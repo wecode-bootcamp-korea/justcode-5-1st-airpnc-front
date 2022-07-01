@@ -47,6 +47,14 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
     // );
   };
 
+  const confirm = e => {
+    navigate('/', {
+      state: {
+        location_type: Number(searchLocation),
+      },
+    });
+  };
+
   const userSelectThis = buttonName => {
     setWhichIsClicked(buttonName);
   };
@@ -222,6 +230,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
                     setLocation(searchLocation);
                     goToListPage();
                     setIsClickedNav(!isClickedNav);
+                    confirm();
                   }}
                   disabled={searchBtnDisabled}
                 >
