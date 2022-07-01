@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import css from './ActivatedHeader.module.scss';
 
-function SearchNav({ setIsClickedNav, isClickedNav }) {
+function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
   const [whichIsClicked, setWhichIsClicked] = useState('');
   const [personCardData, setPersonCardData] = useState([]);
   const [searchLocation, setSerchLocation] = useState('');
@@ -219,6 +219,7 @@ function SearchNav({ setIsClickedNav, isClickedNav }) {
                   className={css.searchZoom}
                   type="button"
                   onClick={() => {
+                    setLocation(searchLocation);
                     goToListPage();
                     setIsClickedNav(!isClickedNav);
                   }}

@@ -24,13 +24,6 @@ import {
   FaTv,
 } from 'react-icons/fa';
 //import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
-// Mock Data for testing //
-const reservation = {
-  user_id: 2,
-  room_id: 1,
-};
-
-//////////////////////////
 
 function Detail() {
   const [reviewOn, setReviewOn] = useState(false);
@@ -42,8 +35,12 @@ function Detail() {
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
 
+  const user = {
+    id: 9999,
+  };
   // room : trimmed data is passed to detail, reservation pages
   const room = {
+    id: rawData.id,
     name: rawData.name,
     images: rawData.photo,
     price: rawData.price,
@@ -213,7 +210,7 @@ function Detail() {
         <div className={css.reservation}>
           <ReservationBox
             room={room}
-            reservation={reservation}
+            user={user}
             reviewScore={avgScore}
             reviewCnt={reviews.length}
           />

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
 import ActivatedHeader from './ActivatedHeader';
@@ -9,14 +9,22 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ login }) {
+function Header({ setHeders, login }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
   const [Signup, ClickedSignUp] = useState(false);
   const [Mypage, ClickedMypage] = useState(false);
+  const [checkin, setCheckin] = useState();
+  const [checkout, setCheckout] = useState();
+  const [location, setLocation] = useState(0);
   const navigate = useNavigate();
 
+  console.log('location : ', location);
+  useEffect(() => {
+    console.log('changed');
+    setHeders(Number(location));
+  }, [location]);
   const isMenued = () => {
     //
     if (localStorage.getItem('back_token')) {
@@ -65,6 +73,7 @@ function Header({ login }) {
         <ActivatedHeader
           setIsClickedNav={setIsClickedNav}
           isClickedNav={isClickedNav}
+          setLocation={setLocation}
         />
       ) : (
         <div

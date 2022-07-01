@@ -12,7 +12,8 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState();
   const [wish, setWish] = useState([]);
-  //const [filters, setfilters] = useState({});
+  const [headerfilters, setheaderfilters] = useState({});
+  const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -20,23 +21,27 @@ function Home() {
 
   const user = useLocation().state;
   console.log(user, '19');
-  // const filtersIn = {
-  //   guests: 1,
-  //   bedrooms: 1,
-  //   beds: 1,
-  //   baths: 1,
-  //   room_type: 1,
-  //   location_type: 6,
-  //   residential_type: 2,
-  //   price: {
-  //     min: 100000,
-  //     max: 2000000,
-  //   },
-  // };
-
+  console.log('filters : ', filters);
   useMemo(() => {
-    setFilters(filtersIn);
-  }, [filtersIn]);
+    setFilters(Object.assign(filtersIn || {}, headerfilters || {}));
+    console.log('in useMemo filters ', filters);
+    console.log('in useMemo filtersIn ', filtersIn);
+    console.log('in useMemo filters ', headerfilters);
+  }, [filtersIn, headerfilters]);
+  console.log('filters ', filters);
+  console.log('headerfilters ', headerfilters);
+  // Enable when login api passes user.id
+  // const isLogin = false;
+  // const homeFetchUrl = () => {
+  //   if (isLogin) {
+  //     return 'http://localhost:10010/home/${user.id}';
+  //   } else {
+  //     return 'http://localhost:10010/home';
+  //   }
+  // };
+  const setHeders = location => {
+    setheaderfilters({ location_type: Number(location) });
+  };
 
   useEffect(() => {
     (async () => {
@@ -62,7 +67,7 @@ function Home() {
       setData(json);
       setFilters({});
     })();
-  }, [filtersIn]);
+  }, [filtersIn, headerfilters]);
 
   //start wishList 갱신 함수
   useEffect(() => {
@@ -180,10 +185,14 @@ function Home() {
   //     }
   //   });
   // }
-
+  console.log(setHeders);
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {token ? (
+        <Header setHeders={setHeders} login />
+      ) : (
+        <Header setHeders={setHeders} />
+      )}
       <MainFilter />
       <div onClick={token ? goWishList : cantGoWishList}>wish</div>
       <div className={css.container}>

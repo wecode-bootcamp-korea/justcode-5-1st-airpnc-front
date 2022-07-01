@@ -19,8 +19,6 @@ function WishList() {
     })();
   }, [wish]);
 
-
-
   const goHome = () => {
     navigate('/', { state: [...wish.state] });
   };

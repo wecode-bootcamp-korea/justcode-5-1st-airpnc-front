@@ -12,26 +12,23 @@ const airbnbConst = {
 
 const reservationPage = '/reservation';
 const ReservationBox = props => {
-  const { room, reservation, reviewScore, reviewCnt, idObject } = props;
-  const [checkin, setCheckIn] = useState(reservation.checkin);
-  const [checkout, setCheckOut] = useState(reservation.checkout);
+  const { room, user, reviewScore, reviewCnt } = props;
+  let today = new Date();
+  let tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const [checkin, setCheckIn] = useState(today);
+  const [checkout, setCheckOut] = useState(today);
   const [nights, setNights] = useState(0);
-  const [guests, setGuests] = useState(reservation.guests);
+  const [guests, setGuests] = useState(0);
+  const [alertMsg, setAlertMsg] = useState('');
+  console.log('room: ', room);
 
-  const reservationDTO = {
+  const reservation = {
     checkin,
     checkout,
     guests,
-    user_id: idObject.user_id,
-    room_id: idObject.room_id,
-  };
-
-  const getTotalNights = (date1, date2) => {
-    let checkin = new Date(date1);
-    let checkout = new Date(date2);
-    let diff = Math.abs(checkout.getTime() - checkin.getTime());
-    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
-    return noofdays;
+    user_id: user.id,
+    room_id: room.id,
   };
 
   useEffect(() => {
@@ -48,6 +45,45 @@ const ReservationBox = props => {
     reservation.guests = guests;
   }, [guests]);
 
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays;
+  };
+
+  const isDateValid = (inout, date) => {
+    const today = new Date();
+    const dateToCheck = new Date();
+    console.log('checkin ', checkin);
+    console.log('checkout ', checkout);
+    console.log('today ', today);
+    console.log('dateToCheck ', dateToCheck);
+    let msg = '';
+    if (new Date(date) < today) {
+      setAlertMsg(
+        `날짜를 확인해주세요. ${today.getFullYear()}-${
+          today.getMonth() + 1
+        }-${today.getDate()} 이후 날짜를 선택해주세요`
+      );
+      return false;
+    }
+    if (inout === 'in') {
+      if (dateToCheck > new Date(checkout)) {
+        setAlertMsg('체크인 날짜를 확인해주세요');
+        return false;
+      }
+    } else {
+      if (dateToCheck < new Date(checkin)) {
+        setAlertMsg('체크아웃 날짜를 확인해주세요');
+        return false;
+      }
+    }
+    console.log('alertMsg', alertMsg);
+    return true;
+  };
+
   const isBtnActive = () => {
     return true;
   };
@@ -58,7 +94,7 @@ const ReservationBox = props => {
       navigate(reservationPage, {
         state: {
           room: room,
-          reservation: reservationDTO,
+          reservation: reservation,
           reviewScore: reviewScore,
           reviewCnt: reviewCnt,
         },
