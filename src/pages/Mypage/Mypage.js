@@ -3,6 +3,7 @@ import { ImStarFull } from 'react-icons/im';
 import MyProfile from './components/MyProfile';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import SubHeader from '../../components/Header/SubHeader';
 import './Mypage.scss';
 
 function MyPage() {
@@ -29,7 +30,7 @@ function MyPage() {
 
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      <SubHeader />
       <div>
         {
           <article className="MyPageWrapper">
