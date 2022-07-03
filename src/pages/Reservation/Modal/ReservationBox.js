@@ -78,7 +78,7 @@ const ReservationBox = props => {
 
   const navigate = useNavigate();
   const handleReservationBtn = () => {
-    if (isBtnActive && reservation.user_id !== '') {
+    if (reservation.user_id !== '') {
       navigate(reservationPage, {
         state: {
           room: room,
@@ -90,8 +90,6 @@ const ReservationBox = props => {
     } else {
       if (!reservation.user_id) {
         alert('로그인 먼저 해주세요');
-      } else {
-        alert(`날짜를 확인해주세요  ${alertMsg}`);
       }
     }
   };
