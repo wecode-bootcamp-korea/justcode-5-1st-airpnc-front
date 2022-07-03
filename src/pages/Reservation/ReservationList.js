@@ -6,6 +6,7 @@ import ReservationHistory from '../../components/Reservation/ReservationHistory'
 import ReservationDetails from './Modal/ReservationDetails';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import Header from '../../components/Header/Header';
+import SubHeader from '../../components/Header/SubHeader';
 
 function ReservationList() {
   const [reservationList, setReservationList] = useState([]);
@@ -14,7 +15,8 @@ function ReservationList() {
   const el = useRef();
   const navigate = useNavigate();
   const token = localStorage.getItem('login-token');
-  const userId = localStorage.getItem('user-info');
+  const userId = localStorage.getItem('user-id');
+  console.log(userId, 252352);
   useEffect(() => {
     (async () => {
       const res = await fetch(`http://localhost:10010/reservation/${userId}`);
@@ -37,7 +39,8 @@ function ReservationList() {
   };
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {/* {token ? <Header login /> : <Header />} */}
+      <SubHeader />
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>

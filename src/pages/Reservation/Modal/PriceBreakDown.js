@@ -24,7 +24,15 @@ const PriceBreakDown = props => {
   const price = {
     perNight: room.price,
   };
-
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays;
+  };
+  if (nights === null)
+    nights = getTotalNights(reservation.checkin, reservation.checkout);
   price.byNights = room.price * nights;
   price.cleaningFee = price.byNights * cleaningRate;
   price.serviceFee = price.byNights * serviceFeeRate;

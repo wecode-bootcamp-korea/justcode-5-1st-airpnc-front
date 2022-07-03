@@ -35,11 +35,12 @@ function ReservationDetails({ data }) {
         <div className={css.comment}>
           <h2>예약 날짜</h2>
           <span className={css.date}>
-            체크인 : {data.check_in}, 체크아웃 : {data.check_out}
+            체크인 : {data.check_in.substring(0, 10)}, 체크아웃 :{' '}
+            {data.check_out.substring(0, 10)}
           </span>
         </div>
         <div className={css.button_group}>
-          <button>수정</button>
+          {/* <button>수정</button> */}
           <button onClick={onDelete}>삭제</button>
         </div>
       </div>

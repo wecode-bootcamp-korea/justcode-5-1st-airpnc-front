@@ -53,6 +53,11 @@ function Home() {
     })();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(user, 234234343);
+  //   navigate('/MyPage', { state: user });
+  // }, [user]);
+
   useEffect(() => {
     (async () => {
       const requestOption = {
@@ -70,6 +75,10 @@ function Home() {
       setFilters({});
     })();
   }, [filtersIn, headerfilters]);
+
+  // const goMyPage = () => {
+
+  // };
 
   //start wishList 갱신 함수
   // useEffect(() => {

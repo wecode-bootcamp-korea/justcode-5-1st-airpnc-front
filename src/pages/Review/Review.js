@@ -8,6 +8,7 @@ import MakeReview from './modals/makeReview';
 import Header from '../../components/Header/Header';
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import SubHeader from '../../components/Header/SubHeader';
 
 function Review() {
   const [review, setReview] = useState([]);
@@ -20,7 +21,7 @@ function Review() {
   const navigate = useNavigate();
   const el = useRef();
   const token = localStorage.getItem('login-token');
-  const userId = localStorage.getItem('user-info');
+  const userId = localStorage.getItem('user-id');
   useEffect(() => {
     (async () => {
       const res = await fetch(
@@ -66,7 +67,8 @@ function Review() {
 
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {/* {token ? <Header login /> : <Header />} */}
+      <SubHeader />
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>
@@ -125,11 +127,6 @@ function Review() {
                   아직 후기를 남기지 않으셨습니다.
                 </div>
               )}
-              <div className={css.page_button}>
-                <FaAngleLeft />
-                <span className={css.current}>1</span>
-                <FaAngleRight />
-              </div>
             </div>
           )}
         </div>

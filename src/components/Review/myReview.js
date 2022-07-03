@@ -21,7 +21,7 @@ function MyReview({ data, reviewOnClick }) {
   return (
     <div className={css.container}>
       <div className={css.myReview}>
-        <img src=""></img>
+        {/* <img src=""></img> */}
         <div className={css.room_info}>
           <div className={css.room_score}>
             <FaStar />
