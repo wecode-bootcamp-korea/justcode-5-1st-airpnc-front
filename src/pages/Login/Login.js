@@ -37,9 +37,8 @@ function Login() {
       .then(res => {
         if (res.success) {
           goHome(res.token.users);
-          console.log(res.token, 123123);
-
           localStorage.setItem('login-token', res.token.token);
+          localStorage.setItem('user-id', res.token.users.id);
         } else {
           alert(res.message);
         }

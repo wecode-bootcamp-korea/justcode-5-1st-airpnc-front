@@ -1,37 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import css from './makeReview.module.scss';
 
-function MakeReview({ data, mode }) {
-  console.log(data, 121312);
-  const [score, setScore] = useState(0);
-  const [review, setReview] = useState('');
+function MakeReview({ data, mode, setReviewOn }) {
+  console.log('data : ', data, 'mode :', mode);
+  const [score, setScore] = useState(data.score);
+  const [review, setReview] = useState(data.review);
   const [title, setTitle] = useState('작성');
   const [fetchOptions, setFetchOptions] = useState({});
+  const [toggle, setToggle] = useState(true);
   const star = useRef();
-  // useEffect(() => {
-  //   const createOption = {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       score,
-  //       review,
-  //       reservation_id: data.id,
-  //       user_id: 1,
-  //       room_id: data.room_id,
-  //     }),
-  //   };
-  // }, [score]);
-  // useEffect(() => {
-  //   const putOption = {
-  //     method: 'PUT',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       score: data.score,
-  //       review: data.review,
-  //       id: data.review_id,
-  //     }),
-  //   };
-  // }, [score]);
+  useEffect(
+    e => {
+      data.score = score;
+      console.log(data.score);
+      drawStar(e);
+    },
+    [score]
+  );
+
+  useEffect(() => {
+    data.review = review;
+  }, [review]);
 
   useEffect(() => {
     if (mode === 'create') {
@@ -67,29 +56,32 @@ function MakeReview({ data, mode }) {
   }, [review]);
   const drawStar = e => {
     // console.log(star.current);
-    star.current.style.width = `${e.target.value * 20}%`;
-    setScore(e.target.value);
+    let value = score;
+    if (e) {
+      value = e.target.value;
+    }
+    star.current.style.width = `${value * 20}%`;
+    setScore(value);
   };
+
   const onSubmit = async () => {
-    console.log(review, score);
     let url = '';
     if (mode === 'create') {
       url = 'http://localhost:10010/review';
     } else if (mode === 'put') {
       url = `http://localhost:10010/review/${data.review_id}`;
     }
-
-    if (score == 0) {
+    if (score === 0) {
       alert('별점 입력을 확인하세요');
       return;
     }
-    if (review == '') {
+    if (review === '') {
       alert('리뷰 입력을 확인하세요');
       return;
     }
     const res = await fetch(url, fetchOptions);
     const json = await res.json();
-    console.log(json);
+    setReviewOn(!toggle);
   };
 
   return (
