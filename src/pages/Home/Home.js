@@ -33,8 +33,6 @@ function Home() {
   //     max: 2000000,
   //   },
   // };
-  useEffect(() => {
-
 
   useMemo(() => {
     setFilters(filtersIn);
@@ -66,7 +64,6 @@ function Home() {
     })();
   }, [filtersIn]);
 
-
   //start wishList 갱신 함수
   useEffect(() => {
     (async () => {
@@ -81,7 +78,6 @@ function Home() {
 
   //filters  <= useState
   //filtersIn <= useLocation
-
 
   const btnClick = e => {
     const wishs = e.target.value;
