@@ -29,33 +29,6 @@ const requirements = {
   message: `Let the host know why you're travelling and when you'll check in.`,
 };
 
-///////////////////////////////////////////////////////////////////
-/////////////////            MockData           ///////////////////
-// Need to be removed
-const host = {
-  profileImg: profileImgCat,
-  name: 'Sarah',
-  joinedIn: '2018',
-};
-
-// const room = {
-//   id: 1,
-//   name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
-//   type: 'Entire Villa',
-//   price: 603000,
-//   rate: 4.9,
-//   rateCnt: 11,
-//   hostType: 'superhost',
-//   repImg: '/images/room_rep/cabin.png',
-// };
-
-// const reservation = {
-//   id: 1,
-//   guests: 4,
-//   checkin: '2022-06-10 23:55:45.000000',
-//   checkout: '2022-06-14 23:55:45.000000',
-// };
-
 const airbnbConst = {
   customerAgreement: `By selecting the button below, I agree to the Host's House Rules, Airbnb's Rebooking and Refund Policy, and that Airbnb can charge my payment method if I’m responsible for damage.`,
   aircover: `Your booking is potected by aircover`,
@@ -78,13 +51,17 @@ const Reservation = props => {
   // use room, reservation info from useLocation when reservationBox is imported to detail page
   const room = useLocation().state.room;
   const reservation = useLocation().state.reservation;
-
+  const reviewScore = useLocation().state.Score;
+  const reviewCnt = useLocation().state.reviewCnt;
+  console.log('reservation : ', reservation);
+  console.log('reservation guests: ', reservation.guests);
   // useState for reservation //
   // To Do : edit option for dates and guests
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
-  const [guests, setGuests] = useState(reservation.guests);
-  const [reservationNumber, setReservationNumber] = useState(0);
+  const [nights, setNight] = useState(reservation.nights);
+  const [guests, setGuests] = useState(reservation.guests || 1);
+  const [reservationNumber, setReservationNumber] = useState(-1);
 
   useEffect(() => {
     reservation.checkin = checkin;
@@ -207,7 +184,7 @@ const Reservation = props => {
   };
 
   const confirmationFailedCloseHandler = e => {
-    setConfirmationFailedVisible(false);
+    setConfirmationFailedVisible(e);
   };
 
   // TO DO : input validation on 'pay with' section
@@ -240,25 +217,6 @@ const Reservation = props => {
   }
 
   const yourTripDate = () => {
-    return yourTripDateIgnoreTimezone();
-  };
-
-  const yourTripDateWithTimezone = () => {
-    let checkinDate = new Date(checkin).toDateString().split(' ');
-    let checkoutDate = new Date(checkout).toDateString().split(' ');
-    if (checkinDate[3] === checkoutDate[3]) {
-      if (checkinDate[1] === checkoutDate[1]) {
-        return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month
-      } else {
-        return `${checkinDate[1]}. ${checkinDate[2]} -  ${checkoutDate[1]}. ${checkoutDate[2]}`;
-      }
-    }
-    return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
-  };
-
-  const yourTripDateIgnoreTimezone = () => {
-    let checkinArr = checkin.split('-');
-    let checkoutArr = checkout.split('-');
     let monthNames = [
       'Jan',
       'Feb',
@@ -273,33 +231,26 @@ const Reservation = props => {
       'Nov',
       'Dec',
     ];
-    let checkinMonth = monthNames[Number(checkinArr[1]) - 1];
-    let checkoutMonth = monthNames[Number(checkoutArr[1]) - 1];
-    return `${checkinMonth}. ${checkinArr[2]} - ${checkoutMonth}. ${checkoutArr[2]}`;
-  };
-
-  const yourTripDateRemoveTimezone = () => {
-    let checkinTimezone = new Date(checkin);
-    let checkoutTimezone = new Date(checkout);
-    const TimezoneOffsetCheckIn = checkinTimezone.getTimezoneOffset() * 60000;
-    const TimezoneOffsetCheckOut = checkoutTimezone.getTimezoneOffset() * 60000;
-    const checkinDate = new Date(
-      checkinTimezone.getTime() - TimezoneOffsetCheckIn
-    )
-      .toDateString()
-      .split(' ');
-
-    const checkoutDate = new Date(
-      checkoutTimezone.getTime() - TimezoneOffsetCheckOut
-    )
-      .toDateString()
-      .split(' ');
-
-    if (checkinDate[3] === checkoutDate[3]) {
-      if (checkinDate[1] === checkoutDate[1]) {
-        return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month
+    let checkinDate = checkin;
+    let checkoutDate = checkout;
+    console.log('------------------------');
+    console.log('checkin : ', checkin);
+    console.log('checkout : ', checkout);
+    console.log('checkinDate : ', checkinDate);
+    console.log('checkinMonth : ', checkinDate.getMonth() + 1);
+    console.log('checkinDate : ', checkinDate.getDate());
+    console.log('checkoutDate : ', checkoutDate);
+    if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
+      if (checkinDate.getMonth() === checkoutDate.getMonth()) {
+        return `${
+          monthNames[Number(checkinDate.getMonth())]
+        } . ${checkinDate.getDate()} - ${checkoutDate.getDate()}`; // same year and month
       } else {
-        return `${checkinDate[1]}. ${checkinDate[2]} -  ${checkoutDate[1]}. ${checkoutDate[2]}`;
+        return `${
+          monthNames[Number(checkinDate.getMonth())]
+        }. ${checkinDate.getDate()} -  ${
+          monthNames[Number(checkoutDate.getMonth())]
+        }. ${checkoutDate.getDate()}`;
       }
     }
     return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
@@ -429,8 +380,8 @@ const Reservation = props => {
                           <div>
                             <h3>Guests</h3>
                             <p>
-                              {guests}
-                              {guests > 1 ? ' guests' : ' guest'}
+                              {reservation.guests}
+                              {reservation.guests > 1 ? ' guests' : ' guest'}
                             </p>
                           </div>
                           <div>
@@ -602,7 +553,7 @@ const Reservation = props => {
                                 onFocus={event => {
                                   setInputPlaceholder(
                                     event.target.id,
-                                    'Postal Code'
+                                    '000000'
                                   );
                                   setCardPostalCode(event.target.value);
                                 }}
@@ -678,7 +629,7 @@ const Reservation = props => {
                         <div
                           className={css.messageToHost}
                           id="message-to-host"
-                        ></div>
+                        />
                       </div>
                     </div>
                     <div
@@ -694,7 +645,7 @@ const Reservation = props => {
                     </div>
                     <div
                       className={`${css.rclCovid19Policy} ${css.reserveContentLeftInner}`}
-                    ></div>
+                    />
                     <div
                       className={`${css.rclAgreementUpon} ${css.reserveContentLeftInner}`}
                     >

@@ -19,21 +19,14 @@ const currencyFomatter = (num, currency) => {
 };
 
 const PriceBreakDown = props => {
-  const { room, reservation, nights } = props;
-
+  const { room, reservation } = props;
+  console.log('room : ', room);
+  console.log('reservation : ', reservation);
   const price = {
     perNight: room.price,
   };
-  const getTotalNights = (date1, date2) => {
-    let checkin = new Date(date1);
-    let checkout = new Date(date2);
-    let diff = Math.abs(checkout.getTime() - checkin.getTime());
-    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
-    return noofdays;
-  };
-  if (nights === null)
-    nights = getTotalNights(reservation.checkin, reservation.checkout);
-  price.byNights = room.price * nights;
+
+  price.byNights = room.price * reservation.nights;
   price.cleaningFee = price.byNights * cleaningRate;
   price.serviceFee = price.byNights * serviceFeeRate;
   price.tax = price.byNights * taxRate;
@@ -48,7 +41,7 @@ const PriceBreakDown = props => {
           <div className={css.priceByNights}>
             <div className={css.priceByNightsDetail}>
               {currencyFomatter(room.price, 'kr')} &nbsp;x&nbsp;
-              {nights}
+              {reservation.nights}
               &nbsp;nights
             </div>
             <div>{currencyFomatter(price.byNights, 'kr')}</div>
