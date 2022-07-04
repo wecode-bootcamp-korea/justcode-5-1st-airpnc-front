@@ -37,7 +37,7 @@ function WishList() {
   console.log(token);
   return (
     <>
-      <SubHeader />
+      {token ? <SubHeader login /> : <SubHeader />}
       <div onClick={goHome}>back</div>
       <div className={css.title}>위시리스트</div>
       <div className={css.container}>

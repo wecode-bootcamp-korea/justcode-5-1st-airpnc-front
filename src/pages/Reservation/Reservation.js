@@ -314,39 +314,8 @@ const Reservation = props => {
 
   return (
     <>
-      {/* {token ? <Header login /> : <Header />} */}
-
+      {token ? <SubHeader login /> : <SubHeader />}
       <div className={css.container}>
-        <header className={css.reserveBanner}>
-          <div className={css.reserveBannerInner}>
-            <div className={css.logoBox}>
-              <img
-                className={css.logoToHome}
-                id={css.logoButton}
-                alt="airbnb"
-                src={airbnbLogo}
-                onClick={event => {
-                  handleNavigateBtn(homepage);
-                }}
-              />
-            </div>
-          </div>
-        </header>
-        <header className={css.reserveBanner}>
-          <div className={css.reserveBannerInner}>
-            <div className={css.logoBox}>
-              <img
-                className={css.logoToHome}
-                id={css.logoButton}
-                alt="airbnb"
-                src={airbnbLogo}
-                onClick={event => {
-                  handleNavigateBtn(homepage);
-                }}
-              />
-            </div>
-          </div>
-        </header>
         <div className={css.reserveContentBody}>
           <main className={css.reserveContentMain} id="reserve-content">
             <section>
@@ -678,7 +647,7 @@ const Reservation = props => {
                         <div
                           className={css.messageToHost}
                           id="message-to-host"
-                        ></div>
+                        />
                       </div>
                     </div>
                     <div
@@ -694,7 +663,7 @@ const Reservation = props => {
                     </div>
                     <div
                       className={`${css.rclCovid19Policy} ${css.reserveContentLeftInner}`}
-                    ></div>
+                    />
                     <div
                       className={`${css.rclAgreementUpon} ${css.reserveContentLeftInner}`}
                     >
