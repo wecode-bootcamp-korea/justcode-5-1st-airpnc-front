@@ -78,13 +78,15 @@ function MainFilter() {
               onClickBed={onClickBed}
               onClickRoom={onClickRoom}
             />
-            <button ref={back} onClick={confirm}>
+            <button className={css.confirmBtn} ref={back} onClick={confirm}>
               확인
             </button>
           </div>
         </ModalLayout>
       )}
-      <button onClick={() => setReviewOn(true)}>필터</button>
+      <button class={css.filter_button} onClick={() => setReviewOn(true)}>
+        필터
+      </button>
     </>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './WishList.module.scss';
-import Header from '../../components/Header/Header';
+import SubHeader from '../../components/Header/SubHeader';
 
 function WishList() {
   const navigate = useNavigate();
@@ -18,8 +18,6 @@ function WishList() {
       console.log(json, '확인콘솔');
     })();
   }, [wish]);
-
-
 
   const goHome = () => {
     navigate('/', { state: [...wish.state] });
@@ -39,7 +37,7 @@ function WishList() {
   console.log(token);
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {token ? <SubHeader login /> : <SubHeader />}
       <div onClick={goHome}>back</div>
       <div className={css.title}>위시리스트</div>
       <div className={css.container}>

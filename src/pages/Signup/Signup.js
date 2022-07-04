@@ -37,7 +37,7 @@ function Signup() {
     })
       .then(res => res.json())
       .then(res => {
-        if (res.success) {
+        if (res) {
           navigate('/login');
         } else {
           alert(res.msg);

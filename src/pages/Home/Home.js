@@ -12,6 +12,8 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState();
   const [wish, setWish] = useState([]);
+  const [headerfilters, setheaderfilters] = useState({});
+  const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -19,33 +21,42 @@ function Home() {
 
   const user = useLocation().state;
   console.log(user, '19');
-  // const filtersIn = {
-  //   guests: 1,
-  //   bedrooms: 1,
-  //   beds: 1,
-  //   baths: 1,
-  //   room_type: 1,
-  //   location_type: 6,
-  //   residential_type: 2,
-  //   price: {
-  //     min: 100000,
-  //     max: 2000000,
-  //   },
-  // };
-  useEffect(() => {
-
-
+  console.log('filters : ', filters);
   useMemo(() => {
-    setFilters(filtersIn);
-  }, [filtersIn]);
+    setFilters(Object.assign(filters, filtersIn, headerfilters));
+    console.log('in useMemo filters ', filters);
+    console.log('in useMemo filtersIn ', filtersIn);
+    console.log('in useMemo headerfilters ', headerfilters);
+    console.log('in useMemo filters second ', filters);
+  }, [filtersIn, headerfilters]);
+  console.log('filters ', filters);
+  console.log('headerfilters ', headerfilters);
+  // Enable when login api passes user.id
+  // const isLogin = false;
+  // const homeFetchUrl = () => {
+  //   if (isLogin) {
+  //     return 'http://localhost:10010/home/${user.id}';
+  //   } else {
+  //     return 'http://localhost:10010/home';
+  //   }
+  // };
+
+  const setHeders = location => {
+    setheaderfilters({ location_type: Number(location) });
+  };
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //list api
+      const res = await fetch('http://localhost:10010/home'); //room api GET request
       const json = await res.json();
       setData(json);
     })();
   }, []);
+
+  // useEffect(() => {
+  //   console.log(user, 234234343);
+  //   navigate('/MyPage', { state: user });
+  // }, [user]);
 
   useEffect(() => {
     (async () => {
@@ -58,29 +69,28 @@ function Home() {
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //list api
+      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
       const json = await res.json();
       setData(json);
       setFilters({});
     })();
-  }, [filtersIn]);
+  }, [filtersIn, headerfilters]);
 
+  // const goMyPage = () => {
+
+  // };
 
   //start wishList 갱신 함수
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-      const json = await res.json();
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+  //     const json = await res.json();
 
-      setSelected(json);
-    })();
-  }, [wish]);
+  //     setSelected(json);
+  //   })();
+  // }, [wish]);
   console.log(wish);
   console.log(selected);
-
-  //filters  <= useState
-  //filtersIn <= useLocation
-
 
   const btnClick = e => {
     const wishs = e.target.value;
@@ -137,7 +147,6 @@ function Home() {
   const goWishList = () => {
     navigate('/wishlist', { state: [...wish] });
   };
-
   const cantGoWishList = () => {
     alert('로그인 먼저 해주세요');
   };
@@ -183,12 +192,18 @@ function Home() {
   //     }
   //   });
   // }
-
+  console.log(setHeders);
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {token ? (
+        <Header setHeders={setHeders} login />
+      ) : (
+        <Header setHeders={setHeders} />
+      )}
       <MainFilter />
-      <div onClick={token ? goWishList : cantGoWishList}>wish</div>
+      <div className={css.wish} onClick={token ? goWishList : cantGoWishList}>
+        wish
+      </div>
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
@@ -213,4 +228,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;

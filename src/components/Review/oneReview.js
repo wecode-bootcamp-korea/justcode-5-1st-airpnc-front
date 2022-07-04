@@ -10,9 +10,9 @@ function oneReview({ data }) {
         <div className={css.profile_info}>
           <h3>{data.name}</h3>
           {data.updated_at ? (
-            <span>{data.updated_at}</span>
+            <span>{data.updated_at.substring(0, 10)}</span>
           ) : (
-            <span>{data.created_at}</span>
+            <span>{data.created_at.substring(0, 10)}</span>
           )}
         </div>
         <div className={css.score}>
