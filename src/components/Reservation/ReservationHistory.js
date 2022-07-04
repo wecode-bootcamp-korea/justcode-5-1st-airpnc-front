@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import css from './ReservationHistory.module.scss';
 
 function ReservationHistory({ data, detailsOn }) {
-  console.log(data, 11111);
+  // console.log(data, 11111);
   return (
     <div className={css.container}>
       <div className={css.reservation_info}>

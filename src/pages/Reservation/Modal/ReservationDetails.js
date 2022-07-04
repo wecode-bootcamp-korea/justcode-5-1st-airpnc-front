@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import css from './ReservationDetails.module.scss';
 
-function ReservationDetails({ data }) {
-  console.log(data, 111111111);
+function ReservationDetails({ data, frontUpdate, setDetailsOn }) {
+  // console.log(data, 111111111);
   const onDelete = async () => {
     // alert('정말 리뷰를 삭제하시겠습니까?');
     if (window.confirm('정말 리뷰를 삭제하시겠습니까?')) {
@@ -13,7 +13,8 @@ function ReservationDetails({ data }) {
         }
       );
       const json = await res.json();
-      console.log(json);
+      setDetailsOn(false);
+      frontUpdate(data.idx);
     }
   };
   return (
@@ -41,7 +42,7 @@ function ReservationDetails({ data }) {
         </div>
         <div className={css.button_group}>
           {/* <button>수정</button> */}
-          <button onClick={onDelete}>삭제</button>
+          <button onClick={onDelete}>취소</button>
         </div>
       </div>
     </div>
