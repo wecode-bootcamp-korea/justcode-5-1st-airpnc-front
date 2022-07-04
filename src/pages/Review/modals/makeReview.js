@@ -31,7 +31,7 @@ function MakeReview({ data, mode, setReviewOn }) {
           score,
           review,
           reservation_id: data.id,
-          user_id: 1,
+          user_id: data.userId,
           room_id: data.room_id,
         }),
       });

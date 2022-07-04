@@ -26,7 +26,7 @@ function Signup() {
       name: data.name,
       password: data.password,
       password_confirm: data.password_confirm,
-      phone_number: data.mobile_number,
+      phone_number: data.phone_number,
     };
     fetch('http://localhost:10010/signup', {
       method: 'POST',
