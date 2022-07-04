@@ -265,39 +265,8 @@ const Reservation = props => {
 
   return (
     <>
-      {/* {token ? <Header login /> : <Header />} */}
-
+      {token ? <SubHeader login /> : <SubHeader />}
       <div className={css.container}>
-        <header className={css.reserveBanner}>
-          <div className={css.reserveBannerInner}>
-            <div className={css.logoBox}>
-              <img
-                className={css.logoToHome}
-                id={css.logoButton}
-                alt="airbnb"
-                src={airbnbLogo}
-                onClick={event => {
-                  handleNavigateBtn(homepage);
-                }}
-              />
-            </div>
-          </div>
-        </header>
-        <header className={css.reserveBanner}>
-          <div className={css.reserveBannerInner}>
-            <div className={css.logoBox}>
-              <img
-                className={css.logoToHome}
-                id={css.logoButton}
-                alt="airbnb"
-                src={airbnbLogo}
-                onClick={event => {
-                  handleNavigateBtn(homepage);
-                }}
-              />
-            </div>
-          </div>
-        </header>
         <div className={css.reserveContentBody}>
           <main className={css.reserveContentMain} id="reserve-content">
             <section>
