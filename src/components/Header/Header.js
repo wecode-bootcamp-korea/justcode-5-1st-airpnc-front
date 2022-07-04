@@ -9,7 +9,7 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ login }) {
+function Header({ login, wish }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
@@ -19,6 +19,7 @@ function Header({ login }) {
 
   const isMenued = () => {
     //
+
     if (localStorage.getItem('back_token')) {
       Menu(!ClickedMenu);
     } else {
@@ -83,10 +84,8 @@ function Header({ login }) {
         </div>
       )}
       <div className="container_right">
-        <div className="container_menu">
-          <div type="button" onClick={isMenued}>
-            <VscThreeBars />
-          </div>
+        <div className="container_wish" onClick={wish}>
+          <span>Wish List</span>
         </div>
 
         {login ? (

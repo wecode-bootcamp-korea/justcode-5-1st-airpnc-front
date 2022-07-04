@@ -6,23 +6,12 @@ import Header from '../../components/Header/Header';
 
 function WishList() {
   const navigate = useNavigate();
-  const wish = useLocation();
 
-  const user = useLocation().state;
-  console.log(wish.state);
-
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-      const json = await res.json();
-      console.log(json, '확인콘솔');
-    })();
-  }, [wish]);
-
-
+  const selected = useLocation().state;
+  console.log(selected);
 
   const goHome = () => {
-    navigate('/', { state: [...wish.state] });
+    navigate('/');
   };
 
   const imageSize = {
@@ -43,11 +32,11 @@ function WishList() {
       <div onClick={goHome}>back</div>
       <div className={css.title}>위시리스트</div>
       <div className={css.container}>
-        {wish.state.map((data, ind) => {
+        {selected.map((data, ind) => {
           return (
             <div key={ind + 3} className={css.wishList}>
               <RoomList
-                key={data.ind}
+                key={ind + 10}
                 id={data.id}
                 room={data}
                 image={data.image}

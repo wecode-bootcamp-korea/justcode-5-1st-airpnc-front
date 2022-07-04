@@ -14,9 +14,9 @@ function RoomList({ room, won, sytle, btnStyle }) {
     navigate('/detail', { state: { data: room } });
   };
 
-  const sliderImage = {
-    backgroundImage: `url(${room.photo[currentIndex].file_url})`,
-  };
+  // const sliderImage = {
+  //   backgroundImage: `url(${room.photo[currentIndex].file_url})`,
+  // };
 
   const onClickPrev = () => {
     currentIndex > 0
@@ -35,7 +35,7 @@ function RoomList({ room, won, sytle, btnStyle }) {
       <div className={css.container} style={sytle}>
         <div
           className={css.sliderStyle}
-          style={sliderImage}
+          // style={sliderImage}
           onClick={goToDetail}
         ></div>
         <p className={css.name}>{room.name}</p>

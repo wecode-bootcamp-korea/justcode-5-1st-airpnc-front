@@ -5,36 +5,19 @@ import Header from '../../components/Header/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
-import { set } from 'react-hook-form';
 
 function Home() {
   const [data, setData] = useState([]);
   const [select, setSelect] = useState('');
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState([]);
   const [wish, setWish] = useState([]);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
   const filtersIn = useLocation().state;
-
   const user = useLocation().state;
-  console.log(user, '19');
-  // const filtersIn = {
-  //   guests: 1,
-  //   bedrooms: 1,
-  //   beds: 1,
-  //   baths: 1,
-  //   room_type: 1,
-  //   location_type: 6,
-  //   residential_type: 2,
-  //   price: {
-  //     min: 100000,
-  //     max: 2000000,
-  //   },
-  // };
-  useEffect(() => {
-
-
+  // console.log(user.id);
+  console.log(selected);
   useMemo(() => {
     setFilters(filtersIn);
   }, [filtersIn]);
@@ -43,6 +26,7 @@ function Home() {
     (async () => {
       const res = await fetch('http://localhost:10010/home'); //list api
       const json = await res.json();
+
       setData(json);
     })();
   }, []);
@@ -54,50 +38,51 @@ function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        //body: JSON.stringify(filtersIn),
+
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
       const res = await fetch('http://localhost:10010/home', requestOption); //list api
       const json = await res.json();
+
       setData(json);
       setFilters({});
     })();
   }, [filtersIn]);
 
-
-  //start wishList 갱신 함수
   useEffect(() => {
-    (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-      const json = await res.json();
-
-      setSelected(json);
-    })();
-  }, [wish]);
-  console.log(wish);
+    if (token) {
+      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+    }
+  }, []);
   console.log(selected);
-
-  //filters  <= useState
-  //filtersIn <= useLocation
-
 
   const btnClick = e => {
     const wishs = e.target.value;
-    console.log(wishs);
     const room_id = Number(wishs);
-    console.log(room_id);
     setSelect(Number(wishs));
-    const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
-    // console.log(alreadySelectedIndex === -1);
+
     const res = {
       user_id: user.id,
       room_id: room_id,
     };
-    if (alreadySelectedIndex === -1) {
-      data[Number(wishs) - 1].like = true;
-      setWish([...wish, data[Number(wishs) - 1]]);
-      console.log(user.id, room_id);
+    fetch(`http://localhost:10010/wishlist/${user.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => setSelected([...res.data]));
+
+    if (selected.length === 0) {
       fetch(`http://localhost:10010/wishlist/${user.id}`, {
         method: 'POST',
         headers: {
@@ -107,11 +92,35 @@ function Home() {
       })
         .then(res => res.json())
         .then(res => console.log(res));
+      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+      console.log(selected);
+    } else if (selected.findIndex(i => i.id == room_id) === -1) {
+      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(res),
+      })
+        .then(res => res.json())
+        .then(res => console.log(res));
+      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+      console.log(selected);
     } else {
-      const wishsright = wish.splice(alreadySelectedIndex + 1);
-      const wishsleft = wish.splice(0, alreadySelectedIndex);
-      data[Number(wishs) - 1].like = false;
-      setWish([...wishsleft, ...wishsright]);
       fetch(`http://localhost:10010/wishlist/${user.id}/${room_id}`, {
         method: 'DELETE',
         headers: {
@@ -121,9 +130,18 @@ function Home() {
       })
         .then(res => res.json())
         .then(res => console.log(res));
+      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+      console.log(selected);
     }
   };
-  //end wishList 갱신 함수
+
   const cantClick = () => {
     alert('로그인 먼저 해주세요');
   };
@@ -135,7 +153,7 @@ function Home() {
   };
 
   const goWishList = () => {
-    navigate('/wishlist', { state: [...wish] });
+    navigate('/wishlist', { state: [...selected] });
   };
 
   const cantGoWishList = () => {
@@ -159,40 +177,22 @@ function Home() {
 
   const token = localStorage.getItem('login-token');
 
-  // const res = {
-  //   userId: user.id,
-  //   roomId: select,
-  // };
-  // console.log(JSON.stringify(res));
-  // fetch('http://localhost:10010/wishlist', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(res),
-  // })
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     if (res.success) {
-  //       goHome();
-  //       console.log(res.token, 123123);
-
-  //       localStorage.setItem('login-token', res.token);
-  //     } else {
-  //       alert(res.message);
-  //     }
-  //   });
-  // }
-
   return (
     <>
-      {token ? <Header login /> : <Header />}
+      {token ? (
+        <div>
+          <Header login wish={goWishList} />
+        </div>
+      ) : (
+        <div>
+          <Header wish={cantGoWishList} />
+        </div>
+      )}
       <MainFilter />
-      <div onClick={token ? goWishList : cantGoWishList}>wish</div>
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
-            <div>
+            <div key={ind + 10}>
               <RoomList key={ind} room={data} sytle={imageSize} won={'원'} />
               <button
                 ref={button}
