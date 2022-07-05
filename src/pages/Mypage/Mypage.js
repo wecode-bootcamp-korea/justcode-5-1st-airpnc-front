@@ -30,9 +30,8 @@ function MyPage() {
     <>
       {token ? <SubHeader login /> : <SubHeader />}
       <div>
-        {
-          <article className="MyPageWrapper">
-            <MyProfile userName={data.name} />
+        <article className="MyPageWrapper">
+          <MyProfile userName={data.name} />
           <section className="MyLog-box">
             <div className="HelloUser">
               <h2 className="MyName">
@@ -54,9 +53,8 @@ function MyPage() {
               &nbsp;리뷰 내역
             </h4>
           </section>
-            <MyProfile userName={data.name} />
-          </article>
-        }
+          <MyProfile userName={data.name} />
+        </article>
       </div>
     </>
   );
