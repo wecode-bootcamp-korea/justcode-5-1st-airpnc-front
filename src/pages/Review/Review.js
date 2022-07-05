@@ -90,6 +90,7 @@ function Review() {
                 <div className={css.review_contents}>
                   {toReviewList.map((toReview, idx) => {
                     toReview.idx = idx;
+                    toReview.userId = userId;
                     return (
                       <ToReview
                         key={idx}
