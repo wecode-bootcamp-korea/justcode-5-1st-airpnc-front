@@ -13,16 +13,16 @@
 
 .contents {
   margin-right: 250px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   .profile {
     margin-bottom: 15px;
     @include flex-align-center;
     .profile_image {
-      margin-right: 10px;
+      margin-right: 20px;
       @include profile-img-size;
     }
     .score {
-      margin-left: 20px;
+      margin-left: 70px;
       @include flex-align-center;
     }
   }

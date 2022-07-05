@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
 
-function MyReview({ data, reviewOnClick }) {
+function MyReview({ data, reviewOnClick, remainedReview }) {
   console.log('data : ', data);
   const onDelete = async () => {
     // alert('정말 리뷰를 삭제하시겠습니까?');
@@ -14,7 +14,8 @@ function MyReview({ data, reviewOnClick }) {
         }
       );
       const json = await res.json();
-      console.log(json);
+      // console.log(json);
+      remainedReview(data.idx);
     }
   };
 
