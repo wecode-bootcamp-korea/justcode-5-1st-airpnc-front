@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
 import ActivatedHeader from './ActivatedHeader';
-// import LoginPop from './LoginPop';
 
 import { FaAirbnb } from 'react-icons/fa';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';

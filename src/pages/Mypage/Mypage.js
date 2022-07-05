@@ -2,20 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ImStarFull } from 'react-icons/im';
 import MyProfile from './components/MyProfile';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header/Header';
 import SubHeader from '../../components/Header/SubHeader';
 import './Mypage.scss';
 
 function MyPage() {
-  const [profile, setProfile] = useState('');
-  const [roomLists, setRoomLists] = useState([]);
-  const [reviews, setReviews] = useState('');
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const token = localStorage.getItem('login-token');
   console.log(token);
-  // const user = useLocation().state;
-  // console.log(user, 23424);
 
   useEffect(() => {
     (async () => {
@@ -36,12 +30,9 @@ function MyPage() {
     <>
       {token ? <SubHeader login /> : <SubHeader />}
       <div>
-        <article className="MyPageWrapper">
-          <MyProfile
-            // userImg={data[0].profile_image_url}
-            userName={data.name}
-          />
-
+        {
+          <article className="MyPageWrapper">
+            <MyProfile userName={data.name} />
           <section className="MyLog-box">
             <div className="HelloUser">
               <h2 className="MyName">
@@ -63,12 +54,9 @@ function MyPage() {
               &nbsp;리뷰 내역
             </h4>
           </section>
-
-          <MyProfile
-            // userImg={data[0].profile_image_url}
-            userName={data.name}
-          />
-        </article>
+            <MyProfile userName={data.name} />
+          </article>
+        }
       </div>
     </>
   );
