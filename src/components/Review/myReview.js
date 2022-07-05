@@ -22,7 +22,7 @@ function MyReview({ data, reviewOnClick, remainedReview }) {
   return (
     <div className={css.container}>
       <div className={css.myReview}>
-        {/* <img src=""></img> */}
+        {/* <img src={data.photo_url[0].url}></img> */}
         <div className={css.room_info}>
           <div className={css.room_score}>
             <FaStar />

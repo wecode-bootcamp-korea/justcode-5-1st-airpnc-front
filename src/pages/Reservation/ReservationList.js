@@ -30,10 +30,8 @@ function ReservationList() {
           }
         }
       });
-      console.log(reservations);
-
-      setReservationList(json[0]);
-      console.log(reservationList);
+      // console.log(reservations, json[0]);
+      setReservationList(reservations);
     })();
   }, []);
   const offModal = e => {
