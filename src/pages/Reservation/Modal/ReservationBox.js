@@ -95,15 +95,13 @@ const ReservationBox = props => {
 
   const navigate = useNavigate();
   const handleReservationBtn = () => {
-    if (reservation.user_id === '') {
-      reservation.user_id = 'anonymous';
-    }
     navigate(reservationPage, {
       state: {
         room: room,
         reservation: reservation,
         reviewScore: reviewScore,
         reviewCnt: reviewCnt,
+        today: today,
       },
     });
   };
@@ -122,18 +120,18 @@ const ReservationBox = props => {
               <span className={css.pricePerNight} id="price-per-night">
                 {room.price}
               </span>
-              <span>&nbsp;night</span>
+              <span>&nbsp;per night</span>
             </div>
             <div className={css.roomRateBox}>
               <div className={css.iconStar}>
                 <TiStarFullOutline />
               </div>
               <div className={css.roomRate} id="room-score">
-                {reviewScore}
+                {isNaN(reviewScore) ? 'n/a' : reviewScore.toFixed(1)}
               </div>
               <span>&nbsp;·&nbsp;&nbsp;</span>
               <div className={css.roomReviewCnt} id="review-count">
-                {reviewCnt} reviews
+                {reviewCnt || 0} reviews
               </div>
             </div>
           </div>

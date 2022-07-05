@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Home from '../Home/Home';
 import css from './Reservation.module.scss';
 import Footer from '../../components/Footer/Footer';
 import PayOptionSelector from './Modal/PayOptionSelector';
@@ -14,13 +13,9 @@ import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { TiTag } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
-import Header from '../../components/Header/Header';
 import SubHeader from '../../components/Header/SubHeader';
 
-/////////////////////////////////////////////////////////////////////
-/////                    img and icons                       ////////
-const profileImgCat = '/images/profile/cat.png';
-
+///////////////        CONSTANTS              //////////////////
 const priceRateSummary = 'This is a rare find.';
 const priceRateDetail = `'s place is usually booked.`;
 
@@ -35,17 +30,35 @@ const airbnbConst = {
   nonRefundable: `This reservation is non-refundable.`,
 };
 
+const monthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'July',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
+  const token = localStorage.getItem('login-token');
   const navigate = useNavigate();
   const homepage = '/';
   const detailpage = '/detail';
-  const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
-
   // To Do : move to home and detail should pass room and reservation
   const handleNavigateBtn = address => {
-    navigate(address);
+    navigate(address, {
+      state: {
+        data: room,
+        userId: reservation.userId,
+      },
+    });
   };
 
   // use room, reservation info from useLocation when reservationBox is imported to detail page
@@ -53,29 +66,70 @@ const Reservation = props => {
   const reservation = useLocation().state.reservation;
   const reviewScore = useLocation().state.Score;
   const reviewCnt = useLocation().state.reviewCnt;
-  console.log('reservation : ', reservation);
-  console.log('reservation guests: ', reservation.guests);
+  const today = useLocation().state.today;
+
+  const hostJoinedIn = room.hostJoinedIn.split('-')[0];
+
   // useState for reservation //
   // To Do : edit option for dates and guests
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
-  const [nights, setNight] = useState(reservation.nights);
+  const [nights, setNights] = useState(reservation.nights);
   const [guests, setGuests] = useState(reservation.guests || 1);
   const [reservationNumber, setReservationNumber] = useState(-1);
+  const [isDateValid, setDateValid] = useState(false);
+  const [isBtnActive, setBtnActive] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('');
+
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays;
+  };
 
   useEffect(() => {
     reservation.checkin = checkin;
-    console.log(reservation.checkin);
   }, [checkin]);
 
   useEffect(() => {
     reservation.checkout = checkout;
-    console.log(reservation.checkout);
   }, [checkout]);
 
   useEffect(() => {
     reservation.guests = guests;
   }, [guests]);
+
+  const yourTripDate = () => {
+    let checkinDate = new Date(checkin);
+    let checkoutDate = new Date(checkout);
+    if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
+      if (checkinDate.getMonth() === checkoutDate.getMonth()) {
+        return `${
+          monthNames[Number(checkinDate.getMonth())]
+        } . ${checkinDate.getDate()} - ${checkoutDate.getDate()}`; // same year and month
+      } else {
+        return `${
+          monthNames[Number(checkinDate.getMonth())]
+        }. ${checkinDate.getDate()} -  ${
+          monthNames[Number(checkoutDate.getMonth())]
+        }. ${checkoutDate.getDate()}`;
+      }
+    }
+    return `${checkinDate.FullYear()} ${
+      monthNames[Number(checkinDate.getMonth())]
+    }. ${checkinDate.getDate()} - ${checkinDate.FullYear()} ${
+      monthNames[Number(checkinDate.getMonth())]
+    }. ${checkinDate.getDate()}`;
+  };
+
+  // < TO DO > dateEdit button is disabled
+  // time zone issue needs to be fixed
+  const [isDateEditClicked, setDateEditClicked] = useState(false);
+  const handleDateEditBtn = e => {
+    setDateEditClicked(!isDateEditClicked);
+  };
 
   const [isPayOptVisible, setPayOptVisible] = useState(false);
 
@@ -86,7 +140,7 @@ const Reservation = props => {
   const [payOption, setPayOption] = useState('Credit or debit card');
   const [payOptionIcon, setPayOptionIcon] = useState(<MdCreditCard />);
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
-  const token = localStorage.getItem('login-token');
+
   const countryOptCloseHandler = e => {
     setCountryOptVisible(false);
   };
@@ -216,53 +270,6 @@ const Reservation = props => {
     }
   }
 
-  const yourTripDate = () => {
-    let monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'July',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    let checkinDate = checkin;
-    let checkoutDate = checkout;
-    console.log('------------------------');
-    console.log('checkin : ', checkin);
-    console.log('checkout : ', checkout);
-    console.log('checkinDate : ', checkinDate);
-    console.log('checkinMonth : ', checkinDate.getMonth() + 1);
-    console.log('checkinDate : ', checkinDate.getDate());
-    console.log('checkoutDate : ', checkoutDate);
-    if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
-      if (checkinDate.getMonth() === checkoutDate.getMonth()) {
-        return `${
-          monthNames[Number(checkinDate.getMonth())]
-        } . ${checkinDate.getDate()} - ${checkoutDate.getDate()}`; // same year and month
-      } else {
-        return `${
-          monthNames[Number(checkinDate.getMonth())]
-        }. ${checkinDate.getDate()} -  ${
-          monthNames[Number(checkoutDate.getMonth())]
-        }. ${checkoutDate.getDate()}`;
-      }
-    }
-    return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
-  };
-
-  const [isDateEditClicked, setDateEditClicked] = useState(false);
-  const handleDateEditBtn = e => {
-    setDateEditClicked(!isDateEditClicked);
-  };
-
-  const hostJoinedIn = room.hostJoinedIn.split('-')[0];
-
   return (
     <>
       {token ? <SubHeader login /> : <SubHeader />}
@@ -277,8 +284,9 @@ const Reservation = props => {
                     onClick={event => {
                       handleNavigateBtn(detailpage);
                     }}
+                    disabled="true"
                   >
-                    <MdNavigateBefore />
+                    {/*<MdNavigateBefore />*/}
                   </button>
                   <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
                 </div>
@@ -316,10 +324,13 @@ const Reservation = props => {
                           </div>
                           <div>
                             <button
-                              className={`${css.editBtn} ${css.visible}`}
-                              onClick={handleDateEditBtn}
+                              className={`${css.editBtn} ${css.editBtnvisible}`}
+                              onClick={event => {
+                                handleDateEditBtn();
+                              }}
+                              disabled="true"
                             >
-                              Edit
+                              {/*Edit*/}
                             </button>
                             {isDateEditClicked && (
                               <div>
@@ -363,6 +374,7 @@ const Reservation = props => {
                               onChange={event => {
                                 setGuests(event.target.value);
                               }}
+                              min="1"
                               max="20"
                             />
                           </div>
@@ -626,15 +638,17 @@ const Reservation = props => {
                       className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
                     >
                       <button
-                        className={css.rclConfirmAndPayBtn}
+                        className={`${css.rclConfirmAndPayBtn} ${css.rclConfirmAndBtnDisabled}`}
                         id="confirm-pay-btn"
                         onClick={event => {
-                          isPayable ? handleConfirmBtn(event) : notPayable();
+                          isPayable
+                            ? handleConfirmBtn(event)
+                            : notPayable(event);
                         }}
                       >
                         Confirm and pay • Airbnb
                       </button>
-                      {isPayable ? (
+                      {token && isPayable ? (
                         <ReservationConfirmed
                           getNum={reservationNum =>
                             setReservationNumber(reservationNum)
@@ -648,6 +662,11 @@ const Reservation = props => {
                         <ReservationNotValid
                           show={isNotConfirmedVisible}
                           onClose={confirmationFailedCloseHandler}
+                          message={
+                            token
+                              ? 'Please check payment option !'
+                              : 'Please login to process !'
+                          }
                         />
                       )}
                     </div>
@@ -657,6 +676,8 @@ const Reservation = props => {
                   <PinnedBox
                     room={room}
                     reservation={reservation}
+                    reviewScore={reviewScore}
+                    reviewCnt={reviewCnt}
                     airbnbConst={airbnbConst}
                   />
                 </section>

@@ -20,8 +20,6 @@ const currencyFomatter = (num, currency) => {
 
 const PriceBreakDown = props => {
   const { room, reservation } = props;
-  console.log('room : ', room);
-  console.log('reservation : ', reservation);
   const price = {
     perNight: room.price,
   };
