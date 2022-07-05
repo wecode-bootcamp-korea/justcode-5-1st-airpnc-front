@@ -16,14 +16,22 @@ function ReservationList() {
   const navigate = useNavigate();
   const token = localStorage.getItem('login-token');
   const userId = localStorage.getItem('user-id');
-  console.log(userId, 252352);
   useEffect(() => {
     (async () => {
       const res = await fetch(`http://localhost:10010/reservation/${userId}`);
       const json = await res.json();
-      console.log(json);
-      setReservationList(json);
-      console.log(reservationList);
+      const reservations = json[0];
+      const photos = json[1];
+      reservations.map(reservation => {
+        for (let i = 0; i < photos.length; i++) {
+          if (reservation.room_id === photos[i].room_id) {
+            reservation.photo_url = photos[i].photo_url;
+            break;
+          }
+        }
+      });
+      // console.log(reservations, json[0]);
+      setReservationList(reservations);
     })();
   }, []);
   const offModal = e => {
@@ -36,6 +44,14 @@ function ReservationList() {
     setReservationIdx(idx);
     console.log(reservationIdx, 64235);
     setDetailsOn(true);
+  };
+
+  const remainedReservation = idx => {
+    setReservationList(
+      reservationList.filter(
+        reservation => reservation !== reservationList[idx]
+      )
+    );
   };
   return (
     <>
@@ -75,9 +91,13 @@ function ReservationList() {
           </div>
         </div>
         {detailsOn && (
-          <ModalLayout reviewOff={offModal}>
+          <ModalLayout modalOff={offModal}>
             <div ref={el} className={css.modal}>
-              <ReservationDetails data={reservationList[reservationIdx]} />
+              <ReservationDetails
+                data={reservationList[reservationIdx]}
+                frontUpdate={remainedReservation}
+                setDetailsOn={setDetailsOn}
+              />
             </div>
           </ModalLayout>
         )}

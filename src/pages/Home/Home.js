@@ -19,7 +19,7 @@ function Home() {
   const button = useRef();
   const filtersIn = useLocation().state;
 
-  const user = useLocation().state;
+  const user = localStorage.getItem('user-id');
   console.log(user, '19');
   console.log('filters : ', filters);
   useMemo(() => {
@@ -83,7 +83,7 @@ function Home() {
   //start wishList 갱신 함수
   // useEffect(() => {
   //   (async () => {
-  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+  //     const res = await fetch(`http://localhost:10010/wishlist/${user}`);
   //     const json = await res.json();
 
   //     setSelected(json);
@@ -101,14 +101,14 @@ function Home() {
     const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
     // console.log(alreadySelectedIndex === -1);
     const res = {
-      user_id: user.id,
+      user_id: user,
       room_id: room_id,
     };
     if (alreadySelectedIndex === -1) {
       data[Number(wishs) - 1].like = true;
       setWish([...wish, data[Number(wishs) - 1]]);
       console.log(user.id, room_id);
-      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+      fetch(`http://localhost:10010/wishlist/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ function Home() {
       const wishsleft = wish.splice(0, alreadySelectedIndex);
       data[Number(wishs) - 1].like = false;
       setWish([...wishsleft, ...wishsright]);
-      fetch(`http://localhost:10010/wishlist/${user.id}/${room_id}`, {
+      fetch(`http://localhost:10010/wishlist/${user}/${room_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

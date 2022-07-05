@@ -53,6 +53,7 @@
   width: 1200px;
   margin: 0 auto;
   @include flex-column-center;
+  font-family: $theme-font;
 }
 
 .header_container {
@@ -117,7 +118,7 @@
   @include flex-center;
   @include pa-ma-border-bottom;
   .room_detail {
-    height: 900px;
+    min-height: 800px;
     padding-right: 40px;
     .header {
       @include flex-align-center;
@@ -150,12 +151,20 @@
         font-size: 30px;
         margin-bottom: 25px;
       }
+      p {
+        margin-bottom: 10px;
+      }
+      span {
+        text-decoration: underline;
+        font-weight: bold;
+      }
     }
     .description {
       @include pa-ma-border-bottom;
     }
     .facilities {
-      // @include pa-ma-border-bottom;
+      @include flex-column-center;
+      height: 250px;
       .contents {
         @include flex-align-center;
         margin-bottom: 30px;
@@ -184,10 +193,12 @@
   }
 }
 .modal {
-  display: inline-block;
-  width: 80%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  width: 70%;
   // max-width: 55%;
-  // height: 90%;
+  min-height: 60%;
   background-color: white;
   border-radius: 20px;
 }
