@@ -20,8 +20,19 @@ function ReservationList() {
     (async () => {
       const res = await fetch(`http://localhost:10010/reservation/${userId}`);
       const json = await res.json();
-      console.log(json);
-      setReservationList(json);
+      const reservations = json[0];
+      const photos = json[1];
+      reservations.map(reservation => {
+        for (let i = 0; i < photos.length; i++) {
+          if (reservation.room_id === photos[i].room_id) {
+            reservation.photo_url = photos[i].photo_url;
+            break;
+          }
+        }
+      });
+      console.log(reservations);
+
+      setReservationList(json[0]);
       console.log(reservationList);
     })();
   }, []);
