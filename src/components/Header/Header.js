@@ -20,7 +20,6 @@ function Header({ setHeders, login, wish }) {
   const [location, setLocation] = useState(0);
   const navigate = useNavigate();
 
-  console.log('location : ', location);
   useEffect(() => {
     console.log('changed');
     setHeders(Number(location));

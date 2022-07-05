@@ -14,13 +14,13 @@ function WishList() {
   const user = useLocation().state;
   console.log(wish.state);
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-      const json = await res.json();
-      console.log(json, '확인콘솔');
-    })();
-  }, [wish]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+  //     const json = await res.json();
+  //     console.log(json, '확인콘솔');
+  //   })();
+  // }, [wish]);
 
   const goHome = () => {
     navigate('/');
@@ -51,7 +51,7 @@ function WishList() {
                 key={ind + 10}
                 id={data.id}
                 room={data}
-                image={data.image}
+                //image={data.image}
                 sytle={imageSize}
                 btnStyle={btnStyle}
               />
