@@ -30,7 +30,7 @@ function MyPage() {
     <>
       {token ? <SubHeader login /> : <SubHeader />}
       <div>
-        {p
+        {
           <article className="MyPageWrapper">
             <MyProfile userName={data.name} />
             <section className="MyLog-box">
