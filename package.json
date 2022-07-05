@@ -31,7 +31,11 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "dotenv": "^16.0.1",
+=======
+    "pm2": "^5.1.2",
+>>>>>>> main
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
