@@ -127,7 +127,7 @@ const ReservationBox = props => {
                 <TiStarFullOutline />
               </div>
               <div className={css.roomRate} id="room-score">
-                {isNaN(reviewScore) ? 'n/a' : reviewScore.toFixed(1)}
+                {isNaN(reviewScore) ? 'n/a' : Number(reviewScore).toFixed(1)}
               </div>
               <span>&nbsp;·&nbsp;&nbsp;</span>
               <div className={css.roomReviewCnt} id="review-count">

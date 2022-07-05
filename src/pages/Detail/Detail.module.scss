@@ -53,6 +53,7 @@
   width: 1200px;
   margin: 0 auto;
   @include flex-column-center;
+  font-family: $theme-font;
 }
 
 .header_container {
