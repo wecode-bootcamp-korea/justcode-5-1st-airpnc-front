@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import css from './makeReview.module.scss';
 
-function MakeReview({ data, mode, setReviewOn }) {
-  console.log('data : ', data.review_id, 'mode :', mode);
+function MakeReview({ data, mode, setReviewOn, remainedReview }) {
   const [score, setScore] = useState(data.score);
   const [review, setReview] = useState(data.review);
   const [title, setTitle] = useState('작성');
@@ -68,10 +67,9 @@ function MakeReview({ data, mode, setReviewOn }) {
     let url = '';
     if (mode === 'create') {
       url = 'http://localhost:10010/review';
+      remainedReview(data.idx);
     } else if (mode === 'put') {
-      console.log(data.review_id);
       url = `http://localhost:10010/review/${data.review_id}`;
-      console.log(url, 5342);
     }
     if (score === 0) {
       alert('별점 입력을 확인하세요');
@@ -83,7 +81,7 @@ function MakeReview({ data, mode, setReviewOn }) {
     }
     const res = await fetch(url, fetchOptions);
     const json = await res.json();
-    console.log(json, 77777);
+    // console.log(json, 77777);
     setReviewOn(!toggle);
   };
 
