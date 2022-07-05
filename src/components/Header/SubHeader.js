@@ -9,25 +9,15 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ setHeders, login, wish }) {
-  const [isClickedNav, setIsClickedNav] = useState(false);
+function SubHeader({ login }) {
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
   const [Signup, ClickedSignUp] = useState(false);
   const [Mypage, ClickedMypage] = useState(false);
-  const [checkin, setCheckin] = useState();
-  const [checkout, setCheckout] = useState();
-  const [location, setLocation] = useState(0);
   const navigate = useNavigate();
 
-  console.log('location : ', location);
-  useEffect(() => {
-    console.log('changed');
-    setHeders(Number(location));
-  }, [location]);
   const isMenued = () => {
     //
-
     if (localStorage.getItem('back_token')) {
       Menu(!ClickedMenu);
     } else {
@@ -70,31 +60,11 @@ function Header({ setHeders, login, wish }) {
         <FaAirbnb size="40" />
         <div>airpnc</div>
       </div>
-      {isClickedNav ? (
-        <ActivatedHeader
-          setIsClickedNav={setIsClickedNav}
-          isClickedNav={isClickedNav}
-          setLocation={setLocation}
-        />
-      ) : (
-        <div
-          className="searchBarContainer"
-          onClick={() => setIsClickedNav(!isClickedNav)}
-        >
-          <div className="search">
-            <div className="searchComment">
-              <span className="where">어디로</span>
-              <span className="when">언제</span>
-            </div>
-            <div className="iconSearch">
-              <FaSearch />
-            </div>
-          </div>
-        </div>
-      )}
       <div className="container_right">
-        <div className="container_wish" onClick={wish}>
-          <span>Wish List</span>
+        <div className="container_menu">
+          <div type="button" onClick={isMenued}>
+            <VscThreeBars />
+          </div>
         </div>
 
         {login ? (
@@ -130,4 +100,4 @@ function Header({ setHeders, login, wish }) {
   );
 }
 
-export default Header;
+export default SubHeader;

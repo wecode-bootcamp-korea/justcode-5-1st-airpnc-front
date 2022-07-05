@@ -6,14 +6,15 @@ function ReservationHistory({ data, detailsOn }) {
   return (
     <div className={css.container}>
       <div className={css.reservation_info}>
-        <img src={data.photo_url[0].url}></img>
+        {/* <img src={data.photo_url[0].url}></img> */}
         <div className={css.info_text}>
           <span>
             {data.city},{data.country}
           </span>
           <h1>{data.name}</h1>
           <span className={css.date}>
-            체크인 : {data.check_in}, 체크아웃 : {data.check_out}
+            체크인 : {data.check_in.substring(0, 10)}, 체크아웃 :{' '}
+            {data.check_out.substring(0, 10)}
           </span>
         </div>
       </div>

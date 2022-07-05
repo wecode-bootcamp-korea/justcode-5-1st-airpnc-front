@@ -85,10 +85,18 @@
 }
 .image_container {
   @include flex-center;
+  width: 1200px;
+  height: 350px;
+  margin: 0 auto;
   position: relative;
   margin-bottom: 30px;
   .image_box {
     @include flex-center;
+    .main {
+      width: 600px;
+      height: 100%;
+    }
+    width: 50%;
     flex-wrap: wrap;
     .sub {
       width: 50%;

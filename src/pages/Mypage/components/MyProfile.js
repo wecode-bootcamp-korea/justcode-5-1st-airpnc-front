@@ -32,7 +32,9 @@ export default function MyProfile({ userImg, userName, getMyProfile }) {
   };
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:3000/data/profile.json');
+      const email = localStorage.getItem('user-email');
+      console.log(email, 10);
+      const res = await fetch(`http://localhost:10010/mypage/${email}`);
       const json = await res.json();
       setData(json);
     })();
@@ -57,15 +59,15 @@ export default function MyProfile({ userImg, userName, getMyProfile }) {
           <div className="FreeUser">
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              <p className="Check_user">이름:{data[0].name}</p>
+              <p className="Check_user">이름:{data.name}</p>
             </p>
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              <p className="Check_user">Email:{data[0].email}</p>
+              <p className="Check_user">Email:{data.email}</p>
             </p>
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              <p className="Check_user">전화번호:{data[0].phone}</p>
+              <p className="Check_user">전화번호:{data.phone_number}</p>
             </p>
           </div>
         </div>

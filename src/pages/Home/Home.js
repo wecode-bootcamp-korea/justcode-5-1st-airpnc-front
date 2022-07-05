@@ -11,6 +11,8 @@ function Home() {
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState([]);
   const [wish, setWish] = useState([]);
+  const [headerfilters, setheaderfilters] = useState({});
+  const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -18,18 +20,44 @@ function Home() {
   const user = useLocation().state;
   // console.log(user.id);
   console.log(selected);
+  console.log(user, '19');
+  console.log('filters : ', filters);
   useMemo(() => {
-    setFilters(filtersIn);
-  }, [filtersIn]);
+    setFilters(Object.assign(filters, filtersIn, headerfilters));
+    console.log('in useMemo filters ', filters);
+    console.log('in useMemo filtersIn ', filtersIn);
+    console.log('in useMemo headerfilters ', headerfilters);
+    console.log('in useMemo filters second ', filters);
+  }, [filtersIn, headerfilters]);
+  console.log('filters ', filters);
+  console.log('headerfilters ', headerfilters);
+  // Enable when login api passes user.id
+  // const isLogin = false;
+  // const homeFetchUrl = () => {
+  //   if (isLogin) {
+  //     return 'http://localhost:10010/home/${user.id}';
+  //   } else {
+  //     return 'http://localhost:10010/home';
+  //   }
+  // };
+
+  const setHeders = location => {
+    setheaderfilters({ location_type: Number(location) });
+  };
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //list api
+      const res = await fetch('http://localhost:10010/home'); //room api GET request
       const json = await res.json();
 
       setData(json);
     })();
   }, []);
+
+  // useEffect(() => {
+  //   console.log(user, 234234343);
+  //   navigate('/MyPage', { state: user });
+  // }, [user]);
 
   useEffect(() => {
     (async () => {
@@ -42,13 +70,13 @@ function Home() {
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //list api
+      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
       const json = await res.json();
 
       setData(json);
       setFilters({});
     })();
-  }, [filtersIn]);
+  }, [filtersIn, headerfilters]);
 
   useEffect(() => {
     if (token) {
@@ -62,6 +90,20 @@ function Home() {
         .then(res => setSelected([...res.data]));
     }
   }, []);
+  // const goMyPage = () => {
+
+  // };
+
+  //start wishList 갱신 함수
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+  //     const json = await res.json();
+
+  //     setSelected(json);
+  //   })();
+  // }, [wish]);
+  console.log(wish);
   console.log(selected);
 
   const btnClick = e => {
@@ -155,7 +197,6 @@ function Home() {
   const goWishList = () => {
     navigate('/wishlist', { state: [...selected] });
   };
-
   const cantGoWishList = () => {
     alert('로그인 먼저 해주세요');
   };
@@ -180,15 +221,14 @@ function Home() {
   return (
     <>
       {token ? (
-        <div>
-          <Header login wish={goWishList} />
-        </div>
+        <Header setHeders={setHeders} login />
       ) : (
-        <div>
-          <Header wish={cantGoWishList} />
-        </div>
+        <Header setHeders={setHeders} />
       )}
       <MainFilter />
+      <div className={css.wish} onClick={token ? goWishList : cantGoWishList}>
+        wish
+      </div>
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
@@ -213,4 +253,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;

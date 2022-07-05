@@ -78,7 +78,7 @@ function MainFilter() {
               onClickBed={onClickBed}
               onClickRoom={onClickRoom}
             />
-            <button ref={back} onClick={confirm}>
+            <button className={css.confirmBtn} ref={back} onClick={confirm}>
               확인
             </button>
           </div>
