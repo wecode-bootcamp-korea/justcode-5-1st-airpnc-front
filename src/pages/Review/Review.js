@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 import css from './Review.module.scss';
 import ToReview from '../../components/Review/toReview';
 import MyReview from '../../components/Review/myReview';
@@ -24,9 +25,7 @@ function Review() {
   const userId = localStorage.getItem('user-id');
   useEffect(() => {
     (async () => {
-      const res = await fetch(
-        `http://localhost:10010/reservation/toReview/${userId}`
-      );
+      const res = await fetch(`${BASE_URL}/reservation/toReview/${userId}`);
       const json = await res.json();
       // console.log(json, 3423);
       const toReviews = json[0];
@@ -43,7 +42,7 @@ function Review() {
       // console.log(toReviewList, 222);
     })();
     (async () => {
-      const res = await fetch(`http://localhost:10010/review/my/${userId}`);
+      const res = await fetch(`${BASE_URL}/review/my/${userId}`);
       const json = await res.json();
       const reviewList = json[0];
       const photos = json[1];
