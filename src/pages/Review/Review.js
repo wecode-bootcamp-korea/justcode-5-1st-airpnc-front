@@ -28,14 +28,34 @@ function Review() {
         `http://localhost:10010/reservation/toReview/${userId}`
       );
       const json = await res.json();
-      console.log(json, 3423);
-      setToReviewList(json);
+      // console.log(json, 3423);
+      const toReviews = json[0];
+      const photos = json[1];
+      toReviews.map(toReview => {
+        for (let i = 0; i < photos.length; i++) {
+          if (toReview.room_id === photos[i].room_id) {
+            toReview.photo_url = photos[i].photo_url;
+            break;
+          }
+        }
+      });
+      setToReviewList(toReviews);
       // console.log(toReviewList, 222);
     })();
     (async () => {
       const res = await fetch(`http://localhost:10010/review/my/${userId}`);
       const json = await res.json();
-      setReviews(json);
+      const reviewList = json[0];
+      const photos = json[1];
+      reviewList.map(review => {
+        for (let i = 0; i < photos.length; i++) {
+          if (review.room_id === photos[i].room_id) {
+            review.photo_url = photos[i].photo_url;
+            break;
+          }
+        }
+      });
+      setReviews(reviewList);
       // console.log(reviews, 333);
     })();
     // if (!toggle) {
