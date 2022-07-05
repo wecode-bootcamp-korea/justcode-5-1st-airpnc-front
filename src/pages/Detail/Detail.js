@@ -103,7 +103,7 @@ function Detail() {
   // const locationName = data.state.name;
   return (
     <>
-      {token ? <SubHeader login /> : <SubHeader />}
+      <SubHeader />
       <div className={css.container}>
         <section className={css.header_container}>
           <h1>{room.name}</h1>

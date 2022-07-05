@@ -40,8 +40,11 @@ const ReservationNotValid = props => {
                 </button>
               </div>
               <div className={css.confirmationFailedHeaderTextBox}>
-                <p>Please&nbsp;check&nbsp;payment&nbsp;option</p>
+                <p></p>
               </div>
+            </div>
+            <div className={css.messageContents}>
+              <p>{props.message}</p>
             </div>
           </div>
         </div>

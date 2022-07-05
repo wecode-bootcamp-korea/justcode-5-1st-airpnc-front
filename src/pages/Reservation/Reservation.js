@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Home from '../Home/Home';
 import css from './Reservation.module.scss';
 import Footer from '../../components/Footer/Footer';
 import PayOptionSelector from './Modal/PayOptionSelector';
@@ -14,13 +13,9 @@ import { GrAmex } from 'react-icons/gr';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { TiTag } from 'react-icons/ti';
 import { IoDiamondOutline } from 'react-icons/io5';
-import Header from '../../components/Header/Header';
 import SubHeader from '../../components/Header/SubHeader';
 
-/////////////////////////////////////////////////////////////////////
-/////                    img and icons                       ////////
-const profileImgCat = '/images/profile/cat.png';
-
+///////////////        CONSTANTS              //////////////////
 const priceRateSummary = 'This is a rare find.';
 const priceRateDetail = `'s place is usually booked.`;
 
@@ -29,76 +24,112 @@ const requirements = {
   message: `Let the host know why you're travelling and when you'll check in.`,
 };
 
-///////////////////////////////////////////////////////////////////
-/////////////////            MockData           ///////////////////
-// Need to be removed
-const host = {
-  profileImg: profileImgCat,
-  name: 'Sarah',
-  joinedIn: '2018',
-};
-
-// const room = {
-//   id: 1,
-//   name: 'Winter Wonderland, 3BR, Fireplace, Cozy',
-//   type: 'Entire Villa',
-//   price: 603000,
-//   rate: 4.9,
-//   rateCnt: 11,
-//   hostType: 'superhost',
-//   repImg: '/images/room_rep/cabin.png',
-// };
-
-// const reservation = {
-//   id: 1,
-//   guests: 4,
-//   checkin: '2022-06-10 23:55:45.000000',
-//   checkout: '2022-06-14 23:55:45.000000',
-// };
-
 const airbnbConst = {
   customerAgreement: `By selecting the button below, I agree to the Host's House Rules, Airbnb's Rebooking and Refund Policy, and that Airbnb can charge my payment method if I’m responsible for damage.`,
   aircover: `Your booking is potected by aircover`,
   nonRefundable: `This reservation is non-refundable.`,
 };
 
+const monthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'July',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
+  const token = localStorage.getItem('login-token');
   const navigate = useNavigate();
   const homepage = '/';
   const detailpage = '/detail';
-  const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
-
   // To Do : move to home and detail should pass room and reservation
   const handleNavigateBtn = address => {
-    navigate(address);
+    navigate(address, {
+      state: {
+        data: room,
+        userId: reservation.userId,
+      },
+    });
   };
 
   // use room, reservation info from useLocation when reservationBox is imported to detail page
   const room = useLocation().state.room;
   const reservation = useLocation().state.reservation;
+  const reviewScore = useLocation().state.Score;
+  const reviewCnt = useLocation().state.reviewCnt;
+  const today = useLocation().state.today;
+
+  const hostJoinedIn = room.hostJoinedIn.split('-')[0];
 
   // useState for reservation //
   // To Do : edit option for dates and guests
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
-  const [guests, setGuests] = useState(reservation.guests);
-  const [reservationNumber, setReservationNumber] = useState(0);
+  const [nights, setNights] = useState(reservation.nights);
+  const [guests, setGuests] = useState(reservation.guests || 1);
+  const [reservationNumber, setReservationNumber] = useState(-1);
+  const [isDateValid, setDateValid] = useState(false);
+  const [isBtnActive, setBtnActive] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('');
+
+  const getTotalNights = (date1, date2) => {
+    let checkin = new Date(date1);
+    let checkout = new Date(date2);
+    let diff = Math.abs(checkout.getTime() - checkin.getTime());
+    let noofdays = Math.ceil(diff / (1000 * 3600 * 24));
+    return noofdays;
+  };
 
   useEffect(() => {
     reservation.checkin = checkin;
-    console.log(reservation.checkin);
   }, [checkin]);
 
   useEffect(() => {
     reservation.checkout = checkout;
-    console.log(reservation.checkout);
   }, [checkout]);
 
   useEffect(() => {
     reservation.guests = guests;
   }, [guests]);
+
+  const yourTripDate = () => {
+    let checkinDate = new Date(checkin);
+    let checkoutDate = new Date(checkout);
+    if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
+      if (checkinDate.getMonth() === checkoutDate.getMonth()) {
+        return `${
+          monthNames[Number(checkinDate.getMonth())]
+        } . ${checkinDate.getDate()} - ${checkoutDate.getDate()}`; // same year and month
+      } else {
+        return `${
+          monthNames[Number(checkinDate.getMonth())]
+        }. ${checkinDate.getDate()} -  ${
+          monthNames[Number(checkoutDate.getMonth())]
+        }. ${checkoutDate.getDate()}`;
+      }
+    }
+    return `${checkinDate.FullYear()} ${
+      monthNames[Number(checkinDate.getMonth())]
+    }. ${checkinDate.getDate()} - ${checkinDate.FullYear()} ${
+      monthNames[Number(checkinDate.getMonth())]
+    }. ${checkinDate.getDate()}`;
+  };
+
+  // < TO DO > dateEdit button is disabled
+  // time zone issue needs to be fixed
+  const [isDateEditClicked, setDateEditClicked] = useState(false);
+  const handleDateEditBtn = e => {
+    setDateEditClicked(!isDateEditClicked);
+  };
 
   const [isPayOptVisible, setPayOptVisible] = useState(false);
 
@@ -109,7 +140,7 @@ const Reservation = props => {
   const [payOption, setPayOption] = useState('Credit or debit card');
   const [payOptionIcon, setPayOptionIcon] = useState(<MdCreditCard />);
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
-  const token = localStorage.getItem('login-token');
+
   const countryOptCloseHandler = e => {
     setCountryOptVisible(false);
   };
@@ -207,7 +238,7 @@ const Reservation = props => {
   };
 
   const confirmationFailedCloseHandler = e => {
-    setConfirmationFailedVisible(false);
+    setConfirmationFailedVisible(e);
   };
 
   // TO DO : input validation on 'pay with' section
@@ -239,79 +270,6 @@ const Reservation = props => {
     }
   }
 
-  const yourTripDate = () => {
-    return yourTripDateIgnoreTimezone();
-  };
-
-  const yourTripDateWithTimezone = () => {
-    let checkinDate = new Date(checkin).toDateString().split(' ');
-    let checkoutDate = new Date(checkout).toDateString().split(' ');
-    if (checkinDate[3] === checkoutDate[3]) {
-      if (checkinDate[1] === checkoutDate[1]) {
-        return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month
-      } else {
-        return `${checkinDate[1]}. ${checkinDate[2]} -  ${checkoutDate[1]}. ${checkoutDate[2]}`;
-      }
-    }
-    return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
-  };
-
-  const yourTripDateIgnoreTimezone = () => {
-    let checkinArr = checkin.split('-');
-    let checkoutArr = checkout.split('-');
-    let monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'July',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    let checkinMonth = monthNames[Number(checkinArr[1]) - 1];
-    let checkoutMonth = monthNames[Number(checkoutArr[1]) - 1];
-    return `${checkinMonth}. ${checkinArr[2]} - ${checkoutMonth}. ${checkoutArr[2]}`;
-  };
-
-  const yourTripDateRemoveTimezone = () => {
-    let checkinTimezone = new Date(checkin);
-    let checkoutTimezone = new Date(checkout);
-    const TimezoneOffsetCheckIn = checkinTimezone.getTimezoneOffset() * 60000;
-    const TimezoneOffsetCheckOut = checkoutTimezone.getTimezoneOffset() * 60000;
-    const checkinDate = new Date(
-      checkinTimezone.getTime() - TimezoneOffsetCheckIn
-    )
-      .toDateString()
-      .split(' ');
-
-    const checkoutDate = new Date(
-      checkoutTimezone.getTime() - TimezoneOffsetCheckOut
-    )
-      .toDateString()
-      .split(' ');
-
-    if (checkinDate[3] === checkoutDate[3]) {
-      if (checkinDate[1] === checkoutDate[1]) {
-        return `${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[2]}`; // same year and month
-      } else {
-        return `${checkinDate[1]}. ${checkinDate[2]} -  ${checkoutDate[1]}. ${checkoutDate[2]}`;
-      }
-    }
-    return `${checkinDate[3]} ${checkinDate[1]}. ${checkinDate[2]} - ${checkoutDate[3]} ${checkoutDate[1]}. ${checkoutDate[2]}`;
-  };
-
-  const [isDateEditClicked, setDateEditClicked] = useState(false);
-  const handleDateEditBtn = e => {
-    setDateEditClicked(!isDateEditClicked);
-  };
-
-  const hostJoinedIn = room.hostJoinedIn.split('-')[0];
-
   return (
     <>
       {token ? <SubHeader login /> : <SubHeader />}
@@ -326,8 +284,9 @@ const Reservation = props => {
                     onClick={event => {
                       handleNavigateBtn(detailpage);
                     }}
+                    disabled="true"
                   >
-                    <MdNavigateBefore />
+                    {/*<MdNavigateBefore />*/}
                   </button>
                   <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
                 </div>
@@ -365,10 +324,13 @@ const Reservation = props => {
                           </div>
                           <div>
                             <button
-                              className={`${css.editBtn} ${css.visible}`}
-                              onClick={handleDateEditBtn}
+                              className={`${css.editBtn} ${css.editBtnvisible}`}
+                              onClick={event => {
+                                handleDateEditBtn();
+                              }}
+                              disabled="true"
                             >
-                              Edit
+                              {/*Edit*/}
                             </button>
                             {isDateEditClicked && (
                               <div>
@@ -398,8 +360,8 @@ const Reservation = props => {
                           <div>
                             <h3>Guests</h3>
                             <p>
-                              {guests}
-                              {guests > 1 ? ' guests' : ' guest'}
+                              {reservation.guests}
+                              {reservation.guests > 1 ? ' guests' : ' guest'}
                             </p>
                           </div>
                           <div>
@@ -412,6 +374,7 @@ const Reservation = props => {
                               onChange={event => {
                                 setGuests(event.target.value);
                               }}
+                              min="1"
                               max="20"
                             />
                           </div>
@@ -571,7 +534,7 @@ const Reservation = props => {
                                 onFocus={event => {
                                   setInputPlaceholder(
                                     event.target.id,
-                                    'Postal Code'
+                                    '000000'
                                   );
                                   setCardPostalCode(event.target.value);
                                 }}
@@ -675,15 +638,17 @@ const Reservation = props => {
                       className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
                     >
                       <button
-                        className={css.rclConfirmAndPayBtn}
+                        className={`${css.rclConfirmAndPayBtn} ${css.rclConfirmAndBtnDisabled}`}
                         id="confirm-pay-btn"
                         onClick={event => {
-                          isPayable ? handleConfirmBtn(event) : notPayable();
+                          isPayable
+                            ? handleConfirmBtn(event)
+                            : notPayable(event);
                         }}
                       >
                         Confirm and pay • Airbnb
                       </button>
-                      {isPayable ? (
+                      {token && isPayable ? (
                         <ReservationConfirmed
                           getNum={reservationNum =>
                             setReservationNumber(reservationNum)
@@ -697,6 +662,11 @@ const Reservation = props => {
                         <ReservationNotValid
                           show={isNotConfirmedVisible}
                           onClose={confirmationFailedCloseHandler}
+                          message={
+                            token
+                              ? 'Please check payment option !'
+                              : 'Please login to process !'
+                          }
                         />
                       )}
                     </div>
@@ -706,6 +676,8 @@ const Reservation = props => {
                   <PinnedBox
                     room={room}
                     reservation={reservation}
+                    reviewScore={reviewScore}
+                    reviewCnt={reviewCnt}
                     airbnbConst={airbnbConst}
                   />
                 </section>

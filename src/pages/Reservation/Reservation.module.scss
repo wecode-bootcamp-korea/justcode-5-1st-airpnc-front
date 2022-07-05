@@ -58,9 +58,9 @@ img.logoToHome {
     margin: 0 10px 0 0;
     padding: 0;
 
-    &:hover {
-      cursor: pointer;
-    }
+    //&:hover {
+    //  cursor: pointer;
+    //}
   }
 
   .reserveContentTitleText {
@@ -201,12 +201,8 @@ img.logoToHome {
           background-color: white;
           font-weight: bold;
           font-size: 14px;
-
-          &:hover {
-            cursor: pointer;
-          }
         }
-
+        
         .editInput {
           display: flex;
           align-items: flex-end;
@@ -221,6 +217,7 @@ img.logoToHome {
 
           &:focus {
             outline: none;
+            color: white;
           }
         }
 
@@ -230,6 +227,9 @@ img.logoToHome {
           width: 30px;
           height: 30px;
           background-color: white;
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
     }
