@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../config';
 import { ImStarFull } from 'react-icons/im';
 import MyProfile from './components/MyProfile';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ function MyPage() {
       const email = localStorage.getItem('user-email');
       console.log(email, 10);
       const res = await fetch(`http://localhost:10010/mypage/${email}`);
+      //const res = await fetch(`${BASE_URL}/mypage/${email}`);
       const json = await res.json();
       setData(json);
     })();
@@ -30,9 +32,8 @@ function MyPage() {
     <>
       {token ? <SubHeader login /> : <SubHeader />}
       <div>
-        {
-          <article className="MyPageWrapper">
-            <MyProfile userName={data.name} />
+        <article className="MyPageWrapper">
+          <MyProfile userName={data.name} />
           <section className="MyLog-box">
             <div className="HelloUser">
               <h2 className="MyName">
@@ -54,9 +55,8 @@ function MyPage() {
               &nbsp;리뷰 내역
             </h4>
           </section>
-            <MyProfile userName={data.name} />
-          </article>
-        }
+          <MyProfile userName={data.name} />
+        </article>
       </div>
     </>
   );
