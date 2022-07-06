@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
@@ -70,7 +71,7 @@ function Detail() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:10010/review/${room.id}`);
+      const res = await fetch(`${BASE_URL}/review/${room.id}`);
       const json = await res.json();
       setReviews(json);
       if (localStorage.getItem('user-id')) {
