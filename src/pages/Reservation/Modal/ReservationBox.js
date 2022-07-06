@@ -45,6 +45,9 @@ const ReservationBox = props => {
   };
 
   const checkDateValid = (d1, d2) => {
+    console.log('-- in reservation Box--');
+    console.log('d1 : ', d1);
+    console.log('d2 : ', d2);
     const date1 = new Date(d1);
     const date1Year = date1.getFullYear();
     const date1Month = date1.getMonth() + 1;
@@ -58,7 +61,10 @@ const ReservationBox = props => {
     const date2Date = date2.getDate() + 1;
     // dateIn is checkin date to compare with today
     const dateOut = new Date(`${date2Year}-${date2Month}-${date2Date}`);
-
+    console.log('date1 : ', date1);
+    console.log('date2 : ', date2);
+    console.log('dateIn ', dateIn);
+    console.log('dateOut ', dateOut);
     if (isNaN(date1) || isNaN(date2)) {
       setDateValid(false);
       setBtnActive(false);
@@ -89,6 +95,8 @@ const ReservationBox = props => {
       setBtnActive(true);
       reservation.checkin = dateIn;
       reservation.checkout = dateOut;
+      console.log('checkin ', dateIn);
+      console.log('checkout ', dateOut);
       return;
     }
   };

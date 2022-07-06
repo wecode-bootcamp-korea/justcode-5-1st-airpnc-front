@@ -55,8 +55,8 @@ const Reservation = props => {
   const handleNavigateBtn = address => {
     navigate(address, {
       state: {
-        data: room,
-        userId: reservation.userId,
+        checkin: reservation.checkin,
+        userId: reservation.checkout,
       },
     });
   };
@@ -102,8 +102,13 @@ const Reservation = props => {
   }, [guests]);
 
   const yourTripDate = () => {
+    console.log('--- yourTripDate ----');
+    console.log('checkin : ', checkin);
+    console.log('checkout : ', checkout);
     let checkinDate = new Date(checkin);
     let checkoutDate = new Date(checkout);
+    console.log('checkinDate(new Date(checkin)) : ', checkinDate);
+    console.log('checkoutDate(new Date(checkin)) : ', checkoutDate);
     if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
       if (checkinDate.getMonth() === checkoutDate.getMonth()) {
         return `${
@@ -284,9 +289,8 @@ const Reservation = props => {
                     onClick={event => {
                       handleNavigateBtn(detailpage);
                     }}
-                    disabled="true"
                   >
-                    {/*<MdNavigateBefore />*/}
+                    <MdNavigateBefore />
                   </button>
                   <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
                 </div>
@@ -328,9 +332,8 @@ const Reservation = props => {
                               onClick={event => {
                                 handleDateEditBtn();
                               }}
-                              disabled="true"
                             >
-                              {/*Edit*/}
+                              Edit
                             </button>
                             {isDateEditClicked && (
                               <div>

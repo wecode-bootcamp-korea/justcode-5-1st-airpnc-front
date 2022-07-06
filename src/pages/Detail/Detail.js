@@ -41,7 +41,7 @@ function Detail() {
   // let userId = '';
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
-
+  const checkinStored = useLocation().state.reserve;
   const token = localStorage.getItem('login-token');
 
   const handleNavigateBtn = address => {
