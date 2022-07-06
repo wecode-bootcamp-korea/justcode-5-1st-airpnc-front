@@ -19,9 +19,7 @@ function Header({ setHeders: setHederFilter, login }) {
   const [location, setLocation] = useState(0);
   const navigate = useNavigate();
 
-  console.log('location : ', location);
   useEffect(() => {
-    console.log('changed');
     setHederFilter(Number(location));
   }, [location]);
 
