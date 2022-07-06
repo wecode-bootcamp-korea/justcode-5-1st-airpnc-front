@@ -14,9 +14,7 @@ function Home() {
   const [login, setLogin] = useState(false);
   const [like, setLike] = useState([]);
   const [data, setData] = useState([]);
-  const [select, setSelect] = useState('');
   const [selected, setSelected] = useState([]);
-  const [wish, setWish] = useState([]);
   const [headerfilters, setheaderfilters] = useState({});
   const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
@@ -68,7 +66,7 @@ function Home() {
       setSelected(json.data);
       setLike(json.data.map(i => i.id));
     })();
-  }, []);
+  }, [user]);
   console.log(selected);
 
   const btnClick = e => {
