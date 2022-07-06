@@ -36,6 +36,7 @@ function Home() {
       const json = await res.json();
 
       setData(json);
+      console.log(data.like, 77777);
     })();
   }, []);
 
@@ -67,6 +68,7 @@ function Home() {
     })();
   }, [wish]);
   console.log(selected);
+  console.log(data.like, 88888);
 
   const btnClick = e => {
     const wishs = e.target.value;

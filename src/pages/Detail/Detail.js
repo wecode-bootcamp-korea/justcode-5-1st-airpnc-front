@@ -17,7 +17,7 @@ import AirCover from '../../components/Modal/airCover';
 import {
   FaStar,
   FaShare,
-  FaRegHeart,
+  FaHeart,
   FaTh,
   FaDoorClosed,
   FaParking,
@@ -35,7 +35,7 @@ function Detail() {
   const [coverOn, setCoverOn] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState();
-  const [wish, setWish] = useState([]);
+  // const [wish, setWish] = useState([]);
   const [userId, setUserId] = useState('');
   const navigate = useNavigate();
   // let userId = '';
@@ -66,6 +66,7 @@ function Detail() {
     locationType: rawData.locationType,
     wish: rawData.wish !== null ? rawData.wish : false,
   };
+  console.log(room.wish, room.like, 45345345345);
   room.repImg = room.images[0].file_url;
   room.hostType = 'superhost'; // constant for current version
   const el = useRef();
@@ -111,9 +112,11 @@ function Detail() {
           <div className={css.function_container}>
             <div className={css.score}>
               <FaStar />
-              <span>
-                {avgScore} · <strong>후기 {reviews.length}개</strong>
-              </span>
+              {reviews.length > 0 && (
+                <span>
+                  {avgScore} · <strong>후기 {reviews.length}개</strong>
+                </span>
+              )}
               <span className={css.location}>스웨덴</span>
             </div>
             <div className={css.function_group}>
@@ -123,12 +126,12 @@ function Detail() {
               </div>
               {room.wish === 0 ? (
                 <div className={css.function}>
-                  <FaRegHeart />
+                  <FaHeart />
                   <span className={css.function_text}>저장</span>
                 </div>
               ) : (
                 <div className={css.function}>
-                  <FaRegHeart color="red" />
+                  <FaHeart color="red" />
                   <span className={css.function_text}>저장 목록</span>
                 </div>
               )}
@@ -242,17 +245,27 @@ function Detail() {
             />
           </div>
         </section>
-        <section className={css.additional_inform}>
-          <DisplayReview
-            data={reviews}
-            displayCnt={4}
-            search={false}
-            getAvg={getAvgFunc}
-          />
-          <button onClick={() => setReviewOn(true)}>
-            후기 {reviews.length}개 모두 보기
-          </button>
-        </section>
+        {reviews.length > 0 ? (
+          <section className={css.additional_inform}>
+            <DisplayReview
+              data={reviews}
+              displayCnt={4}
+              search={false}
+              getAvg={getAvgFunc}
+            />
+            <button onClick={() => setReviewOn(true)}>
+              후기 {reviews.length}개 모두 보기
+            </button>
+          </section>
+        ) : (
+          <div>
+            <h1>후기가 아직 없어요</h1>
+            <p>
+              여행에 차질이 없도록 최선을 다해 도와드리겠습니다. 모든 예약은
+              에어비앤비의 게스트 환불 정책에 따라 보호를 받습니다.
+            </p>
+          </div>
+        )}
         {coverOn && (
           <ModalLayout modalOff={offModal}>
             <div ref={el} className={css.modal}>
