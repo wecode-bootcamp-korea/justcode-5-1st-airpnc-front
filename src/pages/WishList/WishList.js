@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './WishList.module.scss';
 import SubHeader from '../../components/Header/SubHeader';
@@ -13,7 +14,7 @@ function WishList() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
+      const res = await fetch(`${BASE_URL}/wishlist/${user.id}`);
       const json = await res.json();
       console.log(json, '확인콘솔');
     })();
