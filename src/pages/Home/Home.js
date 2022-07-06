@@ -19,30 +19,9 @@ function Home() {
   const button = useRef();
   const filtersIn = useLocation().state;
   const user = localStorage.getItem('user-id');
-<<<<<<< HEAD
-=======
-  console.log(user);
-  console.log(selected);
-
->>>>>>> main
   useMemo(() => {
     setFilters(Object.assign(filters, filtersIn, headerfilters));
   }, [filtersIn, headerfilters]);
-<<<<<<< HEAD
-  console.log('filters ', filters);
-  console.log('headerfilters ', headerfilters);
-
-  // Enable when login api passes user.id
-  // const isLogin = false;
-  // const homeFetchUrl = () => {
-  //   if (isLogin) {
-  //     return 'http://localhost:10010/home/${user.id}';
-  //   } else {
-  //     return 'http://localhost:10010/home';
-  //   }
-  // };
-=======
->>>>>>> main
 
   const setHeders = location => {
     setheaderfilters({ location_type: Number(location) });
