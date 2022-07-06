@@ -84,8 +84,8 @@ function MainFilter() {
           </div>
         </ModalLayout>
       )}
-      <button class={css.filter_button} onClick={() => setReviewOn(true)}>
-        필터
+      <button className={css.filterBtn} onClick={() => setReviewOn(true)}>
+        Filter
       </button>
     </>
   );

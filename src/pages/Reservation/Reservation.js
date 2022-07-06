@@ -47,7 +47,7 @@ const monthNames = [
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
-  const token = localStorage.getItem('login-token');
+  //const token = localStorage.getItem('login-token');
   const navigate = useNavigate();
   const homepage = '/';
   const detailpage = '/detail';
@@ -140,7 +140,7 @@ const Reservation = props => {
   const [payOption, setPayOption] = useState('Credit or debit card');
   const [payOptionIcon, setPayOptionIcon] = useState(<MdCreditCard />);
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
-
+  const token = localStorage.getItem('login-token');
   const countryOptCloseHandler = e => {
     setCountryOptVisible(false);
   };
