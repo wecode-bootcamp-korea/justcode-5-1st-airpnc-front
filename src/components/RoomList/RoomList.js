@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
 function RoomList({ room, won, sytle, btnStyle, userId }) {
-  console.log('userId : ', userId);
   //console.log('room in home', room);
   //console.log('room.file_url : ', room.photo[0].file_url);
-  console.log('room.id : ', room.id);
-  const repImg = room.photo[0].file_url;
+
+  // const repImg = room.photo[0].file_url;
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -16,9 +15,9 @@ function RoomList({ room, won, sytle, btnStyle, userId }) {
     navigate('/detail', { state: { data: room, userId } });
   };
 
-  const sliderImage = {
-    backgroundImage: `url(${room.photo[currentIndex].file_url})`,
-  };
+  // const sliderImage = {
+  //   backgroundImage: `url(${room.photo[currentIndex].file_url})`,
+  // };
 
   const onClickPrev = () => {
     currentIndex > 0
@@ -37,7 +36,7 @@ function RoomList({ room, won, sytle, btnStyle, userId }) {
       <div className={css.container} style={sytle}>
         <div
           className={css.sliderStyle}
-          style={sliderImage}
+          // style={sliderImage}
           onClick={goToDetail}
         ></div>
         <p className={css.name}>{room.name}</p>

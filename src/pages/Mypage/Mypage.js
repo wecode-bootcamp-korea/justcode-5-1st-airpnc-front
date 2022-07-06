@@ -11,6 +11,8 @@ function MyPage() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem('login-token');
   console.log(token);
+  // const user = useLocation().state;
+  // console.log(user, 23424);
 
   useEffect(() => {
     (async () => {
