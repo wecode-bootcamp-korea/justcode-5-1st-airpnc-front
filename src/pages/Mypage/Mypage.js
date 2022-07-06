@@ -16,8 +16,8 @@ function MyPage() {
     (async () => {
       const email = localStorage.getItem('user-email');
       console.log(email, 10);
-      const res = await fetch(`http://localhost:10010/mypage/${email}`);
-      //const res = await fetch(`${BASE_URL}/mypage/${email}`);
+      //const res = await fetch(`http://localhost:10010/mypage/${email}`);
+      const res = await fetch(`${BASE_URL}/mypage/${email}`);
       const json = await res.json();
       setData(json);
     })();

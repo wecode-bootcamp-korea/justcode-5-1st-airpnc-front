@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import BASE_URL from '../../../config';
 import css from './ReservationConfirmed.module.scss';
 import { MdClose } from 'react-icons/md';
 
@@ -28,10 +29,7 @@ const ReservationConfirmed = props => {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(
-        'http://localhost:10010/reservation',
-        postOptions
-      );
+      const res = await fetch(`${BASE_URL}/reservation`, postOptions);
       const json = await res.json();
       console.log(json);
     })();
@@ -73,7 +71,7 @@ const ReservationConfirmed = props => {
               <div>Reservation number : {reservationNumber}</div>
               <div>Dates : {yourTripDate}</div>
               <div>Guests : {reservation.guests}</div>
-              <div></div>
+              <div />
             </div>
           </div>
         </div>

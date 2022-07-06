@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import BASE_URL from '../../config';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
@@ -47,7 +48,7 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //room api GET request
+      const res = await fetch(`${BASE_URL}/home`); //room api GET request
       const json = await res.json();
       setData(json);
     })();
@@ -69,7 +70,7 @@ function Home() {
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
+      const res = await fetch(`${BASE_URL}/home`, requestOption); //room api POST request
       const json = await res.json();
       setData(json);
       setFilters({});
@@ -83,7 +84,7 @@ function Home() {
   //start wishList 갱신 함수
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:10010/wishlist/${user}`);
+      const res = await fetch(`${BASE_URL}/wishlist/${user}`);
       const json = await res.json();
 
       setSelected(json);
@@ -108,7 +109,7 @@ function Home() {
       data[Number(wishs) - 1].like = true;
       setWish([...wish, data[Number(wishs) - 1]]);
       console.log(user.id, room_id);
-      fetch(`http://localhost:10010/wishlist/${user}`, {
+      fetch(`${BASE_URL}/wishlist/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ function Home() {
       const wishsleft = wish.splice(0, alreadySelectedIndex);
       data[Number(wishs) - 1].like = false;
       setWish([...wishsleft, ...wishsright]);
-      fetch(`http://localhost:10010/wishlist/${user}/${room_id}`, {
+      fetch(`${BASE_URL}/${user}/${room_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

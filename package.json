@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "distribute": "npm i && npm run build && pm2 serve build 3000 --name <project-front> --spa"
+    "distribute": "npm i && npm run build && pm2 serve build 3000 --name airpnc --spa"
   },
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
@@ -20,7 +20,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@react-icons/all-files": "^4.1.0",
-    "dotenv": "^16.0.1",
     "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -32,12 +31,14 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
+    "dotenv": "^16.0.1",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "pm2": "^5.1.2",
+    "nodemon": "^2.0.18",
     "prettier": "^2.6.2",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "pm2": "^5.1.2"
   },
   "browserslist": {
     "production": [
