@@ -19,9 +19,6 @@ function Home() {
   const button = useRef();
   const filtersIn = useLocation().state;
   const user = localStorage.getItem('user-id');
-  console.log(user);
-  console.log(selected);
-
   useMemo(() => {
     setFilters(Object.assign(filters, filtersIn, headerfilters));
   }, [filtersIn, headerfilters]);
