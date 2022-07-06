@@ -7,31 +7,17 @@ import SubHeader from '../../components/Header/SubHeader';
 
 function WishList() {
   const navigate = useNavigate();
+  const [selected, setSelected] = useState([]);
+  const user = localStorage.getItem('user-id');
 
-  const selected = useLocation().state;
-  console.log(selected);
-  const wish = useLocation();
-
-  const user = useLocation().state;
-  console.log(wish.state);
-
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-  //     const json = await res.json();
-  //     console.log(json, '확인콘솔');
-  //   })();
-  // }, [wish]);
-=======
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${BASE_URL}/wishlist/${user.id}`);
+      const res = await fetch(`${BASE_URL}/wishlist/${user}`);
       const json = await res.json();
-      console.log(json, '확인콘솔');
+      setSelected(json.data);
     })();
-  }, [wish]);
->>>>>>> main
+  }, []);
+  console.log(selected);
 
   const goHome = () => {
     navigate('/');
@@ -48,7 +34,7 @@ function WishList() {
   };
 
   const token = localStorage.getItem('login-token');
-  console.log(token);
+
   return (
     <>
       {token ? <SubHeader login /> : <SubHeader />}

@@ -29,3 +29,25 @@
   transition: all 0.5s;
   cursor: pointer;
 }
+
+.confirmBtn {
+  position: relative;
+  left: 35%;
+  bottom: 2.5%;
+  margin-left: 70px;
+  border: 1px solid rgb(211, 211, 211);
+  background-color: white;
+  width: 80px;
+  height: 45px;
+  border-radius: 99px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.confirmBtn:hover {
+  box-shadow: 10px 10px 40px #ddd;
+  color: whitesmoke;
+  background-color: rgb(74, 74, 74);
+  transition: all 0.5s;
+  cursor: pointer;
+}
