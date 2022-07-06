@@ -2,6 +2,7 @@
 /public/data/backend/
 /public/data
 /public/images/room
+/public/images/room_rep
 # dependencies
 /node_modules
 /.pnp

@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
 import ActivatedHeader from './ActivatedHeader';
-// import LoginPop from './LoginPop';
 
 import { FaAirbnb } from 'react-icons/fa';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ setHeders, login }) {
+function Header({ setHeders, login, wish }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
@@ -20,13 +19,13 @@ function Header({ setHeders, login }) {
   const [location, setLocation] = useState(0);
   const navigate = useNavigate();
 
-  console.log('location : ', location);
   useEffect(() => {
     console.log('changed');
     setHeders(Number(location));
   }, [location]);
   const isMenued = () => {
     //
+
     if (localStorage.getItem('back_token')) {
       Menu(!ClickedMenu);
     } else {
@@ -92,10 +91,8 @@ function Header({ setHeders, login }) {
         </div>
       )}
       <div className="container_right">
-        <div className="container_menu">
-          <div type="button" onClick={isMenued}>
-            <VscThreeBars />
-          </div>
+        <div className="container_wish" onClick={wish}>
+          <span>Wish List</span>
         </div>
 
         {login ? (

@@ -4,34 +4,37 @@ import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
 import { TiStarFullOutline } from 'react-icons/ti';
 
-// MockData for test //
 const airbnbConst = {
   chargeAtText: `You won't be charged yet`,
 };
-//////////////////////
 const reservationPage = '/reservation';
+const current = new Date();
+const currentYear = current.getFullYear();
+const currentMonth = current.getMonth() + 1;
+const currentDate = current.getDate();
+const today = new Date(`${currentYear}-${currentMonth}-${currentDate}`);
+
 const ReservationBox = props => {
-  const { room, reservation, reviewScore, reviewCnt } = props;
-  const [checkin, setCheckIn] = useState(reservation.checkin);
+  const { userId, room, reservation, reviewScore, reviewCnt } = props;
+  const [checkin, setCheckIn] = useState(reservation.checkin || today);
   const [checkout, setCheckOut] = useState(reservation.checkout);
+  const [isDateValid, setDateValid] = useState(false);
   const [nights, setNights] = useState(0);
-  const [guests, setGuests] = useState(reservation.guests);
+  const [guests, setGuests] = useState(reservation.guests || 1);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
-    reservation.checkin = checkin;
-    setNights(getTotalNights(checkin, checkout));
-  }, [checkin]);
-
-  useEffect(() => {
-    reservation.checkout = checkout;
-    setNights(getTotalNights(checkin, checkout));
-  }, [checkout]);
+    checkDateValid(checkin, checkout);
+  }, [checkin, checkout]);
 
   useMemo(() => {
     reservation.guests = guests;
   }, [guests]);
+
+  useMemo(() => {
+    reservation.nights = nights;
+  }, [nights]);
 
   const getTotalNights = (date1, date2) => {
     let checkin = new Date(date1);
@@ -41,57 +44,66 @@ const ReservationBox = props => {
     return noofdays;
   };
 
-  const isDateValid = (inout, date) => {
-    const today = new Date();
-    const dateToCheck = new Date();
-    console.log('checkin ', checkin);
-    console.log('checkout ', checkout);
-    console.log('today ', today);
-    console.log('dateToCheck ', dateToCheck);
+  const checkDateValid = (d1, d2) => {
+    const date1 = new Date(d1);
+    const date1Year = date1.getFullYear();
+    const date1Month = date1.getMonth() + 1;
+    const date1Date = date1.getDate() + 1;
+    // date1 is checkin date to compare with today
+    const dateIn = new Date(`${date1Year}-${date1Month}-${date1Date}`);
 
-    if (new Date(date) < today) {
+    const date2 = new Date(d2);
+    const date2Year = date2.getFullYear();
+    const date2Month = date2.getMonth() + 1;
+    const date2Date = date2.getDate() + 1;
+    // dateIn is checkin date to compare with today
+    const dateOut = new Date(`${date2Year}-${date2Month}-${date2Date}`);
+
+    if (isNaN(date1) || isNaN(date2)) {
+      setDateValid(false);
+      setBtnActive(false);
+      setAlertMsg(`날짜를 확인해주세요.`);
+      return;
+    } else if (dateIn.getTime() < today.getTime()) {
       setAlertMsg(
-        `날짜를 확인해주세요. ${today.getFullYear()}-${
+        `날짜를 확인해주세요.\n오늘 이후 날짜 ${today.getFullYear()}-${
           today.getMonth() + 1
-        }-${today.getDate()} 이후 날짜를 선택해주세요`
+        }-${today.getDate()} 를 선택해주세요`
       );
-      return false;
-    }
-    if (inout === 'in') {
-      if (dateToCheck > new Date(checkout)) {
-        setAlertMsg('체크인 날짜를 확인해주세요');
-        setBtnActive(false);
-      } else {
-        setBtnActive(true);
-      }
+      setDateValid(false);
+      setBtnActive(false);
+      return;
+    } else if (dateIn.getTime() === dateOut.getTime()) {
+      setAlertMsg('체크인 날짜와 체크아웃 날짜를 확인해주세요');
+      setDateValid(false);
+      setBtnActive(false);
+      return;
+    } else if (dateIn.getTime() > dateOut.getTime()) {
+      setAlertMsg('체크인 날짜와 체크아웃 날짜를 확인해주세요');
+      setDateValid(false);
+      setBtnActive(false);
+      return;
     } else {
-      if (dateToCheck < new Date(checkin)) {
-        setAlertMsg('체크아웃 날짜를 확인해주세요');
-        setBtnActive(false);
-      } else {
-        setBtnActive(true);
-      }
+      setDateValid(true);
+      setNights(getTotalNights(date1, date2));
+      setBtnActive(true);
+      reservation.checkin = dateIn;
+      reservation.checkout = dateOut;
+      return;
     }
-    console.log('alertMsg', alertMsg);
-    setBtnActive(true);
   };
 
   const navigate = useNavigate();
   const handleReservationBtn = () => {
-    if (reservation.user_id !== '') {
-      navigate(reservationPage, {
-        state: {
-          room: room,
-          reservation: reservation,
-          reviewScore: reviewScore,
-          reviewCnt: reviewCnt,
-        },
-      });
-    } else {
-      if (!reservation.user_id) {
-        alert('로그인 먼저 해주세요');
-      }
-    }
+    navigate(reservationPage, {
+      state: {
+        room: room,
+        reservation: reservation,
+        reviewScore: reviewScore,
+        reviewCnt: reviewCnt,
+        today: today,
+      },
+    });
   };
 
   const setInputPlaceholder = (id, str) => {
@@ -108,24 +120,30 @@ const ReservationBox = props => {
               <span className={css.pricePerNight} id="price-per-night">
                 {room.price}
               </span>
-              <span>&nbsp;night</span>
+              <span>&nbsp;per night</span>
             </div>
             <div className={css.roomRateBox}>
               <div className={css.iconStar}>
                 <TiStarFullOutline />
               </div>
               <div className={css.roomRate} id="room-score">
-                {reviewScore}
+                {isNaN(reviewScore) ? 'n/a' : Number(reviewScore).toFixed(1)}
               </div>
               <span>&nbsp;·&nbsp;&nbsp;</span>
               <div className={css.roomReviewCnt} id="review-count">
-                {reviewCnt} reviews
+                {reviewCnt || 0} reviews
               </div>
             </div>
           </div>
           <div className={css.reserveInfoContainer}>
             <div className={css.reserveInfoInner}>
-              <div className={css.checkInOut}>
+              <div
+                className={
+                  isDateValid
+                    ? `${css.checkInOut}`
+                    : `${css.checkInOut} ${css.checkInOutInvalid}`
+                }
+              >
                 <div className={`${css.checkIn} ${css.borderRight}`}>
                   <input
                     className={css.checkInInput}
@@ -171,6 +189,7 @@ const ReservationBox = props => {
             <button
               className={css.rclConfirmAndPayBtn}
               id="confirm-pay-btn"
+              disabled={!isBtnActive}
               onClick={event => {
                 handleReservationBtn();
               }}
@@ -184,11 +203,7 @@ const ReservationBox = props => {
             </div>
           </div>
           <div className={css.priceBreakDown}>
-            <PriceBreakDown
-              room={room}
-              reservation={reservation}
-              nights={nights}
-            />
+            <PriceBreakDown room={room} reservation={reservation} />
           </div>
         </div>
       </div>

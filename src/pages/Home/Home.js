@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import BASE_URL from '../../config';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
-import { set } from 'react-hook-form';
 
 function Home() {
   const [data, setData] = useState([]);
   const [select, setSelect] = useState('');
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState([]);
   const [wish, setWish] = useState([]);
   const [headerfilters, setheaderfilters] = useState({});
   const [location, setlocation] = useState(0);
@@ -18,28 +18,13 @@ function Home() {
   const navigate = useNavigate();
   const button = useRef();
   const filtersIn = useLocation().state;
+  const user = localStorage.getItem('user-id');
+  console.log(user);
+  console.log(selected);
 
-  const user = useLocation().state;
-  console.log(user, '19');
-  console.log('filters : ', filters);
   useMemo(() => {
     setFilters(Object.assign(filters, filtersIn, headerfilters));
-    console.log('in useMemo filters ', filters);
-    console.log('in useMemo filtersIn ', filtersIn);
-    console.log('in useMemo headerfilters ', headerfilters);
-    console.log('in useMemo filters second ', filters);
   }, [filtersIn, headerfilters]);
-  console.log('filters ', filters);
-  console.log('headerfilters ', headerfilters);
-  // Enable when login api passes user.id
-  // const isLogin = false;
-  // const homeFetchUrl = () => {
-  //   if (isLogin) {
-  //     return 'http://localhost:10010/home/${user.id}';
-  //   } else {
-  //     return 'http://localhost:10010/home';
-  //   }
-  // };
 
   const setHeders = location => {
     setheaderfilters({ location_type: Number(location) });
@@ -47,16 +32,12 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //room api GET request
+      const res = await fetch(`${BASE_URL}/home`); //room api GET request
       const json = await res.json();
+
       setData(json);
     })();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(user, 234234343);
-  //   navigate('/MyPage', { state: user });
-  // }, [user]);
 
   useEffect(() => {
     (async () => {
@@ -65,50 +46,48 @@ function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        //body: JSON.stringify(filtersIn),
+
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
+      const res = await fetch(`${BASE_URL}/home`, requestOption); //room api POST request
       const json = await res.json();
+
       setData(json);
       setFilters({});
     })();
   }, [filtersIn, headerfilters]);
 
-  // const goMyPage = () => {
-
-  // };
-
   //start wishList 갱신 함수
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-  //     const json = await res.json();
-
-  //     setSelected(json);
-  //   })();
-  // }, [wish]);
-  console.log(wish);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`${BASE_URL}/wishlist/${user}`);
+      const json = await res.json();
+      setSelected(json.data);
+    })();
+  }, [wish]);
   console.log(selected);
 
   const btnClick = e => {
     const wishs = e.target.value;
-    console.log(wishs);
     const room_id = Number(wishs);
-    console.log(room_id);
     setSelect(Number(wishs));
-    const alreadySelectedIndex = wish.findIndex(i => i.id == wishs);
-    // console.log(alreadySelectedIndex === -1);
+
     const res = {
-      user_id: user.id,
+      user_id: user,
       room_id: room_id,
     };
-    if (alreadySelectedIndex === -1) {
-      data[Number(wishs) - 1].like = true;
-      setWish([...wish, data[Number(wishs) - 1]]);
-      console.log(user.id, room_id);
-      fetch(`http://localhost:10010/wishlist/${user.id}`, {
+    fetch(`${BASE_URL}/wishlist/${user}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => setSelected([...res.data]));
+
+    if (selected.length === 0) {
+      fetch(`${BASE_URL}/wishlist/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,12 +96,36 @@ function Home() {
       })
         .then(res => res.json())
         .then(res => console.log(res));
+      fetch(`${BASE_URL}/wishlist/${user}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+      console.log(selected);
+    } else if (selected.findIndex(i => i.id == room_id) === -1) {
+      fetch(`${BASE_URL}/wishlist/${user}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(res),
+      })
+        .then(res => res.json())
+        .then(res => console.log(res));
+      fetch(`${BASE_URL}/wishlist/${user}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+      console.log(selected);
     } else {
-      const wishsright = wish.splice(alreadySelectedIndex + 1);
-      const wishsleft = wish.splice(0, alreadySelectedIndex);
-      data[Number(wishs) - 1].like = false;
-      setWish([...wishsleft, ...wishsright]);
-      fetch(`http://localhost:10010/wishlist/${user.id}/${room_id}`, {
+      fetch(`${BASE_URL}/wishlist/${user}/${room_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -131,9 +134,19 @@ function Home() {
       })
         .then(res => res.json())
         .then(res => console.log(res));
+
+      fetch(`${BASE_URL}/wishlist/${user}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => setSelected([...res.data]));
+      console.log(selected);
     }
   };
-  //end wishList 갱신 함수
+
   const cantClick = () => {
     alert('로그인 먼저 해주세요');
   };
@@ -145,7 +158,7 @@ function Home() {
   };
 
   const goWishList = () => {
-    navigate('/wishlist', { state: [...wish] });
+    navigate('/wishlist', { state: [...selected] });
   };
   const cantGoWishList = () => {
     alert('로그인 먼저 해주세요');
@@ -168,46 +181,18 @@ function Home() {
 
   const token = localStorage.getItem('login-token');
 
-  // const res = {
-  //   userId: user.id,
-  //   roomId: select,
-  // };
-  // console.log(JSON.stringify(res));
-  // fetch('http://localhost:10010/wishlist', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(res),
-  // })
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     if (res.success) {
-  //       goHome();
-  //       console.log(res.token, 123123);
-
-  //       localStorage.setItem('login-token', res.token);
-  //     } else {
-  //       alert(res.message);
-  //     }
-  //   });
-  // }
-  console.log(setHeders);
   return (
     <>
       {token ? (
-        <Header setHeders={setHeders} login />
+        <Header wish={goWishList} setHeders={setHeders} login />
       ) : (
-        <Header setHeders={setHeders} />
+        <Header wish={cantGoWishList} setHeders={setHeders} />
       )}
       <MainFilter />
-      <div className={css.wish} onClick={token ? goWishList : cantGoWishList}>
-        wish
-      </div>
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
-            <div>
+            <div key={ind + 10}>
               <RoomList key={ind} room={data} sytle={imageSize} won={'원'} />
               <button
                 ref={button}

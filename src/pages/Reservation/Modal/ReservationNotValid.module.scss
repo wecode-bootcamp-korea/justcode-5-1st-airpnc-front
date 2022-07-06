@@ -46,9 +46,8 @@
 				margin-right: 80px;
 
 				p {
-					padding: 60px 40px;
-					@include h2;
-					
+					padding: 20px 100px;
+					@include h2;		
 				}
 			}
 
@@ -61,9 +60,14 @@
 			align-content: center;
 			padding: 5px 18px 10px 18px;
 
-			div {
+			p {
+				padding : 30px;
+				padding-left : 40px;
+				display: flex;
+				align-items: center;
+				@include h2;
 				min-height: 40px;
-				border-bottom: $theme-border-line;
+				color: $theme-color;
 			}
 		}
 

@@ -67,7 +67,7 @@ function MainFilter() {
   return (
     <>
       {reviewOn && (
-        <ModalLayout reviewOff={onClick}>
+        <ModalLayout modalOff={onClick}>
           <div ref={el} onSubmit={onSubmit} className={css.filter}>
             <Title />
             <Price lowOnChange={lowOnChange} highOnChange={highOnChange} />
@@ -84,8 +84,8 @@ function MainFilter() {
           </div>
         </ModalLayout>
       )}
-      <button class={css.filter_button} onClick={() => setReviewOn(true)}>
-        필터
+      <button className={css.filterBtn} onClick={() => setReviewOn(true)}>
+        Filter
       </button>
     </>
   );
