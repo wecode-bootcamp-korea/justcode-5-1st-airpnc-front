@@ -6,7 +6,7 @@ function ReservationHistory({ data, detailsOn }) {
   return (
     <div className={css.container}>
       <div className={css.reservation_info}>
-        <img src={data.photo_url[0].url}></img>
+        {/* <img src={data.photo_url[0].url}></img> */}
         <div className={css.info_text}>
           <span>
             {data.city},{data.country}
