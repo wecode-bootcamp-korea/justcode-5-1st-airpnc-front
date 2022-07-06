@@ -6,7 +6,7 @@ import OneReview from '../../components/Review/oneReview';
 function DisplayReview({ data, displayCnt, search, getAvg }) {
   console.log(data, 22222);
   const [reviews, setReviews] = useState([]);
-  const [avgScore, setAvgScore] = useState(2.5);
+  const [avgScore, setAvgScore] = useState();
   useEffect(() => {
     getAvgScore(data);
   }, [data]);
@@ -26,8 +26,8 @@ function DisplayReview({ data, displayCnt, search, getAvg }) {
     // console.log(scoreArr, 234);
     const average = scoreArr.reduce((a, b) => a + b, 0) / scoreArr.length;
     // console.log(average, 2340000);
-    setAvgScore(average);
-    getAvg(average);
+    setAvgScore(String(average).substring(0, 4));
+    getAvg(String(average).substring(0, 4));
   };
   return (
     <div className={css.review}>

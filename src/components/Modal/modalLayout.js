@@ -3,9 +3,9 @@ import ReactDom from 'react-dom';
 import css from './modalLayout.module.scss';
 const modal = document.getElementById('modal');
 
-function ModalLayout({ reviewOff, children }) {
+function ModalLayout({ modalOff, children }) {
   return ReactDom.createPortal(
-    <div onClick={reviewOff} className={css.background}>
+    <div onClick={modalOff} className={css.background}>
       {children}
     </div>,
     modal

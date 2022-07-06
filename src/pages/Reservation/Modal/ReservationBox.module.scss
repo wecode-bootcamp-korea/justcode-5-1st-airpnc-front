@@ -75,6 +75,12 @@
       display: flex;
       justify-content: center;
       align-items: stretch;
+      &Invalid {
+        border-radius: 8px;
+        border: 1px solid red;
+        overflow: hidden;
+        perspective: 1px;        
+    }
     }
   }
 }
@@ -110,8 +116,14 @@
   font-weight: bold;
   font-size: 17px;
 
-  &:hover {
-    cursor: pointer;
+  &:active {
+    background-color: $theme-color;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &:disabled {
+    background-color: grey;
   }
 }
 

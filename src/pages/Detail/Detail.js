@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 import css from './Detail.module.scss';
 import DisplayReview from '../../components/Review/displayReview';
 import ModalLayout from '../../components/Modal/modalLayout';
 import ReservationBox from '../Reservation/Modal/ReservationBox';
 import SubHeader from '../../components/Header/SubHeader';
+import AirCover from '../../components/Modal/airCover';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // // or for Day.js
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -29,8 +31,8 @@ const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
 function Detail() {
   const homepage = '/';
-  console.log(localStorage.getItem('user-info'), 23456);
   const [reviewOn, setReviewOn] = useState(false);
+  const [coverOn, setCoverOn] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState();
   const [wish, setWish] = useState([]);
@@ -69,7 +71,7 @@ function Detail() {
   const el = useRef();
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:10010/review/${room.id}`);
+      const res = await fetch(`${BASE_URL}/review/${room.id}`);
       const json = await res.json();
       setReviews(json);
       if (localStorage.getItem('user-id')) {
@@ -87,7 +89,12 @@ function Detail() {
   const offModal = e => {
     //console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
-      setReviewOn(false);
+      if (reviewOn) {
+        setReviewOn(false);
+      }
+      if (coverOn) {
+        setCoverOn(false);
+      }
     }
   };
   const getAvgFunc = avgScore => {
@@ -97,7 +104,7 @@ function Detail() {
   // const locationName = data.state.name;
   return (
     <>
-      {token ? <SubHeader login /> : <SubHeader />}
+      <SubHeader />
       <div className={css.container}>
         <section className={css.header_container}>
           <h1>{room.name}</h1>
@@ -190,11 +197,10 @@ function Detail() {
                 않은 경우 또는 체크인에 문제가 있는 상황에 대비한 무료 보호
                 프로그램이 포함됩니다.
               </p>
-              <span>더 알아보기</span>
+              <span onClick={() => setCoverOn(true)}>더 알아보기</span>
             </div>
             <div className={css.description}>
               <p>{room.description}</p>
-              <span>더 보기</span>
             </div>
             <div className={css.facilities}>
               <h2>숙소 편의시설</h2>
@@ -212,7 +218,7 @@ function Detail() {
                   <span>tv</span>
                 </li>
               </ul>
-              <button>편의시설 50개 모두 보기</button>
+              {/* <button>편의시설 50개 모두 보기</button> */}
             </div>
             {/* <div className={css.calendar}>
             <div className={css.calendar_header}>
@@ -246,54 +252,16 @@ function Detail() {
           <button onClick={() => setReviewOn(true)}>
             후기 {reviews.length}개 모두 보기
           </button>
-          {/* <div className={css.instruction_container}>
-          <h2>알아두어야 할 사항</h2>
-          <div className={css.instruction}>
-            <div className={css.rule}>
-              <h3>숙소 이용규칙</h3>
-              <ul className={css.contents}>
-                <li>
-                  <img></img>
-                  <span>주방</span>
-                </li>
-                <li>
-                  <img></img>
-                  <span>무료 주차</span>
-                </li>
-                <li>
-                  <img></img>
-                  <span>tv</span>
-                </li>
-              </ul>
-              <span>더 보기 </span>
-            </div>
-            <div className={css.safety}>
-              <h3>건강과 안전</h3>
-              <ul className={css.contents}>
-                <li>
-                  <img></img>
-                  <span>주방</span>
-                </li>
-                <li>
-                  <img></img>
-                  <span>무료 주차</span>
-                </li>
-                <li>
-                  <img></img>
-                  <span>tv</span>
-                </li>
-              </ul>
-              <span>더 보기 </span>
-            </div>
-            <div className={css.refund}>
-              <h3>환불 정책</h3>
-              <span>더 보기 </span>
-            </div>
-          </div>
-        </div> */}
         </section>
+        {coverOn && (
+          <ModalLayout modalOff={offModal}>
+            <div ref={el} className={css.modal}>
+              <AirCover />
+            </div>
+          </ModalLayout>
+        )}
         {reviewOn && (
-          <ModalLayout reviewOff={offModal}>
+          <ModalLayout modalOff={offModal}>
             <div ref={el} className={css.modal}>
               <DisplayReview
                 data={reviews}

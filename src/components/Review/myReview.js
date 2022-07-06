@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../config';
 import css from './myReview.module.scss';
 import { FaStar } from 'react-icons/fa';
 
-function MyReview({ data, reviewOnClick }) {
+function MyReview({ data, reviewOnClick, remainedReview }) {
   console.log('data : ', data);
   const onDelete = async () => {
     // alert('정말 리뷰를 삭제하시겠습니까?');
     if (window.confirm('정말 리뷰를 삭제하시겠습니까?')) {
-      const res = await fetch(
-        `http://localhost:10010/review/${data.review_id}`,
-        {
-          method: 'DELETE',
-        }
-      );
+      const res = await fetch(`${BASE_URL}/${data.review_id}`, {
+        method: 'DELETE',
+      });
       const json = await res.json();
-      console.log(json);
+      // console.log(json);
+      remainedReview(data.idx);
     }
   };
 
   return (
     <div className={css.container}>
       <div className={css.myReview}>
-        {/* <img src=""></img> */}
+        {/* <img src={data.photo_url[0].url}></img> */}
         <div className={css.room_info}>
           <div className={css.room_score}>
             <FaStar />

@@ -67,7 +67,7 @@ function MainFilter() {
   return (
     <>
       {reviewOn && (
-        <ModalLayout reviewOff={onClick}>
+        <ModalLayout modalOff={onClick}>
           <div ref={el} onSubmit={onSubmit} className={css.filter}>
             <Title />
             <Price lowOnChange={lowOnChange} highOnChange={highOnChange} />

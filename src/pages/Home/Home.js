@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import BASE_URL from '../../config';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './Home.module.scss';
 import Header from '../../components/Header/Header';
@@ -21,6 +22,12 @@ function Home() {
   // console.log(user.id);
   console.log(selected);
 
+<<<<<<< HEAD
+=======
+  const user = localStorage.getItem('user-id');
+  console.log(user, '19');
+  console.log('filters : ', filters);
+>>>>>>> main
   useMemo(() => {
     setFilters(Object.assign(filters, filtersIn, headerfilters));
   }, [filtersIn, headerfilters]);
@@ -31,7 +38,7 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:10010/home'); //room api GET request
+      const res = await fetch(`${BASE_URL}/home`); //room api GET request
       const json = await res.json();
 
       setData(json);
@@ -49,7 +56,7 @@ function Home() {
         body: JSON.stringify(filters),
       };
       if (requestOption.body === 'null') requestOption.body = [];
-      const res = await fetch('http://localhost:10010/home', requestOption); //room api POST request
+      const res = await fetch(`${BASE_URL}/home`, requestOption); //room api POST request
       const json = await res.json();
 
       setData(json);
@@ -74,14 +81,14 @@ function Home() {
   // };
 
   //start wishList 갱신 함수
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await fetch(`http://localhost:10010/wishlist/${user.id}`);
-  //     const json = await res.json();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`${BASE_URL}/wishlist/${user}`);
+      const json = await res.json();
 
-  //     setSelected(json);
-  //   })();
-  // }, [wish]);
+      setSelected(json);
+    })();
+  }, [wish]);
   console.log(wish);
   console.log(selected);
 
@@ -94,6 +101,7 @@ function Home() {
       user_id: user,
       room_id: room_id,
     };
+<<<<<<< HEAD
     fetch(`http://localhost:10010/wishlist/${user}`, {
       method: 'GET',
       headers: {
@@ -105,6 +113,13 @@ function Home() {
 
     if (selected.length === 0) {
       fetch(`http://localhost:10010/wishlist/${user}`, {
+=======
+    if (alreadySelectedIndex === -1) {
+      data[Number(wishs) - 1].like = true;
+      setWish([...wish, data[Number(wishs) - 1]]);
+      console.log(user.id, room_id);
+      fetch(`${BASE_URL}/wishlist/${user}`, {
+>>>>>>> main
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,7 +157,15 @@ function Home() {
         .then(res => setSelected([...res.data]));
       console.log(selected);
     } else {
+<<<<<<< HEAD
       fetch(`http://localhost:10010/wishlist/${user}/${room_id}`, {
+=======
+      const wishsright = wish.splice(alreadySelectedIndex + 1);
+      const wishsleft = wish.splice(0, alreadySelectedIndex);
+      data[Number(wishs) - 1].like = false;
+      setWish([...wishsleft, ...wishsright]);
+      fetch(`${BASE_URL}/${user}/${room_id}`, {
+>>>>>>> main
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

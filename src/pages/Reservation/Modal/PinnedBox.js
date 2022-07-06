@@ -4,7 +4,7 @@ import { TiTags, TiStarFullOutline } from 'react-icons/ti';
 import { RiMedalFill } from 'react-icons/ri';
 
 const PinnedBox = props => {
-  const { room, reservation, airbnbConst } = props;
+  const { room, reviewScore, reviewCnt, reservation, airbnbConst } = props;
   return (
     <section className={css.container}>
       <div className={css.reserveContentRight}>
@@ -24,7 +24,8 @@ const PinnedBox = props => {
                 <div className={css.roomEtcInfo}>
                   <div className={css.roomRate}>
                     <TiStarFullOutline />
-                    {room.rate}({room.rateCnt}reviews)
+                    {isNaN(reviewScore) ? 'n/a' : reviewScore.toFixed(1)}&nbsp;(
+                    {reviewCnt || 0} reviews)
                   </div>
                   <p>&nbsp; • &nbsp;</p>
                   <div className={css.roomHostType}>
