@@ -8,7 +8,7 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ setHeders, login }) {
+function Header({ setHeders: setHederFilter, login }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
@@ -22,8 +22,16 @@ function Header({ setHeders, login }) {
   console.log('location : ', location);
   useEffect(() => {
     console.log('changed');
-    setHeders(Number(location));
+    setHederFilter(Number(location));
   }, [location]);
+
+  const goHome = () => {
+    if (Number(location) !== 0) {
+      setHederFilter(0);
+    }
+    navigate('/');
+  };
+
   const isMenued = () => {
     //
     if (localStorage.getItem('back_token')) {
@@ -64,7 +72,7 @@ function Header({ setHeders, login }) {
 
   return (
     <div className="container">
-      <div className="logo" onClick={() => navigate('/')}>
+      <div className="logo" onClick={() => goHome()}>
         <FaAirbnb size="40" />
         <div>airpnc</div>
       </div>

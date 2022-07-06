@@ -21,8 +21,6 @@ function Home() {
   const filtersIn = useLocation().state;
 
   const user = localStorage.getItem('user-id');
-  console.log(user, '19');
-  console.log('filters : ', filters);
   useMemo(() => {
     setFilters(Object.assign(filters, filtersIn, headerfilters));
     console.log('in useMemo filters ', filters);
@@ -32,6 +30,7 @@ function Home() {
   }, [filtersIn, headerfilters]);
   console.log('filters ', filters);
   console.log('headerfilters ', headerfilters);
+
   // Enable when login api passes user.id
   // const isLogin = false;
   // const homeFetchUrl = () => {
