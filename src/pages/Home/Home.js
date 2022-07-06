@@ -8,8 +8,10 @@ import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import Login from '../Login/Login';
 
 function Home() {
+  const [login, setLogin] = useState(false);
   const [like, setLike] = useState([]);
   const [data, setData] = useState([]);
   const [select, setSelect] = useState('');
@@ -192,14 +194,26 @@ function Home() {
   };
 
   const token = localStorage.getItem('login-token');
+  const loginModalValue = value => {
+    setLogin(value);
+  };
+  const loginModalOff = value => {
+    setLogin(value);
+  };
+  console.log(login);
   return (
     <>
       {token ? (
         <Header wish={goWishList} setHeders={setHeders} login />
       ) : (
-        <Header wish={cantGoWishList} setHeders={setHeders} />
+        <Header
+          loginModalValue={loginModalValue}
+          wish={cantGoWishList}
+          setHeders={setHeders}
+        />
       )}
       <MainFilter />
+      <Login login={login} loginModalOff={loginModalOff} />
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
