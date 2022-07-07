@@ -48,20 +48,8 @@ const monthNames = [
 
 const Reservation = props => {
   //const token = localStorage.getItem('login-token');
-  const navigate = useNavigate();
-  const homepage = '/';
-  const detailpage = '/detail';
-  // To Do : move to home and detail should pass room and reservation
-  const handleNavigateBtn = address => {
-    navigate(address, {
-      state: {
-        checkin: reservation.checkin,
-        userId: reservation.checkout,
-      },
-    });
-  };
-
   // use room, reservation info from useLocation when reservationBox is imported to detail page
+  const rawData = useLocation().state.data;
   const room = useLocation().state.room;
   const reservation = useLocation().state.reservation;
   const reviewScore = useLocation().state.Score;
@@ -80,6 +68,14 @@ const Reservation = props => {
   const [isDateValid, setDateValid] = useState(false);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
+
+  const navigate = useNavigate();
+  const homepage = '/';
+  const detailpage = '/detail';
+  // To Do : move to home and detail should pass room and reservation
+  const handleNavigateBtn = address => {
+    navigate(address, { state: { data: rawData, reservation } });
+  };
 
   const getTotalNights = (date1, date2) => {
     let checkin = new Date(date1);
@@ -102,13 +98,8 @@ const Reservation = props => {
   }, [guests]);
 
   const yourTripDate = () => {
-    console.log('--- yourTripDate ----');
-    console.log('checkin : ', checkin);
-    console.log('checkout : ', checkout);
     let checkinDate = new Date(checkin);
     let checkoutDate = new Date(checkout);
-    console.log('checkinDate(new Date(checkin)) : ', checkinDate);
-    console.log('checkoutDate(new Date(checkin)) : ', checkoutDate);
     if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
       if (checkinDate.getMonth() === checkoutDate.getMonth()) {
         return `${
@@ -332,8 +323,9 @@ const Reservation = props => {
                               onClick={event => {
                                 handleDateEditBtn();
                               }}
+                              disabled={true}
                             >
-                              Edit
+                              {/*Edit*/}
                             </button>
                             {isDateEditClicked && (
                               <div>

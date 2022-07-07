@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useMemo, useInsertionEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
 import { TiStarFullOutline } from 'react-icons/ti';
 
+//////////////// CONSTs /////////////
 const airbnbConst = {
   chargeAtText: `You won't be charged yet`,
 };
@@ -13,11 +14,13 @@ const currentYear = current.getFullYear();
 const currentMonth = current.getMonth() + 1;
 const currentDate = current.getDate();
 const today = new Date(`${currentYear}-${currentMonth}-${currentDate}`);
+const tomorrow = today.getDate() + 1;
+/////////////////////////////////////
 
 const ReservationBox = props => {
-  const { userId, room, reservation, reviewScore, reviewCnt } = props;
+  const { rawData, userId, room, reservation, reviewScore, reviewCnt } = props;
   const [checkin, setCheckIn] = useState(reservation.checkin || today);
-  const [checkout, setCheckOut] = useState(reservation.checkout);
+  const [checkout, setCheckOut] = useState(reservation.checkout || tomorrow);
   const [isDateValid, setDateValid] = useState(false);
   const [nights, setNights] = useState(0);
   const [guests, setGuests] = useState(reservation.guests || 1);
@@ -45,9 +48,6 @@ const ReservationBox = props => {
   };
 
   const checkDateValid = (d1, d2) => {
-    console.log('-- in reservation Box--');
-    console.log('d1 : ', d1);
-    console.log('d2 : ', d2);
     const date1 = new Date(d1);
     const date1Year = date1.getFullYear();
     const date1Month = date1.getMonth() + 1;
@@ -61,10 +61,7 @@ const ReservationBox = props => {
     const date2Date = date2.getDate() + 1;
     // dateIn is checkin date to compare with today
     const dateOut = new Date(`${date2Year}-${date2Month}-${date2Date}`);
-    console.log('date1 : ', date1);
-    console.log('date2 : ', date2);
-    console.log('dateIn ', dateIn);
-    console.log('dateOut ', dateOut);
+
     if (isNaN(date1) || isNaN(date2)) {
       setDateValid(false);
       setBtnActive(false);
@@ -95,8 +92,6 @@ const ReservationBox = props => {
       setBtnActive(true);
       reservation.checkin = dateIn;
       reservation.checkout = dateOut;
-      console.log('checkin ', dateIn);
-      console.log('checkout ', dateOut);
       return;
     }
   };
@@ -105,6 +100,7 @@ const ReservationBox = props => {
   const handleReservationBtn = () => {
     navigate(reservationPage, {
       state: {
+        data: rawData,
         room: room,
         reservation: reservation,
         reviewScore: reviewScore,
