@@ -230,3 +230,20 @@
     }
   }
 }
+
+.backBtn {
+  display: flex;
+  justify-content: center;
+
+  border-radius: 99px;
+  width: 45px;
+  margin: 30px;
+}
+
+.backBtn:hover {
+  box-shadow: 10px 10px 40px #ddd;
+  color: rgb(0, 0, 0);
+  background-color: rgb(234, 234, 234);
+  transition: all 0.5s;
+  cursor: pointer;
+}

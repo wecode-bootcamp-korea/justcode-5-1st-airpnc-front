@@ -19,8 +19,6 @@ function Signup({ signup, signupModalOff }) {
     formState: { errors },
   } = useForm();
 
-  console.log(watch('email'));
-
   useEffect(() => {
     setReviewOn(signup);
   }, [signup]);
@@ -53,7 +51,9 @@ function Signup({ signup, signupModalOff }) {
       .then(res => res.json())
       .then(res => {
         if (res) {
-          navigate('/login');
+          alert('회원가입 완료');
+          setReviewOn(false);
+          signupModalOff(false);
         } else {
           alert(res.msg);
         }

@@ -37,23 +37,28 @@ function RoomList({ room, won, sytle, btnStyle, userId, isThereWish }) {
     <>
       {isThereWish ? (
         <div className={css.container} style={sytle}>
+          <button className={css.prevBtnStyle} onClick={onClickPrev}>
+            &lt;
+          </button>
+          <button className={css.nextBtnStyle} onClick={onClickNext}>
+            &gt;
+          </button>
+
           <div
             className={css.sliderStyle}
             style={sliderImage}
             onClick={goToDetail}
           ></div>
-
-          <div className={css.btn} style={btnStyle}>
-            <button className={css.prevBtnStyle} onClick={onClickPrev}>
-              &lt;
-            </button>
-            <button className={css.nextBtnStyle} onClick={onClickNext}>
-              &gt;
-            </button>
-          </div>
         </div>
       ) : (
         <div className={css.container} style={sytle}>
+          <button className={css.prevBtnStyle} onClick={onClickPrev}>
+            &lt;
+          </button>
+          <button className={css.nextBtnStyle} onClick={onClickNext}>
+            &gt;
+          </button>
+
           <div
             className={css.sliderStyle}
             style={sliderImage}
@@ -64,14 +69,6 @@ function RoomList({ room, won, sytle, btnStyle, userId, isThereWish }) {
             {room.price}
             {won}
           </p>
-          <div className={css.btn} style={btnStyle}>
-            <button className={css.prevBtnStyle} onClick={onClickPrev}>
-              &lt;
-            </button>
-            <button className={css.nextBtnStyle} onClick={onClickNext}>
-              &gt;
-            </button>
-          </div>
         </div>
       )}
     </>

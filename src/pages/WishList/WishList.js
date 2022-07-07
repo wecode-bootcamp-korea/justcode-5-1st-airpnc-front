@@ -52,9 +52,16 @@ function WishList() {
     marginBottom: '100px',
   };
 
-  const btnStyle = {
-    top: '-57%',
-  };
+  // const imageSize = {
+  //   width: '350px',
+  //   height: '320px',
+  //   marginBottom: '100px',
+  // };
+
+  // const btnStyle = {
+  //   top: '-57%',
+  //   right: '2.5%',
+  // };
 
   const token = localStorage.getItem('login-token');
 
@@ -76,7 +83,6 @@ function WishList() {
                 room={data}
                 image={data.photo.file_url}
                 sytle={imageSize}
-                btnStyle={btnStyle}
               />
               <div key={ind + 2} className={css.info}>
                 <div className={css.name} key={ind}>

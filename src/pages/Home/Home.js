@@ -38,7 +38,6 @@ function Home() {
       const json = await res.json();
 
       setData(json);
-      console.log(data.like, 77777);
     })();
   }, []);
 
@@ -69,9 +68,7 @@ function Home() {
       setSelected(json.data);
       setLike(json.data.map(i => i.id));
     })();
-
   }, [user]);
-
 
   const btnClick = e => {
     const wishs = e.currentTarget.value;
@@ -183,12 +180,12 @@ function Home() {
     fontSize: '15px',
     position: 'relative',
     top: '-89%',
-    left: '86%',
+    left: '74%',
     width: '40px',
     height: '40px',
     borderRadius: '20px',
     border: 'none',
-    backgroundColor: 'rgb(232, 232, 232)',
+    backgroundColor: 'rgb(232, 232, 232, 0.5)',
     opacity: '1',
   };
 
@@ -205,7 +202,7 @@ function Home() {
   const signupModalOff = value => {
     setSignup(value);
   };
-  console.log(login);
+
   return (
     <>
       {token ? (
@@ -221,7 +218,7 @@ function Home() {
       <MainFilter />
       <Signup signup={signup} signupModalOff={signupModalOff} />
       <Login login={login} loginModalOff={loginModalOff} />
-      <div className={css.container}>
+      <div className={data.length === 2 ? css.container_sub : css.container}>
         {data.map((data, ind) => {
           return (
             <div key={ind + 10}>
