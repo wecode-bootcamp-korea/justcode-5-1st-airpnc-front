@@ -6,8 +6,11 @@ import Header from '../../components/Header/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function Home() {
+  const [like, setLike] = useState([]);
   const [data, setData] = useState([]);
   const [select, setSelect] = useState('');
   const [selected, setSelected] = useState([]);
@@ -33,6 +36,7 @@ function Home() {
       const json = await res.json();
 
       setData(json);
+      console.log(data.like, 77777);
     })();
   }, []);
 
@@ -61,15 +65,16 @@ function Home() {
       const res = await fetch(`${BASE_URL}/wishlist/${user}`);
       const json = await res.json();
       setSelected(json.data);
+      setLike(json.data.map(i => i.id));
     })();
-  }, [wish]);
+  }, []);
   console.log(selected);
+  console.log(data.like, 88888);
 
   const btnClick = e => {
-    const wishs = e.target.value;
+    const wishs = e.currentTarget.value;
     const room_id = Number(wishs);
-    setSelect(Number(wishs));
-
+    console.log(wishs);
     const res = {
       user_id: user,
       room_id: room_id,
@@ -81,7 +86,10 @@ function Home() {
       },
     })
       .then(res => res.json())
-      .then(res => setSelected([...res.data]));
+      .then(res => {
+        setSelected([...res.data]);
+        setLike([...res.data].map(i => i.id));
+      });
 
     if (selected.length === 0) {
       fetch(`${BASE_URL}/wishlist/${user}`, {
@@ -100,7 +108,10 @@ function Home() {
         },
       })
         .then(res => res.json())
-        .then(res => setSelected([...res.data]));
+        .then(res => {
+          setSelected([...res.data]);
+          setLike([...res.data].map(i => i.id));
+        });
       console.log(selected);
     } else if (selected.findIndex(i => i.id == room_id) === -1) {
       fetch(`${BASE_URL}/wishlist/${user}`, {
@@ -119,7 +130,10 @@ function Home() {
         },
       })
         .then(res => res.json())
-        .then(res => setSelected([...res.data]));
+        .then(res => {
+          setSelected([...res.data]);
+          setLike([...res.data].map(i => i.id));
+        });
       console.log(selected);
     } else {
       fetch(`${BASE_URL}/wishlist/${user}/${room_id}`, {
@@ -139,7 +153,10 @@ function Home() {
         },
       })
         .then(res => res.json())
-        .then(res => setSelected([...res.data]));
+        .then(res => {
+          setSelected([...res.data]);
+          setLike([...res.data].map(i => i.id));
+        });
       console.log(selected);
     }
   };
@@ -162,7 +179,7 @@ function Home() {
   };
 
   const likeBtnStyle = {
-    color: 'rgb(255, 114, 114)',
+    color: 'red',
     fontWeight: '900',
     fontSize: '15px',
     position: 'relative',
@@ -177,7 +194,6 @@ function Home() {
   };
 
   const token = localStorage.getItem('login-token');
-
   return (
     <>
       {token ? (
@@ -198,9 +214,9 @@ function Home() {
                 key={data.id}
                 onClick={token ? btnClick : cantClick}
                 value={data.id}
-                style={data.like ? likeBtnStyle : undefined}
+                style={like.includes(data.id) ? likeBtnStyle : undefined}
               >
-                like
+                <FontAwesomeIcon icon={faHeart} />
               </button>
             </div>
           );

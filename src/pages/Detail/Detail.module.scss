@@ -43,17 +43,12 @@
   border-radius: 50%;
 }
 
-// * {
-//   font-family: $theme-font !important;
-//   // color: $theme-font-color;
-//   border: $theme-border-line;
-//   // box-shadow: $darker-shadow;
-// }
 .container {
   width: 1200px;
   margin: 0 auto;
   @include flex-column-center;
   font-family: $theme-font;
+  color: $theme-font-color;
 }
 
 .header_container {
@@ -61,6 +56,7 @@
   padding: 20px 0;
   h1 {
     font-size: 25px;
+    font-weight: bold;
     margin-bottom: 10px;
   }
   .function_container {
@@ -76,6 +72,7 @@
     @include flex-align-center;
     .function {
       margin-left: 10px;
+      cursor: pointer;
       @include flex-align-center;
       span {
         margin-left: 5px;
@@ -101,6 +98,7 @@
     flex-wrap: wrap;
     .sub {
       width: 50%;
+      height: 50%;
     }
   }
   .display_button {
@@ -131,6 +129,7 @@
         // margin-right: 10px;
         h2 {
           font-size: 20px;
+          font-weight: bold;
           margin-bottom: 10px;
         }
       }
@@ -148,8 +147,12 @@
     .insurance {
       @include pa-ma-border-bottom;
       h2 {
-        font-size: 30px;
+        font-size: 20px;
+        font-weight: bold;
         margin-bottom: 25px;
+        strong {
+          color: $theme-color;
+        }
       }
       p {
         margin-bottom: 10px;
@@ -165,6 +168,10 @@
     .facilities {
       @include flex-column-center;
       height: 250px;
+      h2 {
+        font-size: 20px;
+        font-weight: bold;
+      }
       .contents {
         @include flex-align-center;
         margin-bottom: 30px;
@@ -193,9 +200,9 @@
   }
 }
 .modal {
-  padding: 10px;
+  padding: 30px;
   display: flex;
-  align-items: center;
+  // align-items: center;
   width: 70%;
   // max-width: 55%;
   min-height: 60%;
@@ -209,12 +216,17 @@
     @include button-style-reset;
     border-radius: 8px;
     background-color: white;
-    padding: 10px;
+    padding: 20px;
   }
-  //   .instruction_container {
-  //     .instruction {
-  //       @include flex-space-between;
-  //       padding-right: 40px;
-  //     }
-  //   }
+  .review_container {
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+    .instruction {
+      @include flex-space-between;
+      padding-right: 40px;
+    }
+  }
 }
