@@ -67,9 +67,7 @@ function Home() {
       setSelected(json.data);
       setLike(json.data.map(i => i.id));
     })();
-
   }, [user]);
-
 
   const btnClick = e => {
     const wishs = e.currentTarget.value;
@@ -215,7 +213,7 @@ function Home() {
         {data.map((data, ind) => {
           return (
             <div key={ind + 10}>
-              <RoomList key={ind} room={data} sytle={imageSize} won={'원'} />
+              <RoomList key={ind} room={data} sytle={imageSize} won="원" />
               <button
                 ref={button}
                 id={data.id}
