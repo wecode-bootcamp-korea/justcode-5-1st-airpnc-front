@@ -19,7 +19,7 @@
   // border-radius: 5px;
   // @include pa-ma-border-bottom;
   .score {
-    @include flex-align-center;
+    display: flex;
     margin-bottom: 30px;
     h2 {
       margin-left: 10px;
@@ -29,13 +29,14 @@
     @include flex-align-center;
     width: 500px;
     border-radius: 10px;
-    border: 2px solid lightgray;
-    background-color: lightgray;
+    border: 2px solid #f7f7f7;
+    background-color: #f7f7f7;
     margin-bottom: 20px;
     padding: 5px;
     input {
+      width: 100%;
       border: none;
-      background-color: lightgray;
+      background-color: #f7f7f7;
       margin-left: 5px;
     }
   }

@@ -8,13 +8,13 @@ import Footer from '../../components/Footer/Footer';
 import MainFilter from '../../components/MainFilter/MainFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import Login from '../Login/Login';
 
 function Home() {
+  const [login, setLogin] = useState(false);
   const [like, setLike] = useState([]);
   const [data, setData] = useState([]);
-  const [select, setSelect] = useState('');
   const [selected, setSelected] = useState([]);
-  const [wish, setWish] = useState([]);
   const [headerfilters, setheaderfilters] = useState({});
   const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
@@ -36,6 +36,7 @@ function Home() {
       const json = await res.json();
 
       setData(json);
+      console.log(data.like, 77777);
     })();
   }, []);
 
@@ -66,8 +67,9 @@ function Home() {
       setSelected(json.data);
       setLike(json.data.map(i => i.id));
     })();
-  }, []);
-  console.log(selected);
+
+  }, [user]);
+
 
   const btnClick = e => {
     const wishs = e.currentTarget.value;
@@ -110,7 +112,6 @@ function Home() {
           setSelected([...res.data]);
           setLike([...res.data].map(i => i.id));
         });
-      console.log(selected);
     } else if (selected.findIndex(i => i.id == room_id) === -1) {
       fetch(`${BASE_URL}/wishlist/${user}`, {
         method: 'POST',
@@ -132,7 +133,6 @@ function Home() {
           setSelected([...res.data]);
           setLike([...res.data].map(i => i.id));
         });
-      console.log(selected);
     } else {
       fetch(`${BASE_URL}/wishlist/${user}/${room_id}`, {
         method: 'DELETE',
@@ -155,7 +155,6 @@ function Home() {
           setSelected([...res.data]);
           setLike([...res.data].map(i => i.id));
         });
-      console.log(selected);
     }
   };
 
@@ -192,14 +191,26 @@ function Home() {
   };
 
   const token = localStorage.getItem('login-token');
+  const loginModalValue = value => {
+    setLogin(value);
+  };
+  const loginModalOff = value => {
+    setLogin(value);
+  };
+  console.log(login);
   return (
     <>
       {token ? (
         <Header wish={goWishList} setHeders={setHeders} login />
       ) : (
-        <Header wish={cantGoWishList} setHeders={setHeders} />
+        <Header
+          loginModalValue={loginModalValue}
+          wish={cantGoWishList}
+          setHeders={setHeders}
+        />
       )}
       <MainFilter />
+      <Login login={login} loginModalOff={loginModalOff} />
       <div className={css.container}>
         {data.map((data, ind) => {
           return (
