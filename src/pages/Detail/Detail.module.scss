@@ -160,6 +160,7 @@
       span {
         text-decoration: underline;
         font-weight: bold;
+        cursor: pointer;
       }
     }
     .description {
@@ -227,6 +228,9 @@
     .instruction {
       @include flex-space-between;
       padding-right: 40px;
+    }
+    button {
+      cursor: pointer;
     }
   }
 }
