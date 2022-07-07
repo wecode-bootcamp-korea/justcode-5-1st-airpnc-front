@@ -7,17 +7,11 @@ import ModalLayout from '../../components/Modal/modalLayout';
 import ReservationBox from '../Reservation/Modal/ReservationBox';
 import SubHeader from '../../components/Header/SubHeader';
 import AirCover from '../../components/Modal/airCover';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// // or for Day.js
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// // or for Luxon
-// import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-// // or for Moment.js
-// import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+
 import {
   FaStar,
   FaShare,
-  FaRegHeart,
+  FaHeart,
   FaTh,
   FaDoorClosed,
   FaParking,
@@ -31,19 +25,19 @@ const airbnbLogo = 'icons/256px-Airbnb_Logo.svg.png';
 
 function Detail() {
   const homepage = '/';
+  const user = localStorage.getItem('user-id');
+  const token = localStorage.getItem('login-token');
   const [reviewOn, setReviewOn] = useState(false);
   const [coverOn, setCoverOn] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [avgScore, setAvgScore] = useState();
-  const [wish, setWish] = useState([]);
+  const [wish, setWish] = useState(false);
+  const [selected, setSelected] = useState([]);
   const [userId, setUserId] = useState('');
   const navigate = useNavigate();
-  // let userId = '';
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
-
-  const token = localStorage.getItem('login-token');
-
+  const reserveStored = useLocation().state.reservation;
   const handleNavigateBtn = address => {
     navigate(address);
   };
@@ -80,12 +74,29 @@ function Detail() {
       console.log(reviews, 86868);
     })();
   }, []);
-  const reservation = {
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`${BASE_URL}/wishlist/${user}`);
+      const json = await res.json();
+      setSelected(json.data);
+      console.log(json.data[0].id, json.data[1].id, room.id, 3242342);
+      if (json.data.filter(el => el.id === room.id).length > 0) {
+        setWish(true);
+      } else {
+        setWish(false);
+      }
+      // setSelected(json.data);
+      // setLike(json.data.map(i => i.id));
+    })();
+  }, []);
+  const reservation = reserveStored || {
     user_id: userId,
     room_id: room.id,
   };
-  // console.log(reservation.user_id, 2222222);
-  // console.log(reviews, 111);
+
+  const cantClick = () => {
+    alert('로그인 먼저 해주세요');
+  };
   const offModal = e => {
     //console.log(el.current.contains(e.target));
     if (!el.current.contains(e.target)) {
@@ -101,19 +112,56 @@ function Detail() {
     setAvgScore(avgScore);
   };
 
+  const btnClick = async () => {
+    const req = {
+      user_id: userId,
+      room_id: room.id,
+    };
+    if (wish) {
+      setWish(false);
+      const res = await fetch(`${BASE_URL}/wishlist/${userId}/${room.id}`, {
+        method: 'DELETE',
+      });
+      const json = await res.json();
+      console.log('delete : ', json);
+    } else {
+      setWish(true);
+      const res = await fetch(`${BASE_URL}/wishlist/${userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(req),
+      });
+      const json = await res.json();
+      console.log('post : ', json);
+    }
+
+    const res = await fetch(`${BASE_URL}/wishlist/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    setSelected(json.data);
+  };
+
   // const locationName = data.state.name;
   return (
     <>
-      <SubHeader />
+      {token ? <SubHeader login /> : <SubHeader />}
       <div className={css.container}>
         <section className={css.header_container}>
           <h1>{room.name}</h1>
           <div className={css.function_container}>
             <div className={css.score}>
               <FaStar />
-              <span>
-                {avgScore} · <strong>후기 {reviews.length}개</strong>
-              </span>
+              {reviews.length > 0 && (
+                <span>
+                  {avgScore} · <strong>후기 {reviews.length}개</strong>
+                </span>
+              )}
               <span className={css.location}>스웨덴</span>
             </div>
             <div className={css.function_group}>
@@ -121,15 +169,26 @@ function Detail() {
                 <FaShare />
                 <span className={css.function_text}>공유하기</span>
               </div>
-              {room.wish === 0 ? (
-                <div className={css.function}>
-                  <FaRegHeart />
+              {!wish ? (
+                <div
+                  onClick={userId ? btnClick : cantClick}
+                  className={css.function}
+                >
+                  <FaHeart />
                   <span className={css.function_text}>저장</span>
                 </div>
               ) : (
                 <div className={css.function}>
-                  <FaRegHeart color="red" />
-                  <span className={css.function_text}>저장 목록</span>
+                  <FaHeart
+                    onClick={userId ? btnClick : cantClick}
+                    color="red"
+                  />
+                  <span
+                    onClick={() => navigate('/wishlist')}
+                    className={css.function_text}
+                  >
+                    저장 목록
+                  </span>
                 </div>
               )}
             </div>
@@ -191,7 +250,9 @@ function Detail() {
               </div>
             </div>
             <div className={css.insurance}>
-              <h2>에어커버</h2>
+              <h2>
+                <strong>에어</strong>커버
+              </h2>
               <p>
                 모든 예약에는 호스트가 예약을 취소하거나 숙소 정보가 정확하지
                 않은 경우 또는 체크인에 문제가 있는 상황에 대비한 무료 보호
@@ -234,6 +295,7 @@ function Detail() {
           </div>
           <div className={css.reservation}>
             <ReservationBox
+              rawData={rawData}
               userId={userId}
               room={room}
               reservation={reservation}
@@ -243,15 +305,28 @@ function Detail() {
           </div>
         </section>
         <section className={css.additional_inform}>
-          <DisplayReview
-            data={reviews}
-            displayCnt={4}
-            search={false}
-            getAvg={getAvgFunc}
-          />
-          <button onClick={() => setReviewOn(true)}>
-            후기 {reviews.length}개 모두 보기
-          </button>
+          {reviews.length > 0 ? (
+            <div className={css.review_container}>
+              <DisplayReview
+                data={reviews}
+                displayCnt={4}
+                search={false}
+                getAvg={getAvgFunc}
+              />
+              <button onClick={() => setReviewOn(true)}>
+                후기 {reviews.length}개 모두 보기
+              </button>
+            </div>
+          ) : (
+            <div className={css.review_container}>
+              <h2>후기가 아직 없어요</h2>
+              <p>
+                여행에 차질이 없도록 최선을 다해 도와드리겠습니다. <br />
+                모든 예약은 에어비앤비의 게스트 환불 정책에 따라 보호를
+                받습니다.
+              </p>
+            </div>
+          )}
         </section>
         {coverOn && (
           <ModalLayout modalOff={offModal}>
