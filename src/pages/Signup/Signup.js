@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config';
 import css from './Signup.module.scss';
-//import "./App.css";
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +9,7 @@ import ModalLayout from '../../components/Modal/modalLayout';
 function Signup({ signup, signupModalOff }) {
   const [reviewOn, setReviewOn] = useState();
   const el = useRef();
-  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,

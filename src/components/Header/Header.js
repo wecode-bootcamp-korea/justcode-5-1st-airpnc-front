@@ -2,11 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
 import ActivatedHeader from './ActivatedHeader';
-
 import { FaAirbnb } from 'react-icons/fa';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
-import { VscThreeBars } from 'react-icons/vsc';
-import ModalLayout from '../Modal/modalLayout';
 
 function Header({
   setHeders: setHederFilter,
@@ -16,12 +13,8 @@ function Header({
   signupModalValue,
 }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
-  const [Menu, ClickedMenu] = useState(false);
-  const [Login, ClickedLogin] = useState(false);
   const [Signup, ClickedSignUp] = useState(false);
   const [Mypage, ClickedMypage] = useState(false);
-  const [checkin, setCheckin] = useState();
-  const [checkout, setCheckout] = useState();
   const [location, setLocation] = useState(0);
   const el = useRef();
   const navigate = useNavigate();

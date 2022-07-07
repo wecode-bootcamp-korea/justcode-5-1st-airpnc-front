@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ModalLayout from '../Modal/modalLayout';
 import BedRoom from './BedRoom';

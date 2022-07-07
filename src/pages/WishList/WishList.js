@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config';
 import RoomList from '../../components/RoomList/RoomList';
 import css from './WishList.module.scss';

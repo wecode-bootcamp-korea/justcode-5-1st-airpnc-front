@@ -18,12 +18,12 @@ function Home() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [headerfilters, setheaderfilters] = useState({});
-  const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
   const filtersIn = useLocation().state;
   const user = localStorage.getItem('user-id');
+
   useMemo(() => {
     setFilters(Object.assign(filters, filtersIn, headerfilters));
   }, [filtersIn, headerfilters]);
