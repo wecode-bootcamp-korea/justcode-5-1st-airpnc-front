@@ -32,7 +32,6 @@ function MyPage() {
       <div>
         {
           <article className="MyPageWrapper">
-            <MyProfile userName={data.name} />
             <section className="MyLog-box">
               <div className="HelloUser">
                 <h2 className="MyName">
