@@ -8,7 +8,13 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ setHeders: setHederFilter, login, wish, loginModalValue }) {
+function Header({
+  setHeders: setHederFilter,
+  login,
+  wish,
+  loginModalValue,
+  signupModalValue,
+}) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
@@ -44,7 +50,7 @@ function Header({ setHeders: setHederFilter, login, wish, loginModalValue }) {
     if (localStorage.getItem('back_token')) {
       Signup(!ClickedSignUp);
     } else {
-      navigate('/Signup');
+      signupModalValue(true);
     }
   };
   const isMyPaged = () => {

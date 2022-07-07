@@ -9,9 +9,11 @@ import MainFilter from '../../components/MainFilter/MainFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 
 function Home() {
   const [login, setLogin] = useState(false);
+  const [signup, setSignup] = useState(false);
   const [like, setLike] = useState([]);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -194,6 +196,12 @@ function Home() {
   const loginModalOff = value => {
     setLogin(value);
   };
+  const signupModalValue = value => {
+    setSignup(value);
+  };
+  const signupModalOff = value => {
+    setSignup(value);
+  };
   console.log(login);
   return (
     <>
@@ -201,12 +209,14 @@ function Home() {
         <Header wish={goWishList} setHeders={setHeders} login />
       ) : (
         <Header
+          signupModalValue={signupModalValue}
           loginModalValue={loginModalValue}
           wish={cantGoWishList}
           setHeders={setHeders}
         />
       )}
       <MainFilter />
+      <Signup signup={signup} signupModalOff={signupModalOff} />
       <Login login={login} loginModalOff={loginModalOff} />
       <div className={css.container}>
         {data.map((data, ind) => {
