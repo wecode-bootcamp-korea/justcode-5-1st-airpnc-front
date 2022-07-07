@@ -21,13 +21,14 @@ function DisplayReview({ data, displayCnt, search, getAvg }) {
     const scoreArr = [];
     // console.log(data);
     data.forEach((el, idx) => {
+      el.score = parseInt(el.score);
       scoreArr.push(el.score);
     });
     // console.log(scoreArr, 234);
     const average = scoreArr.reduce((a, b) => a + b, 0) / scoreArr.length;
     // console.log(average, 2340000);
-    setAvgScore(String(average).substring(0, 4));
-    getAvg(String(average).substring(0, 4));
+    setAvgScore(average);
+    getAvg(average);
   };
   return (
     <div className={css.review}>
