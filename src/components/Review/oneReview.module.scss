@@ -24,6 +24,9 @@
     .score {
       margin-left: 70px;
       @include flex-align-center;
+      span {
+        margin-left: 10px;
+      }
     }
   }
 }

@@ -18,9 +18,13 @@
       width: 200px;
       height: auto;
     }
+    .room_title {
+      margin: 10px 0;
+    }
     .info_text {
       display: flex;
       flex-direction: column;
+      padding: 10px;
     }
   }
   button {

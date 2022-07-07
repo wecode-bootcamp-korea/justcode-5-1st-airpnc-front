@@ -21,8 +21,8 @@ function Review() {
   const [reviewOn, setReviewOn] = useState(false);
   const navigate = useNavigate();
   const el = useRef();
-  const token = localStorage.getItem('login-token');
   const userId = localStorage.getItem('user-id');
+  const token = localStorage.getItem('login-token');
   useEffect(() => {
     (async () => {
       const res = await fetch(`${BASE_URL}/reservation/toReview/${userId}`);
@@ -97,8 +97,7 @@ function Review() {
 
   return (
     <>
-      {/* {token ? <Header login /> : <Header />} */}
-      <SubHeader />
+      {token ? <SubHeader login /> : <SubHeader />}
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>

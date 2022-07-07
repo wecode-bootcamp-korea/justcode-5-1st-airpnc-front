@@ -15,8 +15,8 @@ function ReservationList() {
   const [reservationIdx, setReservationIdx] = useState(0);
   const el = useRef();
   const navigate = useNavigate();
-  const token = localStorage.getItem('login-token');
   const userId = localStorage.getItem('user-id');
+  const token = localStorage.getItem('login-token');
   useEffect(() => {
     (async () => {
       const res = await fetch(`${BASE_URL}/reservation/${userId}`);
@@ -56,8 +56,7 @@ function ReservationList() {
   };
   return (
     <>
-      {/* {token ? <Header login /> : <Header />} */}
-      <SubHeader />
+      {token ? <SubHeader login /> : <SubHeader />}
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>
