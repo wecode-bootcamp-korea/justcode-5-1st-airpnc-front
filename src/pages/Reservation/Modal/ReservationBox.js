@@ -19,8 +19,8 @@ const tomorrow = today.getDate() + 1;
 
 const ReservationBox = props => {
   const { rawData, userId, room, reservation, reviewScore, reviewCnt } = props;
-  const [checkin, setCheckIn] = useState(reservation.checkin || today);
-  const [checkout, setCheckOut] = useState(reservation.checkout || tomorrow);
+  const [checkin, setCheckIn] = useState(reservation.checkin);
+  const [checkout, setCheckOut] = useState(reservation.checkout);
   const [isDateValid, setDateValid] = useState(false);
   const [nights, setNights] = useState(0);
   const [guests, setGuests] = useState(reservation.guests || 1);
@@ -153,7 +153,7 @@ const ReservationBox = props => {
                     className={css.checkInInput}
                     id="checkin-input"
                     type="date"
-                    value={checkin}
+                    value={checkin || today}
                     autoComplete="off"
                     onChange={event => {
                       setCheckIn(event.target.value);
