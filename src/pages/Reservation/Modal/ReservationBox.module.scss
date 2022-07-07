@@ -111,27 +111,29 @@
 .borderTop {
   border-top: $theme-border-line;
 }
-
-.rclConfirmAndPayBtn {
-  width: 100%;
-  padding: 15px 35px;
-  border: none;
-  border-radius: 8px;
-  background-color: $theme-color;
-  color: white;
-  font-weight: bold;
-  font-size: 17px;
-
-  &:active {
+.BtnBox {
+  .rclConfirmAndPayBtn {
+    width: 100%;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 8px;
     background-color: $theme-color;
-  }
-  &:hover:active {
-    cursor: pointer;
-  }
-  &:disabled {
-    background-color: grey;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+
+    &:hover{
+      cursor: pointer;
+    }
+    &:disabled {
+      background-color: grey;
+    }
+    &:hover:disabled {
+      cursor: auto;
+    }
   }
 }
+
 
 .chargeAt {
   margin: 28px 20px 0 20px;

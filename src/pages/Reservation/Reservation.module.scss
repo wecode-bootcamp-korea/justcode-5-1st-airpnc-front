@@ -57,17 +57,20 @@ img.logoToHome {
     border: none;
     margin: 0 10px 0 0;
     padding: 0;
-
-    //&:hover {
-    //  cursor: pointer;
-    //}
+    
+    &:hover {
+      cursor: pointer;
+    }
+    svg {
+      font-size: 28px;
+    }
   }
 
   .reserveContentTitleText {
     margin: 0;
     padding-left: 15px;
     font-family: inherit;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     color: $theme-font-color;
     align-items: center;
@@ -191,6 +194,8 @@ img.logoToHome {
 
         p {
           margin-top: 10px;
+          font-size: 15px;
+          font-weight: 450;
         }
       }
       div:nth-child(2) {
@@ -513,17 +518,22 @@ img.logoToHome {
   }
 }
 
-.rclConfirmAndPayBtn {
+.rclConfirmAndPayBtn, .rclConfirmAndPayBtnDisabled {
   padding: 18px 35px;
   border: none;
   border-radius: 8px;
-  background-color: $theme-color;
   color: white;
   font-weight: bold;
   font-size: 20px;
-
+  
+  .rclConfirmAndPayBnt {
+  background-color: $theme-color;
   &:hover {
     cursor: pointer;
+  }
+  }
+  &Disabled {
+    background-color: grey;
   }
 }
 

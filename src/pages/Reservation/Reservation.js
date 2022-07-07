@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import moment from 'moment';
 import css from './Reservation.module.scss';
 import Footer from '../../components/Footer/Footer';
 import PayOptionSelector from './Modal/PayOptionSelector';
@@ -98,26 +99,20 @@ const Reservation = props => {
   }, [guests]);
 
   const yourTripDate = () => {
-    let checkinDate = new Date(checkin);
-    let checkoutDate = new Date(checkout);
-    if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
-      if (checkinDate.getMonth() === checkoutDate.getMonth()) {
-        return `${
-          monthNames[Number(checkinDate.getMonth())]
-        } . ${checkinDate.getDate()} - ${checkoutDate.getDate()}`; // same year and month
+    if (moment(checkin).year() === moment(checkout).year()) {
+      if (moment(checkin).month() === moment(checkout).month()) {
+        return `${moment(checkin).format('MMM. D')} - ${moment(checkout).format(
+          'D'
+        )}`; // same year and month
       } else {
-        return `${
-          monthNames[Number(checkinDate.getMonth())]
-        }. ${checkinDate.getDate()} -  ${
-          monthNames[Number(checkoutDate.getMonth())]
-        }. ${checkoutDate.getDate()}`;
+        return `${moment(checkin).format('MMM, D')} ${moment(checkout).format(
+          'MMM, D'
+        )}`;
       }
     }
-    return `${checkinDate.FullYear()} ${
-      monthNames[Number(checkinDate.getMonth())]
-    }. ${checkinDate.getDate()} - ${checkinDate.FullYear()} ${
-      monthNames[Number(checkinDate.getMonth())]
-    }. ${checkinDate.getDate()}`;
+    return `${moment(checkin).format('YYYY. MMM. D')} ${moment(checkout).format(
+      'YYYY. MMM. D'
+    )}`;
   };
 
   // < TO DO > dateEdit button is disabled
@@ -323,9 +318,9 @@ const Reservation = props => {
                               onClick={event => {
                                 handleDateEditBtn();
                               }}
-                              disabled={true}
+                              disabled={false}
                             >
-                              {/*Edit*/}
+                              Edit
                             </button>
                             {isDateEditClicked && (
                               <div>
@@ -355,15 +350,15 @@ const Reservation = props => {
                           <div>
                             <h3>Guests</h3>
                             <p>
-                              {reservation.guests}
-                              {reservation.guests > 1 ? ' guests' : ' guest'}
+                              {guests}
+                              {guests > 1 ? ' guests' : ' guest'}
                             </p>
                           </div>
                           <div>
                             <button className={css.editBtn}>Edit</button>
                             <input
                               className={css.editInput}
-                              id="guest-edit"
+                              id="guests-edit"
                               type="number"
                               value={guests}
                               onChange={event => {
@@ -633,7 +628,11 @@ const Reservation = props => {
                       className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
                     >
                       <button
-                        className={`${css.rclConfirmAndPayBtn} ${css.rclConfirmAndBtnDisabled}`}
+                        className={
+                          isConfirmedVisible
+                            ? `${css.rclConfirmAndPayBtn}`
+                            : `${css.rclConfirmAndPayBtnDisabled}`
+                        }
                         id="confirm-pay-btn"
                         onClick={event => {
                           isPayable
