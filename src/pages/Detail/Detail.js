@@ -41,7 +41,7 @@ function Detail() {
   // let userId = '';
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
-
+  const reserveStored = useLocation().state.reservation;
   const token = localStorage.getItem('login-token');
 
   const handleNavigateBtn = address => {
@@ -81,7 +81,7 @@ function Detail() {
       console.log(reviews, 86868);
     })();
   }, []);
-  const reservation = {
+  const reservation = reserveStored || {
     user_id: userId,
     room_id: room.id,
   };
@@ -237,6 +237,7 @@ function Detail() {
           </div>
           <div className={css.reservation}>
             <ReservationBox
+              rawData={rawData}
               userId={userId}
               room={room}
               reservation={reservation}
