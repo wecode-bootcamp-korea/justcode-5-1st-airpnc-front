@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useMemo, useInsertionEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
 import { TiStarFullOutline } from 'react-icons/ti';
 
+//////////////// CONSTs /////////////
 const airbnbConst = {
   chargeAtText: `You won't be charged yet`,
 };
@@ -13,11 +14,13 @@ const currentYear = current.getFullYear();
 const currentMonth = current.getMonth() + 1;
 const currentDate = current.getDate();
 const today = new Date(`${currentYear}-${currentMonth}-${currentDate}`);
+const tomorrow = today.getDate() + 1;
+/////////////////////////////////////
 
 const ReservationBox = props => {
-  const { userId, room, reservation, reviewScore, reviewCnt } = props;
+  const { rawData, userId, room, reservation, reviewScore, reviewCnt } = props;
   const [checkin, setCheckIn] = useState(reservation.checkin || today);
-  const [checkout, setCheckOut] = useState(reservation.checkout);
+  const [checkout, setCheckOut] = useState(reservation.checkout || tomorrow);
   const [isDateValid, setDateValid] = useState(false);
   const [nights, setNights] = useState(0);
   const [guests, setGuests] = useState(reservation.guests || 1);
@@ -97,6 +100,7 @@ const ReservationBox = props => {
   const handleReservationBtn = () => {
     navigate(reservationPage, {
       state: {
+        data: rawData,
         room: room,
         reservation: reservation,
         reviewScore: reviewScore,

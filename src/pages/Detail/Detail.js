@@ -37,10 +37,10 @@ function Detail() {
   const navigate = useNavigate();
   // rawData should gets raw room api from home, my pages, wishlist //
   const rawData = useLocation().state.data;
-
-  // const handleNavigateBtn = address => {
-  //   navigate(address);
-  // };
+  const reserveStored = useLocation().state.reservation;
+  const handleNavigateBtn = address => {
+    navigate(address);
+  };
   // room : trimmed data is passed to detail, reservation pages
   const room = {
     id: rawData.id,
@@ -89,7 +89,7 @@ function Detail() {
       // setLike(json.data.map(i => i.id));
     })();
   }, []);
-  const reservation = {
+  const reservation = reserveStored || {
     user_id: userId,
     room_id: room.id,
   };
@@ -295,6 +295,7 @@ function Detail() {
           </div>
           <div className={css.reservation}>
             <ReservationBox
+              rawData={rawData}
               userId={userId}
               room={room}
               reservation={reservation}
