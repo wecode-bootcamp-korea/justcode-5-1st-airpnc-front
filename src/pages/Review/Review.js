@@ -27,7 +27,7 @@ function Review() {
     (async () => {
       const res = await fetch(`${BASE_URL}/reservation/toReview/${userId}`);
       const json = await res.json();
-      // console.log(json, 3423);
+      console.log(json, 3423);
       const toReviews = json[0];
       const photos = json[1];
       toReviews.map(toReview => {
@@ -46,6 +46,7 @@ function Review() {
       const json = await res.json();
       const reviewList = json[0];
       const photos = json[1];
+      console.log(reviewList, 'review');
       reviewList.map(review => {
         for (let i = 0; i < photos.length; i++) {
           if (review.room_id === photos[i].room_id) {

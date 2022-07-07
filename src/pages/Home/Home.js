@@ -67,9 +67,7 @@ function Home() {
       setSelected(json.data);
       setLike(json.data.map(i => i.id));
     })();
-
   }, [user]);
-
 
   const btnClick = e => {
     const wishs = e.currentTarget.value;
