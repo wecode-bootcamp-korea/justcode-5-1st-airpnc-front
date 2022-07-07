@@ -7,12 +7,12 @@ function ToReview({ data, reviewOnClick }) {
   return (
     <div className={css.container}>
       <div className={css.room_info}>
-        {/* <img src={data.photo_url[0].url}></img> */}
+        <img src={data.photo_url[0].url}></img>
         <div className={css.info_text}>
           <span>
             {data.city},{data.country}
           </span>
-          <h1>{data.name}</h1>
+          <h1 className={css.room_title}>{data.name}</h1>
         </div>
       </div>
       <button
