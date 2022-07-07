@@ -22,7 +22,7 @@ const ReservationBox = props => {
   const [checkin, setCheckIn] = useState(reservation.checkin);
   const [checkout, setCheckOut] = useState(reservation.checkout);
   const [isDateValid, setDateValid] = useState(false);
-  const [nights, setNights] = useState(0);
+  const [nights, setNights] = useState(1);
   const [guests, setGuests] = useState(reservation.guests || 1);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
