@@ -74,9 +74,8 @@
       margin-left: 10px;
       cursor: pointer;
       @include flex-align-center;
-      span {
+      .function_text {
         margin-left: 5px;
-        text-decoration: underline;
       }
     }
   }
