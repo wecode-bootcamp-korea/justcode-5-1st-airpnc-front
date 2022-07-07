@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../../config';
 import { ImStarFull } from 'react-icons/im';
 import MyProfile from './components/MyProfile';
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +11,14 @@ function MyPage() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem('login-token');
   console.log(token);
+  // const user = useLocation().state;
+  // console.log(user, 23424);
 
   useEffect(() => {
     (async () => {
       const email = localStorage.getItem('user-email');
       console.log(email, 10);
-      const res = await fetch(`http://localhost:10010/mypage/${email}`);
+      const res = await fetch(`${BASE_URL}/mypage/${email}`);
       const json = await res.json();
       setData(json);
     })();

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import BASE_URL from '../../../config';
 import css from './makeReview.module.scss';
 
 function MakeReview({ data, mode, setReviewOn, remainedReview }) {
@@ -66,10 +67,10 @@ function MakeReview({ data, mode, setReviewOn, remainedReview }) {
   const onSubmit = async () => {
     let url = '';
     if (mode === 'create') {
-      url = 'http://localhost:10010/review';
+      url = `${BASE_URL}/review`;
       remainedReview(data.idx);
     } else if (mode === 'put') {
-      url = `http://localhost:10010/review/${data.review_id}`;
+      url = `${BASE_URL}/review/${data.review_id}`;
     }
     if (score === 0) {
       alert('별점 입력을 확인하세요');
@@ -110,7 +111,7 @@ function MakeReview({ data, mode, setReviewOn, remainedReview }) {
               type="range"
               min="0"
               max="5"
-              step="0.5"
+              step="1"
               value={score}
             />
           </span>

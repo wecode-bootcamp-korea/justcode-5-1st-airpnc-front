@@ -8,7 +8,7 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ setHeders, login }) {
+function Header({ setHeders: setHederFilter, login, wish, loginModalValue }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
@@ -19,13 +19,20 @@ function Header({ setHeders, login }) {
   const [location, setLocation] = useState(0);
   const navigate = useNavigate();
 
-  console.log('location : ', location);
   useEffect(() => {
-    console.log('changed');
-    setHeders(Number(location));
+    setHederFilter(Number(location));
   }, [location]);
+
+  const goHome = () => {
+    if (Number(location) !== 0) {
+      setHederFilter(0);
+    }
+    navigate('/');
+  };
+
   const isMenued = () => {
     //
+
     if (localStorage.getItem('back_token')) {
       Menu(!ClickedMenu);
     } else {
@@ -49,7 +56,8 @@ function Header({ setHeders, login }) {
     }
   };
   const isLogined = () => {
-    navigate('/Login');
+    loginModalValue(true);
+
     // if (localStorage.getItem('back_token')) {
     //   Login(!ClickedLogin);
     // } else {
@@ -59,12 +67,13 @@ function Header({ setHeders, login }) {
 
   const isLogout = () => {
     localStorage.removeItem('login-token');
+    localStorage.removeItem('user-id');
     navigate('/');
   };
 
   return (
     <div className="container">
-      <div className="logo" onClick={() => navigate('/')}>
+      <div className="logo" onClick={() => goHome()}>
         <FaAirbnb size="40" />
         <div>airpnc</div>
       </div>
@@ -91,10 +100,8 @@ function Header({ setHeders, login }) {
         </div>
       )}
       <div className="container_right">
-        <div className="container_menu">
-          <div type="button" onClick={isMenued}>
-            <VscThreeBars />
-          </div>
+        <div className="container_wish" onClick={wish}>
+          <span>Wish List</span>
         </div>
 
         {login ? (

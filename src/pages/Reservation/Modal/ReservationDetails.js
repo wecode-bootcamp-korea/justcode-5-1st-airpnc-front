@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import BASE_URL from '../../../config';
 import css from './ReservationDetails.module.scss';
 
 function ReservationDetails({ data, frontUpdate, setDetailsOn }) {
@@ -7,7 +8,7 @@ function ReservationDetails({ data, frontUpdate, setDetailsOn }) {
     // alert('정말 리뷰를 삭제하시겠습니까?');
     if (window.confirm('정말 리뷰를 삭제하시겠습니까?')) {
       const res = await fetch(
-        `http://localhost:10010/reservation/${data.reservation_no}`,
+        `${BASE_URL}/reservation/${data.reservation_no}`,
         {
           method: 'DELETE',
         }

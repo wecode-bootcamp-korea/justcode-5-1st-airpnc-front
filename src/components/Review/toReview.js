@@ -12,7 +12,7 @@ function ToReview({ data, reviewOnClick }) {
           <span>
             {data.city},{data.country}
           </span>
-          <h1>{data.name}</h1>
+          <h1 className={css.room_title}>{data.name}</h1>
         </div>
       </div>
       <button

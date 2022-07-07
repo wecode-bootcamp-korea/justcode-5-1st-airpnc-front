@@ -47,21 +47,9 @@ const monthNames = [
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
-  const token = localStorage.getItem('login-token');
-  const navigate = useNavigate();
-  const homepage = '/';
-  const detailpage = '/detail';
-  // To Do : move to home and detail should pass room and reservation
-  const handleNavigateBtn = address => {
-    navigate(address, {
-      state: {
-        data: room,
-        userId: reservation.userId,
-      },
-    });
-  };
-
+  //const token = localStorage.getItem('login-token');
   // use room, reservation info from useLocation when reservationBox is imported to detail page
+  const rawData = useLocation().state.data;
   const room = useLocation().state.room;
   const reservation = useLocation().state.reservation;
   const reviewScore = useLocation().state.Score;
@@ -80,6 +68,14 @@ const Reservation = props => {
   const [isDateValid, setDateValid] = useState(false);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
+
+  const navigate = useNavigate();
+  const homepage = '/';
+  const detailpage = '/detail';
+  // To Do : move to home and detail should pass room and reservation
+  const handleNavigateBtn = address => {
+    navigate(address, { state: { data: rawData, reservation } });
+  };
 
   const getTotalNights = (date1, date2) => {
     let checkin = new Date(date1);
@@ -140,7 +136,7 @@ const Reservation = props => {
   const [payOption, setPayOption] = useState('Credit or debit card');
   const [payOptionIcon, setPayOptionIcon] = useState(<MdCreditCard />);
   const [isCountryOptVisible, setCountryOptVisible] = useState(false);
-
+  const token = localStorage.getItem('login-token');
   const countryOptCloseHandler = e => {
     setCountryOptVisible(false);
   };
@@ -284,9 +280,8 @@ const Reservation = props => {
                     onClick={event => {
                       handleNavigateBtn(detailpage);
                     }}
-                    disabled="true"
                   >
-                    {/*<MdNavigateBefore />*/}
+                    <MdNavigateBefore />
                   </button>
                   <h1 className={css.reserveContentTitleText}>확인 및 결제</h1>
                 </div>
@@ -328,7 +323,7 @@ const Reservation = props => {
                               onClick={event => {
                                 handleDateEditBtn();
                               }}
-                              disabled="true"
+                              disabled={true}
                             >
                               {/*Edit*/}
                             </button>

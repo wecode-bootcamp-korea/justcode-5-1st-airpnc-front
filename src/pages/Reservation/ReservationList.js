@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 import css from './ReservationList.module.scss';
 import ModalLayout from '../../components/Modal/modalLayout';
 import ReservationHistory from '../../components/Reservation/ReservationHistory';
@@ -14,11 +15,11 @@ function ReservationList() {
   const [reservationIdx, setReservationIdx] = useState(0);
   const el = useRef();
   const navigate = useNavigate();
-  const token = localStorage.getItem('login-token');
   const userId = localStorage.getItem('user-id');
+  const token = localStorage.getItem('login-token');
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:10010/reservation/${userId}`);
+      const res = await fetch(`${BASE_URL}/reservation/${userId}`);
       const json = await res.json();
       const reservations = json[0];
       const photos = json[1];
@@ -55,8 +56,7 @@ function ReservationList() {
   };
   return (
     <>
-      {/* {token ? <Header login /> : <Header />} */}
-      <SubHeader />
+      {token ? <SubHeader login /> : <SubHeader />}
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.route}>

@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import css from './RoomList.module.scss';
 
-function RoomList({ room, won, sytle, btnStyle, userId }) {
-  console.log('userId : ', userId);
+function RoomList({ room, won, sytle, btnStyle, userId, isThereWish }) {
   //console.log('room in home', room);
   //console.log('room.file_url : ', room.photo[0].file_url);
-  console.log('room.id : ', room.id);
-  const repImg = room.photo[0].file_url;
+
+  // const repImg = room.photo[0].file_url;
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -18,6 +17,8 @@ function RoomList({ room, won, sytle, btnStyle, userId }) {
 
   const sliderImage = {
     backgroundImage: `url(${room.photo[currentIndex].file_url})`,
+    maxWidth: '310px',
+    maxHeight: '280px',
   };
 
   const onClickPrev = () => {
@@ -27,33 +28,52 @@ function RoomList({ room, won, sytle, btnStyle, userId }) {
   };
 
   const onClickNext = () => {
-    currentIndex < 4
+    currentIndex < room.photo.length - 1
       ? setCurrentIndex(currentIndex + 1)
       : setCurrentIndex((currentIndex = 0));
   };
 
   return (
     <>
-      <div className={css.container} style={sytle}>
-        <div
-          className={css.sliderStyle}
-          style={sliderImage}
-          onClick={goToDetail}
-        ></div>
-        <p className={css.name}>{room.name}</p>
-        <p className={css.price}>
-          {room.price}
-          {won}
-        </p>
-        <div className={css.btn} style={btnStyle}>
-          <button className={css.prevBtnStyle} onClick={onClickPrev}>
-            &lt;
-          </button>
-          <button className={css.nextBtnStyle} onClick={onClickNext}>
-            &gt;
-          </button>
+      {isThereWish ? (
+        <div className={css.container} style={sytle}>
+          <div
+            className={css.sliderStyle}
+            style={sliderImage}
+            onClick={goToDetail}
+          ></div>
+
+          <div className={css.btn} style={btnStyle}>
+            <button className={css.prevBtnStyle} onClick={onClickPrev}>
+              &lt;
+            </button>
+            <button className={css.nextBtnStyle} onClick={onClickNext}>
+              &gt;
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={css.container} style={sytle}>
+          <div
+            className={css.sliderStyle}
+            style={sliderImage}
+            onClick={goToDetail}
+          ></div>
+          <p className={css.name}>{room.name}</p>
+          <p className={css.price}>
+            {room.price}
+            {won}
+          </p>
+          <div className={css.btn} style={btnStyle}>
+            <button className={css.prevBtnStyle} onClick={onClickPrev}>
+              &lt;
+            </button>
+            <button className={css.nextBtnStyle} onClick={onClickNext}>
+              &gt;
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
