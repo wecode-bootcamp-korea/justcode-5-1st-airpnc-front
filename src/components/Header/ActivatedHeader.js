@@ -1,19 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import LocationTypeSelector from './LocationTypeSelector';
 import { FaSearch } from 'react-icons/fa';
 import css from './ActivatedHeader.module.scss';
 
 function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
   const [whichIsClicked, setWhichIsClicked] = useState('');
   const [personCardData, setPersonCardData] = useState([]);
-  const [searchLocation, setSerchLocation] = useState('');
+  const [searchLocationId, setSearchLocationId] = useState(0);
+  const [searchLocation, setSearchLocation] = useState('');
+  const [isLocationClicked, setLocationClicked] = useState(true);
   const [checkInDate, setCheckInDate] = useState('날짜입력');
   const [checkOutDate, setCheckOutDate] = useState('날짜입력');
   const [personNum, setPersonNum] = useState(0);
   const [childNum, setChildNum] = useState(0);
   const [searchBtnDisabled, setSearchBtnDisabled] = useState(true);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetch('data/PersonData.json')
       .then(res => res.json())
@@ -57,6 +59,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
 
   const userSelectThis = buttonName => {
     setWhichIsClicked(buttonName);
+    if (buttonName === 'location') setLocationClicked(!isLocationClicked);
   };
 
   //   const plusPersonNumber = title => {
@@ -77,7 +80,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
 
   const changeLocationInput = e => {
     if (e.target.name === 'location') {
-      setSerchLocation(e.target.value);
+      setSearchLocation(e.target.value);
     } else if (e.target.name === 'checkIn') {
       setCheckInDate(e.target.value);
     } else if (e.target.name === 'checkOut') {
@@ -85,6 +88,10 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
     }
   };
 
+  const getLocationType = (id, name) => {
+    setSearchLocationId(id);
+    setSearchLocation(name);
+  };
   const changeInputType = (id, type) => {
     document.getElementById(id).type = type;
   };
@@ -123,6 +130,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
                     value={searchLocation}
                     onChange={changeLocationInput}
                     name="location"
+                    autoComplete="off"
                     onFocus={event => {
                       setInputPlaceholder(event.target.id, '');
                     }}
@@ -137,6 +145,14 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
                   />
                 </div>
               </div>
+              {isLocationClicked && whichIsClicked === 'location' ? (
+                <LocationTypeSelector
+                  getLocationType={getLocationType}
+                  closeHandler={setLocationClicked}
+                />
+              ) : (
+                <></>
+              )}
             </div>
             <div
               className={css.checkIn}
@@ -227,7 +243,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
                   className={css.searchZoom}
                   type="button"
                   onClick={() => {
-                    setLocation(searchLocation);
+                    setLocation(searchLocationId);
                     goToListPage();
                     setIsClickedNav(!isClickedNav);
                     confirm();

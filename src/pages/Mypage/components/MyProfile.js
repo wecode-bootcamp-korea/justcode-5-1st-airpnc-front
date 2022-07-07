@@ -5,32 +5,15 @@ import './MyProfile.scss';
 
 export default function MyProfile({ userImg, userName, getMyProfile }) {
   const [imgFile, setImgFile] = useState(null);
+  console.log(imgFile, 'test');
   const [data, setData] = useState([]);
 
   const handleChangeFile = e => {
-    setImgFile(e.target.files[0]);
+    const url = URL.createObjectURL(e.target.files[0]);
+    console.log(e.target.files[0], 'img');
+    setImgFile(url);
   };
 
-  const handlePostImg = e => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('filename', imgFile);
-
-    fetch(``, {
-      method: 'POST',
-      headers: {},
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message === 'SUCCESS') {
-          alert('프로필이 업로드 되었습니다!');
-          getMyProfile();
-        } else {
-          alert('프로필 사진을 업로드 해 주세요!');
-        }
-      });
-  };
   useEffect(() => {
     (async () => {
       const email = localStorage.getItem('user-email');
@@ -50,11 +33,13 @@ export default function MyProfile({ userImg, userName, getMyProfile }) {
       <section className="ProfileWrapper">
         <div className="UserProfile">
           <form className="ImageWrapper">
-            <input className="UploadBtn" type="File" />
+            <img className="ImageSize" src={imgFile}></img>
+            <input
+              className="UploadBtn"
+              type="file"
+              onChange={handleChangeFile}
+            />
             프로필을 고르세요.
-            <button className="SubmitBtn" type="submit" onClick={handlePostImg}>
-              확인
-            </button>
           </form>
 
           <div className="FreeUser">

@@ -8,7 +8,7 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { VscThreeBars } from 'react-icons/vsc';
 import ModalLayout from '../Modal/modalLayout';
 
-function Header({ setHeders: setHederFilter, login, wish }) {
+function Header({ setHeders: setHederFilter, login, wish, loginModalValue }) {
   const [isClickedNav, setIsClickedNav] = useState(false);
   const [Menu, ClickedMenu] = useState(false);
   const [Login, ClickedLogin] = useState(false);
@@ -56,7 +56,8 @@ function Header({ setHeders: setHederFilter, login, wish }) {
     }
   };
   const isLogined = () => {
-    navigate('/Login');
+    loginModalValue(true);
+
     // if (localStorage.getItem('back_token')) {
     //   Login(!ClickedLogin);
     // } else {
@@ -66,6 +67,7 @@ function Header({ setHeders: setHederFilter, login, wish }) {
 
   const isLogout = () => {
     localStorage.removeItem('login-token');
+    localStorage.removeItem('user-id');
     navigate('/');
   };
 
