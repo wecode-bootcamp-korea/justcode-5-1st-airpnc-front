@@ -22,9 +22,6 @@ function Home() {
   const button = useRef();
   const filtersIn = useLocation().state;
   const user = localStorage.getItem('user-id');
-  useMemo(() => {
-    setFilters(Object.assign(filters, filtersIn, headerfilters));
-  }, [filtersIn, headerfilters]);
 
   const setHeders = location => {
     setheaderfilters({ location_type: Number(location) });
@@ -36,11 +33,11 @@ function Home() {
       const json = await res.json();
 
       setData(json);
-      console.log(data.like, 77777);
     })();
   }, []);
 
   useEffect(() => {
+    setFilters(Object.assign(filters, filtersIn, headerfilters));
     (async () => {
       const requestOption = {
         method: 'POST',
@@ -58,6 +55,13 @@ function Home() {
       setFilters({});
     })();
   }, [filtersIn, headerfilters]);
+  console.log('-------------------filter options -----------');
+  console.log('headerfilters :', headerfilters);
+  console.log('main filter :', filtersIn);
+  console.log(
+    'filters assign ',
+    Object.assign(filters, filtersIn, headerfilters)
+  );
 
   //start wishList 갱신 함수
   useEffect(() => {
@@ -195,7 +199,6 @@ function Home() {
   const loginModalOff = value => {
     setLogin(value);
   };
-  console.log(login);
   return (
     <>
       {token ? (
@@ -213,7 +216,7 @@ function Home() {
         {data.map((data, ind) => {
           return (
             <div key={ind + 10}>
-              <RoomList key={ind} room={data} sytle={imageSize} won={'원'} />
+              <RoomList key={ind} room={data} sytle={imageSize} won="원" />
               <button
                 ref={button}
                 id={data.id}
