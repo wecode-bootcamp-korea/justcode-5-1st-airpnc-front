@@ -22,7 +22,7 @@ const ReservationBox = props => {
   const [checkin, setCheckIn] = useState(reservation.checkin);
   const [checkout, setCheckOut] = useState(reservation.checkout);
   const [isDateValid, setDateValid] = useState(false);
-  const [nights, setNights] = useState(1);
+  const [nights, setNights] = useState(reservation.nights || 1);
   const [guests, setGuests] = useState(reservation.guests || 1);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
@@ -153,7 +153,7 @@ const ReservationBox = props => {
                     className={css.checkInInput}
                     id="checkin-input"
                     type="date"
-                    value={checkin || today}
+                    value={checkin}
                     autoComplete="off"
                     onChange={event => {
                       setCheckIn(event.target.value);
