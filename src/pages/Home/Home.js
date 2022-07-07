@@ -67,7 +67,6 @@ function Home() {
       setLike(json.data.map(i => i.id));
     })();
   }, [user]);
-  console.log(selected);
 
   const btnClick = e => {
     const wishs = e.currentTarget.value;
@@ -110,7 +109,6 @@ function Home() {
           setSelected([...res.data]);
           setLike([...res.data].map(i => i.id));
         });
-      console.log(selected);
     } else if (selected.findIndex(i => i.id == room_id) === -1) {
       fetch(`${BASE_URL}/wishlist/${user}`, {
         method: 'POST',
@@ -132,7 +130,6 @@ function Home() {
           setSelected([...res.data]);
           setLike([...res.data].map(i => i.id));
         });
-      console.log(selected);
     } else {
       fetch(`${BASE_URL}/wishlist/${user}/${room_id}`, {
         method: 'DELETE',
@@ -155,7 +152,6 @@ function Home() {
           setSelected([...res.data]);
           setLike([...res.data].map(i => i.id));
         });
-      console.log(selected);
     }
   };
 
