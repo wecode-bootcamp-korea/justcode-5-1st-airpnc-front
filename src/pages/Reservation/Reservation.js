@@ -376,7 +376,7 @@ const Reservation = props => {
                                   }}
                                 />
                                 <input
-                                  className={css.checkInInput}
+                                  className={css.checkOutInput}
                                   id="checkout-input-edit"
                                   type="date"
                                   min={moment(checkin)
