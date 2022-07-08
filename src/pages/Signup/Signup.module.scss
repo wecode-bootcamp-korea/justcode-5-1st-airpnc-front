@@ -56,11 +56,15 @@
 // }
 
 .container {
-  max-width: 500px;
+  max-width: 650px;
+  width: 600px;
   margin: 20px auto;
   border: 1px solid #e6e6e6;
   padding: 50px 30px 20px;
   background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 // form {
@@ -68,19 +72,21 @@
 //   margin: 0 auto;
 // }
 
-.container0 {
-  background: #939497;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-}
+// .container0 {
+//   background: #939497;
+//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+//     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+//     sans-serif;
+// }
 
 .title {
   display: inline-block;
   margin-bottom: 20px;
   //font-family: 'Lobster', cursive;
   font-size: 20px;
+  font-weight: 700;
   color: #262626;
+  text-align: center;
 }
 
 // .form {

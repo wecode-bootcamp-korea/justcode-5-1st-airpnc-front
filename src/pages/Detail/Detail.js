@@ -7,6 +7,8 @@ import ModalLayout from '../../components/Modal/modalLayout';
 import ReservationBox from '../Reservation/Modal/ReservationBox';
 import SubHeader from '../../components/Header/SubHeader';
 import AirCover from '../../components/Modal/airCover';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {
   FaStar,
@@ -146,11 +148,17 @@ function Detail() {
     const json = await res.json();
     setSelected(json.data);
   };
+  const goHome = () => {
+    navigate('/');
+  };
 
   // const locationName = data.state.name;
   return (
     <>
       {token ? <SubHeader login /> : <SubHeader />}
+      <div className={css.backBtn} onClick={goHome}>
+        <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+      </div>
       <div className={css.container}>
         <section className={css.header_container}>
           <h1>{room.name}</h1>

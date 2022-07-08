@@ -9,14 +9,15 @@ import MainFilter from '../../components/MainFilter/MainFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 
 function Home() {
   const [login, setLogin] = useState(false);
+  const [signup, setSignup] = useState(false);
   const [like, setLike] = useState([]);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [headerfilters, setheaderfilters] = useState({});
-  const [location, setlocation] = useState(0);
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
   const button = useRef();
@@ -183,12 +184,12 @@ function Home() {
     fontSize: '15px',
     position: 'relative',
     top: '-89%',
-    left: '86%',
+    left: '74%',
     width: '40px',
     height: '40px',
     borderRadius: '20px',
     border: 'none',
-    backgroundColor: 'rgb(232, 232, 232)',
+    backgroundColor: 'rgb(232, 232, 232, 0.5)',
     opacity: '1',
   };
 
@@ -199,20 +200,29 @@ function Home() {
   const loginModalOff = value => {
     setLogin(value);
   };
+  const signupModalValue = value => {
+    setSignup(value);
+  };
+  const signupModalOff = value => {
+    setSignup(value);
+  };
+
   return (
     <>
       {token ? (
         <Header wish={goWishList} setHeders={setHeders} login />
       ) : (
         <Header
+          signupModalValue={signupModalValue}
           loginModalValue={loginModalValue}
           wish={cantGoWishList}
           setHeders={setHeders}
         />
       )}
       <MainFilter />
+      <Signup signup={signup} signupModalOff={signupModalOff} />
       <Login login={login} loginModalOff={loginModalOff} />
-      <div className={css.container}>
+      <div className={data.length === 2 ? css.container_sub : css.container}>
         {data.map((data, ind) => {
           return (
             <div key={ind + 10}>

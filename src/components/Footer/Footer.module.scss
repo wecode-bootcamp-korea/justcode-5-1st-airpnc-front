@@ -1,3 +1,5 @@
+@import '../../styles/common.scss';
+
 .container {
   //   border: 1px solid red;
   //display: flex;
@@ -11,6 +13,7 @@
   bottom: 0px;
   height: 89px;
   width: 100%;
+  font-family: $theme-font;
 }
 
 .top {
