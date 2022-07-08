@@ -44,15 +44,15 @@ const ReservationConfirmed = props => {
   };
 
   useEffect(() => {
-    (async () => {
-      const res = await fetch(`${BASE_URL}/reservation`, postOptions);
-      const json = await res.json();
-      console.log(json);
-    })();
-  }, []);
-  useEffect(() => {
-    console.log(yourTripDate);
-  }, []);
+    if (show) {
+      (async () => {
+        const res = await fetch(`${BASE_URL}/reservation`, postOptions);
+        const json = await res.json();
+        console.log(json);
+      })();
+    }
+  }, [show]);
+
   useEffect(() => {
     setShow(props.show);
   }, [props.show]);
