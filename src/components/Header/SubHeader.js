@@ -60,13 +60,7 @@ function SubHeader({ login }) {
         <FaAirbnb size="40" />
         <div>airpnc</div>
       </div>
-      <div className="container_right">
-        <div className="container_menu">
-          <div type="button" onClick={isMenued}>
-            <VscThreeBars />
-          </div>
-        </div>
-
+      <div className="sub_container_right">
         {login ? (
           <div className="container_login">
             <div type="button" onClick={isLogout}>
