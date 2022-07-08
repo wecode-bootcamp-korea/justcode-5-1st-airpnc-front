@@ -19,7 +19,6 @@ const ReservationNotValid = props => {
   //function getInnerComponent(state) {
   //  return state.map((item) => <></>);
   //}
-
   return (
     <div>
       {show && (
