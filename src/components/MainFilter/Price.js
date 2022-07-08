@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import css from './Price.module.scss';
 
 function Price({ lowOnChange, highOnChange }) {
