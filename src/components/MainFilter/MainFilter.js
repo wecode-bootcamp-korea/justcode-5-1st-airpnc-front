@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ModalLayout from '../Modal/modalLayout';
 import BedRoom from './BedRoom';
@@ -84,9 +84,11 @@ function MainFilter() {
           </div>
         </ModalLayout>
       )}
-      <button className={css.filterBtn} onClick={() => setReviewOn(true)}>
-        Filter
-      </button>
+      <div className={css.btnWrapper}>
+        <button className={css.filterBtn} onClick={() => setReviewOn(true)}>
+          Filter
+        </button>
+      </div>
     </>
   );
 }
