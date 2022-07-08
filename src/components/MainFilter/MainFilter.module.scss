@@ -10,9 +10,17 @@
   background-color: white;
   border-radius: 20px;
 }
+
+.btnWrapper {
+  width: 100vw;
+  height: 30px;
+}
+
 .filterBtn {
-  margin-left: 70px;
-  margin-top: 0.7%;
+  display: block;
+  float: right;
+  margin-right: 120px;
+  margin-top: 1.5%;
   border: 1px solid rgb(211, 211, 211);
   background-color: white;
   width: 80px;

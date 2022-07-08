@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
 import { TiStarFullOutline } from 'react-icons/ti';
@@ -19,10 +20,10 @@ const tomorrow = today.getDate() + 1;
 
 const ReservationBox = props => {
   const { rawData, userId, room, reservation, reviewScore, reviewCnt } = props;
-  const [checkin, setCheckIn] = useState(reservation.checkin || today);
-  const [checkout, setCheckOut] = useState(reservation.checkout || tomorrow);
+  const [checkin, setCheckIn] = useState(reservation.checkin);
+  const [checkout, setCheckOut] = useState(reservation.checkout);
   const [isDateValid, setDateValid] = useState(false);
-  const [nights, setNights] = useState(0);
+  const [nights, setNights] = useState(reservation.nights || 1);
   const [guests, setGuests] = useState(reservation.guests || 1);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
@@ -153,7 +154,12 @@ const ReservationBox = props => {
                     className={css.checkInInput}
                     id="checkin-input"
                     type="date"
-                    value={checkin}
+                    min={moment(today).format('YYYY-MM-DD')}
+                    value={
+                      checkin !== undefined
+                        ? moment(checkin).format('YYYY-MM-DD')
+                        : ''
+                    }
                     autoComplete="off"
                     onChange={event => {
                       setCheckIn(event.target.value);
@@ -165,7 +171,12 @@ const ReservationBox = props => {
                     className={css.checkOutInput}
                     id="checkout-input"
                     type="date"
-                    value={checkout}
+                    min={moment(checkin).add(1, 'days').format('YYYY-MM-DD')}
+                    value={
+                      checkout !== undefined
+                        ? moment(checkout).format('YYYY-MM-DD')
+                        : ''
+                    }
                     autoComplete="off"
                     onChange={event => {
                       setCheckOut(event.target.value);

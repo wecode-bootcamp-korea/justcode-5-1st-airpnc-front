@@ -23,8 +23,8 @@ const PriceBreakDown = props => {
   const price = {
     perNight: room.price,
   };
-
-  price.byNights = room.price * reservation.nights;
+  price.byNights =
+    room.price * (isNaN(reservation.nights) ? 1 : reservation.nights);
   price.cleaningFee = price.byNights * cleaningRate;
   price.serviceFee = price.byNights * serviceFeeRate;
   price.tax = price.byNights * taxRate;
@@ -39,7 +39,7 @@ const PriceBreakDown = props => {
           <div className={css.priceByNights}>
             <div className={css.priceByNightsDetail}>
               {currencyFomatter(room.price, 'kr')} &nbsp;x&nbsp;
-              {reservation.nights}
+              {isNaN(reservation.nights) ? 1 : reservation.nights}
               &nbsp;nights
             </div>
             <div>{currencyFomatter(price.byNights, 'kr')}</div>
