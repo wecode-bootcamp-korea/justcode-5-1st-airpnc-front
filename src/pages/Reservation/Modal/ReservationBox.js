@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import css from './ReservationBox.module.scss';
 import PriceBreakDown from './PriceBreakDown';
 import { TiStarFullOutline } from 'react-icons/ti';
@@ -153,7 +154,12 @@ const ReservationBox = props => {
                     className={css.checkInInput}
                     id="checkin-input"
                     type="date"
-                    value={checkin}
+                    min={moment(today).format('YYYY-MM-DD')}
+                    value={
+                      checkin !== undefined
+                        ? moment(checkin).format('YYYY-MM-DD')
+                        : ''
+                    }
                     autoComplete="off"
                     onChange={event => {
                       setCheckIn(event.target.value);
@@ -165,7 +171,12 @@ const ReservationBox = props => {
                     className={css.checkOutInput}
                     id="checkout-input"
                     type="date"
-                    value={checkout}
+                    min={moment(checkin).add(1, 'days').format('YYYY-MM-DD')}
+                    value={
+                      checkout !== undefined
+                        ? moment(checkout).format('YYYY-MM-DD')
+                        : ''
+                    }
                     autoComplete="off"
                     onChange={event => {
                       setCheckOut(event.target.value);

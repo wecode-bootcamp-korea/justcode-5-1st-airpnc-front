@@ -31,20 +31,6 @@ const airbnbConst = {
   nonRefundable: `This reservation is non-refundable.`,
 };
 
-const monthNames = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'July',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
@@ -73,7 +59,7 @@ const Reservation = props => {
   const navigate = useNavigate();
   const homepage = '/';
   const detailpage = '/detail';
-  // To Do : move to home and detail should pass room and reservation
+
   const handleNavigateBtn = address => {
     navigate(address, { state: { data: rawData, reservation } });
   };
@@ -115,8 +101,6 @@ const Reservation = props => {
     )}`;
   };
 
-  // < TO DO > dateEdit button is disabled
-  // time zone issue needs to be fixed
   const [isDateEditClicked, setDateEditClicked] = useState(false);
   const handleDateEditBtn = e => {
     setDateEditClicked(!isDateEditClicked);
@@ -323,21 +307,31 @@ const Reservation = props => {
                               Edit
                             </button>
                             {isDateEditClicked && (
-                              <div>
+                              <div
+                                className={
+                                  isDateValid
+                                    ? `${css.checkInOut}`
+                                    : `${css.checkInOut} ${css.checkInOutInvalid}`
+                                }
+                              >
                                 <input
                                   className={css.checkInInput}
                                   id="checkin-input-edit"
                                   type="date"
-                                  value={checkin}
+                                  value={moment(checkin).format('YYYY-MM-DD')}
+                                  min={moment(today).format('YYYY-MM-DD')}
                                   onChange={event => {
                                     setCheckin(event.target.value);
                                   }}
                                 />
                                 <input
                                   className={css.checkInInput}
-                                  id="checkin-input-edit"
+                                  id="checkout-input-edit"
                                   type="date"
-                                  value={checkout}
+                                  min={moment(checkin)
+                                    .add(1, 'days')
+                                    .format('YYYY-MM-DD')}
+                                  value={moment(checkout).format('YYYY-MM-DD')}
                                   onChange={event => {
                                     setCheckout(event.target.value);
                                   }}
@@ -357,7 +351,7 @@ const Reservation = props => {
                           <div>
                             <button className={css.editBtn}>Edit</button>
                             <input
-                              className={css.editInput}
+                              className={css.editGuestInput}
                               id="guests-edit"
                               type="number"
                               value={guests}
@@ -629,9 +623,9 @@ const Reservation = props => {
                     >
                       <button
                         className={
-                          isConfirmedVisible
-                            ? `${css.rclConfirmAndPayBtn}`
-                            : `${css.rclConfirmAndPayBtnDisabled}`
+                          token && isPayable
+                            ? `${css.rclConfirmAndPayBtn} ${css.rclConfirmAndPayBtnVisible}`
+                            : `${css.rclConfirmAndPayBtn} ${css.rclConfirmAndPayBtnDisabled}`
                         }
                         id="confirm-pay-btn"
                         onClick={event => {
