@@ -40,7 +40,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
     //   return;
     // }
 
-    setWhichIsClicked('ㅇ');
+    setWhichIsClicked('');
 
     // navigate(
     //   `roomlist?location=${searchLocation}&check_in=${checkInDate}&check_out=${checkOutDate}&guest=${

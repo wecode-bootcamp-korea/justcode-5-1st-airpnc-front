@@ -49,6 +49,7 @@ function Detail() {
     name: rawData.name,
     images: rawData.photo,
     price: rawData.price,
+    address: rawData.address,
     hostId: rawData.users.id,
     hostname: rawData.users.name,
     profileImage: rawData.users.profile_image,
@@ -171,7 +172,7 @@ function Detail() {
                   {avgScore} · <strong>후기 {reviews.length}개</strong>
                 </span>
               )}
-              <span className={css.location}>스웨덴</span>
+              <span className={css.location}>{room.address}</span>
             </div>
             <div className={css.function_group}>
               <div className={css.function}>
