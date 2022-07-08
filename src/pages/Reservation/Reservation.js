@@ -46,18 +46,16 @@ const Reservation = props => {
   const hostJoinedIn = room.hostJoinedIn.split('-')[0];
 
   // useState for reservation //
-  // To Do : edit option for dates and guests
   const [checkin, setCheckin] = useState(reservation.checkin);
   const [checkout, setCheckout] = useState(reservation.checkout);
   const [nights, setNights] = useState(reservation.nights);
   const [guests, setGuests] = useState(reservation.guests || 1);
   const [reservationNumber, setReservationNumber] = useState(-1);
-  const [isDateValid, setDateValid] = useState(false);
+  const [isDateValid, setDateValid] = useState(true);
   const [isBtnActive, setBtnActive] = useState(false);
   const [alertMsg, setAlertMsg] = useState('');
 
   const navigate = useNavigate();
-  const homepage = '/';
   const detailpage = '/detail';
 
   const handleNavigateBtn = address => {
@@ -73,12 +71,12 @@ const Reservation = props => {
   };
 
   useEffect(() => {
-    reservation.checkin = checkin;
-  }, [checkin]);
+    checkDateValid(checkin, checkout);
+  }, [checkin, checkout]);
 
-  useEffect(() => {
-    reservation.checkout = checkout;
-  }, [checkout]);
+  useMemo(() => {
+    reservation.nights = nights;
+  }, [nights]);
 
   useEffect(() => {
     reservation.guests = guests;
@@ -99,6 +97,56 @@ const Reservation = props => {
     return `${moment(checkin).format('YYYY. MMM. D')} ${moment(checkout).format(
       'YYYY. MMM. D'
     )}`;
+  };
+
+  const checkDateValid = (d1, d2) => {
+    const date1 = new Date(d1);
+    const date1Year = date1.getFullYear();
+    const date1Month = date1.getMonth() + 1;
+    const date1Date = date1.getDate() + 1;
+    // date1 is checkin date to compare with today
+    const dateIn = new Date(`${date1Year}-${date1Month}-${date1Date}`);
+
+    const date2 = new Date(d2);
+    const date2Year = date2.getFullYear();
+    const date2Month = date2.getMonth() + 1;
+    const date2Date = date2.getDate() + 1;
+    // dateIn is checkin date to compare with today
+    const dateOut = new Date(`${date2Year}-${date2Month}-${date2Date}`);
+
+    if (isNaN(date1) || isNaN(date2)) {
+      setDateValid(false);
+      setBtnActive(false);
+      setAlertMsg(`날짜를 확인해주세요.`);
+      return;
+    } else if (dateIn.getTime() < today.getTime()) {
+      setAlertMsg(
+        `날짜를 확인해주세요.\n오늘 이후 날짜 ${today.getFullYear()}-${
+          today.getMonth() + 1
+        }-${today.getDate()} 를 선택해주세요`
+      );
+      setDateValid(false);
+      setBtnActive(false);
+      return;
+    } else if (dateIn.getTime() === dateOut.getTime()) {
+      setAlertMsg('체크인 날짜와 체크아웃 날짜를 확인해주세요');
+      setDateValid(false);
+      setBtnActive(false);
+      return;
+    } else if (dateIn.getTime() > dateOut.getTime()) {
+      setAlertMsg('체크인 날짜와 체크아웃 날짜를 확인해주세요');
+      setDateValid(false);
+      setBtnActive(false);
+      return;
+    } else {
+      setDateValid(true);
+      setNights(getTotalNights(date1, date2));
+      setBtnActive(true);
+      reservation.checkin = dateIn;
+      reservation.checkout = dateOut;
+      //setNights(moment(checkout).diff(moment(checkin), 'days'));
+      return;
+    }
   };
 
   const [isDateEditClicked, setDateEditClicked] = useState(false);
@@ -181,6 +229,7 @@ const Reservation = props => {
 
   useMemo(() => {
     if (
+      isDateValid &&
       isCardNumberValid &&
       isCardExpirationValid &&
       isCardCVVValid &&
@@ -191,6 +240,7 @@ const Reservation = props => {
       setPayable(false);
     }
   }, [
+    isDateValid,
     isCardNumberValid,
     isCardExpirationValid,
     isCardCVVValid,
@@ -295,10 +345,11 @@ const Reservation = props => {
                           <div>
                             <h3>Dates</h3>
                             <p className={css.yourTripDate}>{yourTripDate()}</p>
+                            <p>{isDateValid ? '' : '!Date not Valid!'}</p>
                           </div>
                           <div>
                             <button
-                              className={`${css.editBtn} ${css.editBtnvisible}`}
+                              className={`${css.dateEdit} ${css.editBtn} ${css.editBtnvisible}`}
                               onClick={event => {
                                 handleDateEditBtn();
                               }}

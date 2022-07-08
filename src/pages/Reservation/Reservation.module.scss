@@ -200,6 +200,11 @@ img.logoToHome {
       }
       div:nth-child(2) {
         display: flex;
+        .dateEdit {
+          &:hover {
+            cursor: pointer;
+          }
+        }
         .editBtn {
           border: none;
           text-decoration: underline;
@@ -212,11 +217,23 @@ img.logoToHome {
           display: flex;
           justify-content: center;
           align-items: stretch;
+          
+          &:hover {
+            cursor: pointer;
+          }
+          input:focus,
+          input:active {
+           box-shadow: none !important;
+           -moz-box-shadow: none !important;
+           -webkit-box-shadow: none !important;
+           outline: none !important;
+         }
+
           &Invalid {
             border-radius: 8px;
-            border: 1px solid red;
+            border: 2px solid $theme-color;
             overflow: hidden;
-            perspective: 1px;        
+            perspective: 1px;   
           }
         }
         
