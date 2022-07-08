@@ -12,21 +12,21 @@ const ReservationConfirmed = props => {
   const reservationNumber = Math.floor(Math.random() * 1000000 + 1);
   const el = useRef();
   const navigate = useNavigate();
-  const goToMyPage = () => {
+  const goToReserveListPage = () => {
     navigate('/reservationlist');
   };
 
   const closeHandler = e => {
     setShow(false);
     props.onClose(false);
-    goToMyPage();
+    goToReserveListPage();
   };
 
   const onClick = e => {
     if (!el.current.contains(e.target)) {
       setShow(false);
       props.onClose(false);
-      goToMyPage();
+      goToReserveListPage();
     }
   };
 
