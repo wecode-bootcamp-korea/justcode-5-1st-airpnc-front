@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import css from './BedRoom.module.scss';
 
 const Btn = ({ value, onClick, style, selected }) => {

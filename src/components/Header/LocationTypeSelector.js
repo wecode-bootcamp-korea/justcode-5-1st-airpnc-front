@@ -44,7 +44,7 @@ const LocationTypeSelector = props => {
       id="location-selector"
       className={css.container}
       onMouseLeave={() => {
-        //closeHandler(false);
+        closeHandler(false);
       }}
     >
       <div className={css.outer}>

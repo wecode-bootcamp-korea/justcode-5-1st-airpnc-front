@@ -1,74 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { AiFillSafetyCertificate, AiOutlineCheck } from 'react-icons/ai';
 import BASE_URL from '../../../config';
 import './MyProfile.scss';
+import { FaUserAlt } from 'react-icons/fa';
 
-export default function MyProfile({ userImg, userName, getMyProfile }) {
+export default function MyProfile({ user }) {
   const [imgFile, setImgFile] = useState(null);
+  console.log(imgFile, 'test');
   const [data, setData] = useState([]);
-
+  const input = useRef();
   const handleChangeFile = e => {
-    setImgFile(e.target.files[0]);
+    const url = URL.createObjectURL(e.target.files[0]);
+    console.log(e.target.files[0], 'img');
+    setImgFile(url);
   };
 
-  const handlePostImg = e => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('filename', imgFile);
-
-    fetch(``, {
-      method: 'POST',
-      headers: {},
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message === 'SUCCESS') {
-          alert('프로필이 업로드 되었습니다!');
-          getMyProfile();
-        } else {
-          alert('프로필 사진을 업로드 해 주세요!');
-        }
-      });
-  };
-  useEffect(() => {
-    (async () => {
-      const email = localStorage.getItem('user-email');
-      console.log(email, 10);
-      const res = await fetch(`${BASE_URL}/mypage/${email}`);
-      const json = await res.json();
-      setData(json);
-    })();
-  }, []);
-
-  if (data.length === 0) {
-    return <div>데이터없음</div>;
-  }
-  console.log(data[0]);
   return (
     <div>
       <section className="ProfileWrapper">
         <div className="UserProfile">
-          <form className="ImageWrapper">
-            <input className="UploadBtn" type="File" />
-            프로필을 고르세요.
-            <button className="SubmitBtn" type="submit" onClick={handlePostImg}>
-              확인
-            </button>
-          </form>
+          {imgFile ? (
+            <div className="ImageWrapper">
+              <img className="ImageSize" src={imgFile}></img>
+            </div>
+          ) : (
+            <div className="ImageWrapper">
+              <FaUserAlt size="50" />
+              <input
+                id="input"
+                className="UploadBtn"
+                type="file"
+                onChange={handleChangeFile}
+              />
+              <label className="input_label" for="input">
+                사진 업데이트하기
+              </label>
+            </div>
+          )}
 
           <div className="FreeUser">
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              <p className="Check_user">이름:{data.name}</p>
+              <p className="Check_user">이름:{user.name}</p>
             </p>
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              <p className="Check_user">Email:{data.email}</p>
+              <p className="Check_user">Email:{user.email}</p>
             </p>
             <p className="CheckUser">
               <AiOutlineCheck size="18" />
-              <p className="Check_user">전화번호:{data.phone_number}</p>
+              <p className="Check_user">전화번호:{user.phone_number}</p>
             </p>
           </div>
         </div>

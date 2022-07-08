@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import moment from 'moment';
 import css from './Reservation.module.scss';
 import Footer from '../../components/Footer/Footer';
 import PayOptionSelector from './Modal/PayOptionSelector';
@@ -30,20 +31,6 @@ const airbnbConst = {
   nonRefundable: `This reservation is non-refundable.`,
 };
 
-const monthNames = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'July',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const Reservation = props => {
@@ -72,7 +59,7 @@ const Reservation = props => {
   const navigate = useNavigate();
   const homepage = '/';
   const detailpage = '/detail';
-  // To Do : move to home and detail should pass room and reservation
+
   const handleNavigateBtn = address => {
     navigate(address, { state: { data: rawData, reservation } });
   };
@@ -98,30 +85,22 @@ const Reservation = props => {
   }, [guests]);
 
   const yourTripDate = () => {
-    let checkinDate = new Date(checkin);
-    let checkoutDate = new Date(checkout);
-    if (checkinDate.getFullYear() === checkoutDate.getFullYear()) {
-      if (checkinDate.getMonth() === checkoutDate.getMonth()) {
-        return `${
-          monthNames[Number(checkinDate.getMonth())]
-        } . ${checkinDate.getDate()} - ${checkoutDate.getDate()}`; // same year and month
+    if (moment(checkin).year() === moment(checkout).year()) {
+      if (moment(checkin).month() === moment(checkout).month()) {
+        return `${moment(checkin).format('MMM. D')} - ${moment(checkout).format(
+          'D'
+        )}`; // same year and month
       } else {
-        return `${
-          monthNames[Number(checkinDate.getMonth())]
-        }. ${checkinDate.getDate()} -  ${
-          monthNames[Number(checkoutDate.getMonth())]
-        }. ${checkoutDate.getDate()}`;
+        return `${moment(checkin).format('MMM, D')} ${moment(checkout).format(
+          'MMM, D'
+        )}`;
       }
     }
-    return `${checkinDate.FullYear()} ${
-      monthNames[Number(checkinDate.getMonth())]
-    }. ${checkinDate.getDate()} - ${checkinDate.FullYear()} ${
-      monthNames[Number(checkinDate.getMonth())]
-    }. ${checkinDate.getDate()}`;
+    return `${moment(checkin).format('YYYY. MMM. D')} ${moment(checkout).format(
+      'YYYY. MMM. D'
+    )}`;
   };
 
-  // < TO DO > dateEdit button is disabled
-  // time zone issue needs to be fixed
   const [isDateEditClicked, setDateEditClicked] = useState(false);
   const handleDateEditBtn = e => {
     setDateEditClicked(!isDateEditClicked);
@@ -323,26 +302,36 @@ const Reservation = props => {
                               onClick={event => {
                                 handleDateEditBtn();
                               }}
-                              disabled={true}
+                              disabled={false}
                             >
-                              {/*Edit*/}
+                              Edit
                             </button>
                             {isDateEditClicked && (
-                              <div>
+                              <div
+                                className={
+                                  isDateValid
+                                    ? `${css.checkInOut}`
+                                    : `${css.checkInOut} ${css.checkInOutInvalid}`
+                                }
+                              >
                                 <input
                                   className={css.checkInInput}
                                   id="checkin-input-edit"
                                   type="date"
-                                  value={checkin}
+                                  value={moment(checkin).format('YYYY-MM-DD')}
+                                  min={moment(today).format('YYYY-MM-DD')}
                                   onChange={event => {
                                     setCheckin(event.target.value);
                                   }}
                                 />
                                 <input
                                   className={css.checkInInput}
-                                  id="checkin-input-edit"
+                                  id="checkout-input-edit"
                                   type="date"
-                                  value={checkout}
+                                  min={moment(checkin)
+                                    .add(1, 'days')
+                                    .format('YYYY-MM-DD')}
+                                  value={moment(checkout).format('YYYY-MM-DD')}
                                   onChange={event => {
                                     setCheckout(event.target.value);
                                   }}
@@ -355,15 +344,15 @@ const Reservation = props => {
                           <div>
                             <h3>Guests</h3>
                             <p>
-                              {reservation.guests}
-                              {reservation.guests > 1 ? ' guests' : ' guest'}
+                              {guests}
+                              {guests > 1 ? ' guests' : ' guest'}
                             </p>
                           </div>
                           <div>
                             <button className={css.editBtn}>Edit</button>
                             <input
-                              className={css.editInput}
-                              id="guest-edit"
+                              className={css.editGuestInput}
+                              id="guests-edit"
                               type="number"
                               value={guests}
                               onChange={event => {
@@ -633,7 +622,11 @@ const Reservation = props => {
                       className={`${css.rclConfirmAndPay} ${css.reserveContentLeftInner}`}
                     >
                       <button
-                        className={`${css.rclConfirmAndPayBtn} ${css.rclConfirmAndBtnDisabled}`}
+                        className={
+                          token && isPayable
+                            ? `${css.rclConfirmAndPayBtn} ${css.rclConfirmAndPayBtnVisible}`
+                            : `${css.rclConfirmAndPayBtn} ${css.rclConfirmAndPayBtnDisabled}`
+                        }
                         id="confirm-pay-btn"
                         onClick={event => {
                           isPayable
