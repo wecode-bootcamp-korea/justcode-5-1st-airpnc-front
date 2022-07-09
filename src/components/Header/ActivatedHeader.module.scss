@@ -2,6 +2,7 @@
 
 .navigation {
   display: flex;
+  flex-direction: column;
   align-items: center;
   font-family: $theme-font;
   color: $theme-font-color;
@@ -19,13 +20,12 @@
       padding-bottom: 7px;
     }
   }
-}
-
-.text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .searchBarContainer {
@@ -131,4 +131,8 @@
       }
     }
   }
+}
+
+.locationSelector {
+  
 }
