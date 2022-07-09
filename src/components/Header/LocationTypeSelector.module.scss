@@ -15,31 +15,32 @@
 		box-shadow: $tooltip-shadow;
 		position: absolute;
 		border-radius: 20px;
-		left: -30%;
+		left: -20%;
 		margin: 30px;
-		margin-top: 10%;
+		margin-top: -1%;
 		.inner {
 			display: flex;
 			align-items: flex-start;
-			padding: 5px;
+			justify-content: space-between;
+			padding: 0;
 			button {
 				margin: 30px;
 				background-color: white;
 				border: none;
-				opacity: 0.5;
-				&:hover {
-					cursor: pointer;
-					opacity: 1;
-					text-decoration: underline;
-				}
+				opacity: 0.55;
 				svg {
-
+					margin: 0 20px;
 				}
 				p {
 					padding-top: 5px;
 					font-family: $theme-font;
 					display: block;
 					font-weight: 450;
+				}
+				&:hover {
+					cursor: pointer;
+					opacity: 1;
+					text-decoration: underline;
 				}
 			}
 			}

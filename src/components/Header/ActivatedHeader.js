@@ -9,7 +9,7 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
   const [personCardData, setPersonCardData] = useState([]);
   const [searchLocationId, setSearchLocationId] = useState(0);
   const [searchLocation, setSearchLocation] = useState('');
-  const [isLocationClicked, setLocationClicked] = useState(true);
+  const [isLocationClicked, setLocationClicked] = useState(false);
   const [checkInDate, setCheckInDate] = useState('날짜입력');
   const [checkOutDate, setCheckOutDate] = useState('날짜입력');
   const [personNum, setPersonNum] = useState(0);
@@ -145,14 +145,6 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
                   />
                 </div>
               </div>
-              {isLocationClicked && whichIsClicked === 'location' ? (
-                <LocationTypeSelector
-                  getLocationType={getLocationType}
-                  closeHandler={setLocationClicked}
-                />
-              ) : (
-                <></>
-              )}
             </div>
             <div
               className={css.checkIn}
@@ -255,6 +247,16 @@ function SearchNav({ setIsClickedNav, isClickedNav, setLocation }) {
               </div>
             </div>
           </div>
+        </div>
+        <div className={css.locationSelector}>
+          {isLocationClicked ? (
+            <LocationTypeSelector
+              getLocationType={getLocationType}
+              closeHandler={setLocationClicked}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </nav>
     </div>
