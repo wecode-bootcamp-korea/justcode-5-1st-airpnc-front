@@ -23,6 +23,7 @@ function Review() {
   const el = useRef();
   const userId = localStorage.getItem('user-id');
   const token = localStorage.getItem('login-token');
+  console.log(reviewOn, 345435435);
   useEffect(() => {
     (async () => {
       const res = await fetch(`${BASE_URL}/reservation/toReview/${userId}`);
@@ -58,15 +59,6 @@ function Review() {
       setReviews(reviewList);
       // console.log(reviews, 333);
     })();
-    // if (!toggle) {
-    //   document.querySelector('.container').style.borderBottom =
-    //     '2px solid gray';
-    // }
-    // else {
-    //   document.querySelector(
-    //     '.tab_box > span:last-of-type'
-    //   ).style.borderBottom = '2px solid gray';
-    // }
   }, [toggle]);
 
   const offModal = e => {

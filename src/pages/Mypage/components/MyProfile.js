@@ -5,13 +5,37 @@ import './MyProfile.scss';
 import { FaUserAlt } from 'react-icons/fa';
 
 export default function MyProfile({ user }) {
-  const [imgFile, setImgFile] = useState(null);
+  console.log(user.profile_image, 3456);
+  const [imgFile, setImgFile] = useState();
   console.log(imgFile, 'test');
   const [data, setData] = useState([]);
   const input = useRef();
+
+  useEffect(() => {
+    setImgFile(user.profile_image);
+  }, [user]);
+
+  console.log(imgFile, 1234);
+  useEffect(() => {
+    (async () => {
+      if (imgFile) {
+        const res = await fetch('http://localhost:10010/mypage', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: user.name,
+            phone_number: user.phone_number,
+            profile_image: imgFile,
+            email: user.email,
+          }),
+        });
+        const json = await res.json();
+      }
+    })();
+  }, [imgFile]);
+
   const handleChangeFile = e => {
     const url = URL.createObjectURL(e.target.files[0]);
-    console.log(e.target.files[0], 'img');
     setImgFile(url);
   };
 
