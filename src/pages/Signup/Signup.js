@@ -67,9 +67,7 @@ function Signup({ signup, signupModalOff }) {
         <ModalLayout modalOff={onClick}>
           <div ref={el} className={css.container0}>
             <div className={css.container}>
-              <h1 className={css.title}>
-                반가워요^^ 회원가입 정보를 입력해주세요.
-              </h1>
+              <h1 className={css.title}>회원가입 정보를 입력해주세요.</h1>
               <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
                 <label className={css.label}>Email</label>
                 <input
