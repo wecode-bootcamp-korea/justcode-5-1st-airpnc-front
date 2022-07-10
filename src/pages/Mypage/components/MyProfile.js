@@ -46,6 +46,15 @@ export default function MyProfile({ user }) {
           {imgFile ? (
             <div className="ImageWrapper">
               <img className="ImageSize" src={imgFile}></img>
+              <input
+                id="input"
+                className="UploadBtn"
+                type="file"
+                onChange={handleChangeFile}
+              />
+              <label className="input_label" for="input">
+                사진 업데이트하기
+              </label>
             </div>
           ) : (
             <div className="ImageWrapper">
