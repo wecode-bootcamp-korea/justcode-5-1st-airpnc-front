@@ -103,17 +103,20 @@ function Home() {
         body: JSON.stringify(res),
       })
         .then(res => res.json())
-        .then(res => console.log(res));
-      fetch(`${BASE_URL}/wishlist/${user}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(res => res.json())
         .then(res => {
-          setSelected([...res.data]);
-          setLike([...res.data].map(i => i.id));
+          console.log(res);
+          fetch(`${BASE_URL}/wishlist/${user}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then(res => res.json())
+            .then(res => {
+              setSelected([...res.data]);
+              setLike([...res.data].map(i => i.id));
+              console.log(res, '두번째 get');
+            });
         });
     } else if (selected.findIndex(i => i.id == room_id) === -1) {
       fetch(`${BASE_URL}/wishlist/${user}`, {
@@ -124,17 +127,20 @@ function Home() {
         body: JSON.stringify(res),
       })
         .then(res => res.json())
-        .then(res => console.log(res));
-      fetch(`${BASE_URL}/wishlist/${user}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(res => res.json())
         .then(res => {
-          setSelected([...res.data]);
-          setLike([...res.data].map(i => i.id));
+          console.log(res);
+          fetch(`${BASE_URL}/wishlist/${user}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then(res => res.json())
+            .then(res => {
+              setSelected([...res.data]);
+              setLike([...res.data].map(i => i.id));
+              console.log(res, '두번째 get');
+            });
         });
     } else {
       fetch(`${BASE_URL}/wishlist/${user}/${room_id}`, {
@@ -145,18 +151,20 @@ function Home() {
         body: JSON.stringify(res),
       })
         .then(res => res.json())
-        .then(res => console.log(res));
-
-      fetch(`${BASE_URL}/wishlist/${user}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(res => res.json())
         .then(res => {
-          setSelected([...res.data]);
-          setLike([...res.data].map(i => i.id));
+          console.log(res);
+          fetch(`${BASE_URL}/wishlist/${user}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then(res => res.json())
+            .then(res => {
+              setSelected([...res.data]);
+              setLike([...res.data].map(i => i.id));
+              console.log(res, '두번째 get');
+            });
         });
     }
   };
