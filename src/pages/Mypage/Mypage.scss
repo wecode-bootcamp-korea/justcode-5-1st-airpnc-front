@@ -22,8 +22,10 @@
 }
 
 .Title-history {
+  display: flex;
   padding-top: 10px;
   font-size: 1.2rem;
+  margin-bottom: 50px;
 }
 
 .MyName {
@@ -40,4 +42,8 @@
   padding-top: 10px;
   font-size: 1.2rem;
   text-align: right;
+}
+.navigation_bar {
+  display: flex;
+  flex-direction: column;
 }
