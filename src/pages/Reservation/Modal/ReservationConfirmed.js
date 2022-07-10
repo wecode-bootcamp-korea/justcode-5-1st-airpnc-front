@@ -36,7 +36,7 @@ const ReservationConfirmed = props => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       check_in: moment(reservation.checkin).format(moment.HTML5_FMT.DATE),
-      check_out: moment(reservation.checkin).format(moment.HTML5_FMT.DATE),
+      check_out: moment(reservation.checkout).format(moment.HTML5_FMT.DATE),
       guests: reservation.guests,
       reservation_no: reservationNumber,
       user_id: reservation.user_id,
