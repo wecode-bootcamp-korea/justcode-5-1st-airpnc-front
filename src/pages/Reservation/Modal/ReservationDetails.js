@@ -5,8 +5,7 @@ import css from './ReservationDetails.module.scss';
 function ReservationDetails({ data, frontUpdate, setDetailsOn }) {
   // console.log(data, 111111111);
   const onDelete = async () => {
-    // alert('정말 리뷰를 삭제하시겠습니까?');
-    if (window.confirm('정말 리뷰를 삭제하시겠습니까?')) {
+    if (window.confirm('정말 예약을 취소 하시겠습니까?')) {
       const res = await fetch(
         `${BASE_URL}/reservation/${data.reservation_no}`,
         {
@@ -14,6 +13,7 @@ function ReservationDetails({ data, frontUpdate, setDetailsOn }) {
         }
       );
       const json = await res.json();
+      console.log(json);
       setDetailsOn(false);
       frontUpdate(data.idx);
     }
