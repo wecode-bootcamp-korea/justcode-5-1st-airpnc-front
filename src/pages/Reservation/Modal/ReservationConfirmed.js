@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import moment from 'moment';
 import BASE_URL from '../../../config';
 import ModalLayout from '../../../components/Modal/modalLayout';
 import css from './ReservationConfirmed.module.scss';
@@ -34,8 +35,8 @@ const ReservationConfirmed = props => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      check_in: reservation.checkin,
-      check_out: reservation.checkout,
+      check_in: moment(reservation.checkin).format(moment.HTML5_FMT.DATE),
+      check_out: moment(reservation.checkout).format(moment.HTML5_FMT.DATE),
       guests: reservation.guests,
       reservation_no: reservationNumber,
       user_id: reservation.user_id,

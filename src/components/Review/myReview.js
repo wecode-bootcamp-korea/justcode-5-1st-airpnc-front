@@ -22,6 +22,10 @@ function MyReview({ data, reviewOnClick, remainedReview }) {
       <div className={css.myReview}>
         <img src={data.photo_url[0].url}></img>
         <div className={css.room_info}>
+          <span className={css.room_title}>
+            {' '}
+            작성일자 {data.created_at.substring(0, 10)}
+          </span>
           <span>
             {data.city},{data.country}
           </span>

@@ -23,11 +23,12 @@ function Review() {
   const el = useRef();
   const userId = localStorage.getItem('user-id');
   const token = localStorage.getItem('login-token');
+  console.log(reviewOn, 345435435);
   useEffect(() => {
     (async () => {
       const res = await fetch(`${BASE_URL}/reservation/toReview/${userId}`);
       const json = await res.json();
-      // console.log(json, 3423);
+      console.log(json, 3423);
       const toReviews = json[0];
       const photos = json[1];
       toReviews.map(toReview => {
@@ -46,6 +47,7 @@ function Review() {
       const json = await res.json();
       const reviewList = json[0];
       const photos = json[1];
+      console.log(reviewList, 'review');
       reviewList.map(review => {
         for (let i = 0; i < photos.length; i++) {
           if (review.room_id === photos[i].room_id) {
@@ -57,15 +59,6 @@ function Review() {
       setReviews(reviewList);
       // console.log(reviews, 333);
     })();
-    // if (!toggle) {
-    //   document.querySelector('.container').style.borderBottom =
-    //     '2px solid gray';
-    // }
-    // else {
-    //   document.querySelector(
-    //     '.tab_box > span:last-of-type'
-    //   ).style.borderBottom = '2px solid gray';
-    // }
   }, [toggle]);
 
   const offModal = e => {

@@ -3,23 +3,26 @@ import BASE_URL from '../../../config';
 import css from './makeReview.module.scss';
 
 function MakeReview({ data, mode, setReviewOn, remainedReview }) {
-  const [score, setScore] = useState(data.score);
-  const [review, setReview] = useState(data.review);
+  const [score, setScore] = useState(0);
+  const [review, setReview] = useState('');
   const [title, setTitle] = useState('작성');
   const [fetchOptions, setFetchOptions] = useState({});
   const [toggle, setToggle] = useState(true);
   const star = useRef();
-  useEffect(
-    e => {
-      data.score = score;
-      console.log(data.score);
-      drawStar(e);
-    },
-    [score]
-  );
+
+  useEffect(() => {
+    setScore(data.score);
+    setReview(data.review);
+    star.current.style.width = `${data.score * 20}%`;
+  }, []);
+  useEffect(() => {
+    data.score = score;
+    console.log(data.score, 'score');
+  }, [score]);
 
   useEffect(() => {
     data.review = review;
+    console.log(data.review, 'review');
   }, [review]);
 
   useEffect(() => {
@@ -41,19 +44,14 @@ function MakeReview({ data, mode, setReviewOn, remainedReview }) {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          score: data.score,
-          review: data.review,
-          id: data.review_id,
+          score,
+          review,
+          id: data.id,
         }),
       });
     }
   }, [score, review]);
-  useEffect(() => {
-    console.log(score);
-  }, [score]);
-  useEffect(() => {
-    console.log(review);
-  }, [review]);
+
   const drawStar = e => {
     // console.log(star.current);
     let value = score;
@@ -70,7 +68,7 @@ function MakeReview({ data, mode, setReviewOn, remainedReview }) {
       url = `${BASE_URL}/review`;
       remainedReview(data.idx);
     } else if (mode === 'put') {
-      url = `${BASE_URL}/review/${data.review_id}`;
+      url = `${BASE_URL}/review/${data.id}`;
     }
     if (score === 0) {
       alert('별점 입력을 확인하세요');
@@ -88,50 +86,54 @@ function MakeReview({ data, mode, setReviewOn, remainedReview }) {
 
   return (
     <div className={css.MakeReview}>
-      <div className={css.container}>
-        <h1>리뷰 {title}</h1>
-        <div className={css.review_info_box}>
-          {/* <img src={data.photo_url[0].url}></img> */}
-          <div className={css.room_info}>
-            <span>
-              {data.city}, {data.country}
-            </span>
-            <h1 className={css.room_name}>{data.name}</h1>
+      {data ? (
+        <div className={css.container}>
+          <h1>리뷰 {title}</h1>
+          <div className={css.review_info_box}>
+            {/* <img src={data.photo_url[0].url}></img> */}
+            <div className={css.room_info}>
+              <span>
+                {data.city}, {data.country}
+              </span>
+              <h1 className={css.room_name}>{data.name}</h1>
+            </div>
           </div>
-        </div>
-        <div className={css.score}>
-          <h2>종합 점수</h2>
-          <span className={css.background_star}>
-            ★★★★★
-            <span ref={star} className={css.star}>
+          <div className={css.score}>
+            <h2>종합 점수</h2>
+            <span className={css.background_star}>
               ★★★★★
+              <span ref={star} className={css.star}>
+                ★★★★★
+              </span>
+              <input
+                onChange={drawStar}
+                type="range"
+                min="0"
+                max="5"
+                step="1"
+                value={score}
+              />
             </span>
-            <input
-              onChange={drawStar}
-              type="range"
-              min="0"
-              max="5"
-              step="1"
-              value={score}
-            />
-          </span>
+          </div>
+          <div className={css.comment}>
+            <h2>리뷰</h2>
+            <textarea
+              onChange={e => setReview(e.target.value)}
+              value={review}
+              placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
+            ></textarea>
+          </div>
+          <button
+            onClick={e => {
+              onSubmit();
+            }}
+          >
+            완료
+          </button>
         </div>
-        <div className={css.comment}>
-          <h2>리뷰</h2>
-          <textarea
-            onChange={e => setReview(e.target.value)}
-            value={review}
-            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
-          ></textarea>
-        </div>
-        <button
-          onClick={e => {
-            onSubmit();
-          }}
-        >
-          완료
-        </button>
-      </div>
+      ) : (
+        <div>데이터가 없습니다.</div>
+      )}
     </div>
   );
 }
